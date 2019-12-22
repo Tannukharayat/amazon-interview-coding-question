@@ -1,0 +1,84 @@
+***Trie is an efficient information retrieval data structure. Use this data structure to store Strings and search strings. Your task is to
+use TRIE data structure and search the given string A. If found print 1 else 0.  ***
+
+#include <iostream>
+using namespace std;
+class node
+{
+    public:
+    int c;
+    node *child[26];
+    int flag;
+    node(int a)
+    {
+        c=a;
+    }
+};
+class trie
+{
+    public:
+    node *head;
+    trie()
+    {
+        head=new node(0);
+    }
+    void insert(string ch)
+    {
+        int i = 0 ;
+        node *temp=head;
+        while(i<ch.length())
+        {
+             if(temp->child[ch[i]-'a']==NULL)
+            {
+                temp->child[ch[i]-'a']=new node(i);
+                //cout<<ch[i]<<" ";
+            }
+              temp=temp->child[ch[i]-'a'];
+            i++;
+        }
+        temp->flag=1;
+        //cout<<temp->c<<" "<<temp->flag<<endl;
+    }
+    void search(string ch)
+    {
+        int i = 0 ;
+       node *temp=head;
+        while(i<ch.length())
+        {
+            //cout<<ch[i]<<" ";
+             if(temp->child[ch[i]-'a']==NULL)
+            {
+                cout<<"0"<<endl;
+                return;
+            }
+            temp=temp->child[ch[i]-'a'];
+            i++;
+        }
+        //cout<<temp->c<<" "<<temp->flag<<endl;
+        if(temp->flag==1)
+        cout<<"1"<<endl;
+        else cout<<"0"<<endl;
+    }
+};
+
+int main() 
+{
+	int t ;
+	cin >> t;
+	for(int i = 0 ; i < t ; i++)
+	{
+	    int n;
+	    cin>>n;
+	    trie obj;
+	    for(int j=0;j< n ; j++)
+	    {
+	        string s;
+	        cin>>s;
+	        obj.insert(s);
+	    }
+	    string s;
+	    cin >>s;
+	    obj.search(s);
+	}
+	return 0;
+}
