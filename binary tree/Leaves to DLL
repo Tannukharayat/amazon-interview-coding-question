@@ -1,0 +1,102 @@
+**Given a Binary Tree with N edges. The task is to extract all leaves of it in a Doubly Linked List (DLL). Note that the DLL need to be 
+created in-place. Assume that the node structure of DLL and Binary Tree is same, only the meaning of left and right pointers are different
+In DLL, left means previous pointer and right means next pointer. Head of DLL should point to the left most leaf and then in inorder 
+traversal and so on. **
+
+using namespace std;
+struct Node{
+	int data;
+	Node *left,*right;
+	
+	Node(int x){
+	    data = x;
+	    left = NULL;
+	    right = NULL;
+	}
+};
+
+void insert(Node *root, int a1,int a2, char lr){
+	if(root==NULL)
+		return;
+	if(root->data==a1){
+		switch(lr){
+			case 'L':root->left=new Node(a2);
+			break;
+			case 'R':root->right=new Node(a2);
+			break;
+		}
+	}
+	else{
+		insert(root->left, a1, a2, lr);
+		insert(root->right, a1, a2, lr);
+	}
+}
+
+Node *convertToDLL(Node *root,Node **head_ref);
+int main(){
+	int t;
+	cin>>t;
+	while(t--){
+		int n;
+		cin>>n;
+		Node *root=NULL;
+		while(n--){
+			int a1,a2;
+			char lr;
+			cin>>a1>>a2;
+			scanf(" %c",&lr);
+			if(root==NULL){
+				root=new Node(a1);
+				switch(lr){
+					case 'L':root->left=new Node(a2);
+					break;
+					case 'R':root->right=new Node(a2);
+					break;
+				}
+			}
+			else{
+				insert(root,a1,a2,lr);
+			}
+		}
+		
+		Node *head=NULL;
+		root=convertToDLL(root,&head);
+		
+		while(head->right!=NULL){
+			cout<<head->data<<" ";
+			head=head->right;
+		}
+		
+		cout<<head->data<<endl;
+		while(head!=NULL){
+			cout<<head->data<<" ";
+			head = head->left;
+		}
+		cout<<endl;
+	}
+}
+
+Node *convertToDLL(Node *root,Node **head_ref)
+{
+    if(root==NULL)
+    return NULL;
+    convertToDLL(root->left, head_ref);
+    if(root->right==NULL&&root->left==NULL)
+    {
+        Node *np=new Node(root->data);
+        if(*(head_ref)==NULL)
+        {
+            *(head_ref)=np;
+        }else
+        {
+            Node *temp=*(head_ref);
+            while(temp->right!=NULL)
+            {
+                temp=temp->right;
+            }
+            temp->right=np;
+            np->left=temp;
+        }
+    }
+    convertToDLL(root->right, head_ref);
+}
