@@ -1,0 +1,18 @@
+**Given A binary Tree, Task is to remove all the half nodes (which has only one child)**
+
+Node *removeHalfNodes(Node *root)
+{
+        if(root==NULL)
+        return root;
+        root->left=removeHalfNodes(root->left);
+        
+        root->right= removeHalfNodes(root->right);
+        if(root->left==NULL&&root->right!=NULL)
+        {
+            return root->right;
+        }else if(root->right==NULL&&root->left!=NULL)
+        {
+            return root->left;
+        }
+        return root;
+}
