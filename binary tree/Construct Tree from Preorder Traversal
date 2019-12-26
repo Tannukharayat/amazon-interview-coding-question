@@ -1,0 +1,30 @@
+** Given an array pre[] that represents Preorder traversal of a binary tree. One more array preLN[] is given which has only two possible
+values ‘L’ and ‘N’. The value ‘L’ in preLN[] indicates that the corresponding node in Binary Tree is a leaf node and value ‘N’ indicates 
+that the corresponding node is non-leaf node.
+it is a special binary tree where every node has either 0 or 2 children **
+
+  struct Node *tree(int pre[] , char preLN[] , int  n , int &i )
+  {
+      if(i>=n)
+      {
+          return NULL;
+      }
+      Node *np = new Node(pre[i]);
+      if( i < n and preLN[i] == 'L')
+      {
+          i++;
+          return np;
+
+      }
+      i++;
+       np->left = tree(pre,preLN,n , i  );
+       np->right = tree(pre,preLN,n , i  );
+       return np;
+  }
+  struct Node *constructTree(int n, int pre[], char preLN[])
+  {
+      Node *head = NULL , *temp= NULL  ;
+      int i = 0 ; 
+     head=tree( pre , preLN, n , i );
+     return head;
+  }
