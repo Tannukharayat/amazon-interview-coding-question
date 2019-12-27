@@ -1,0 +1,55 @@
+** Consider lines of slope -1 passing between nodes (dotted lines in below diagram). The diagonal sum in a binary tree is the sum of all
+node’s data lying between these lines. Given a Binary Tree, print all diagonal sums **
+
+    void diagonalSum(Node* root) 
+    {
+        queue< pair <Node*,int> > q;
+        vector<int> v [ 1000 ] ;
+        /*for ( int k = 0 ; k < 1000 ; k ++ )
+            v [ k ] = 0 ; */
+        int i = 0  ; 
+        pair<Node*, int> p;
+        p.first = root ; 
+        p.second = i ;
+        q.push(p);
+       while(!q.empty())
+        {
+            queue< pair < Node*, int> > q1;
+            while(!q.empty())
+            {
+                p=q.front();
+                q.pop();
+                //cout<<p.first->data<<" "<<p.second<<endl;
+                v[p.second].push_back(p.first->data);
+                Node *np = p.first;
+                i=max(i, p.second);
+                if(np->left!=NULL)
+                {
+                    pair<Node*, int> p1 ;
+                    p1 .first = np -> left ; 
+                    p1.second = p.second + 1 ; 
+                    q1.push(p1);
+                }
+
+                if(np->right!=NULL)
+                {
+                    pair<Node*,int> p1 ;
+                     p1 .first = np -> right ; 
+                    p1.second = p.second  ; 
+                    q1.push(p1);
+                }
+            }
+            q=q1;
+        }
+        for ( int k = 0 ; k <= i ; k ++ )
+           {
+               int sum=0;
+               for(int l=0;l<v[k].size();l++)
+               {
+                  // cout<<v[k][l]<<" ";
+                   sum+=v[k][l];
+               }
+               cout<<sum<<" ";
+           }
+            cout<<endl;
+    }
