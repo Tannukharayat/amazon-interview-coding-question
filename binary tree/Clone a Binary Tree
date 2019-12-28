@@ -1,0 +1,28 @@
+**Given a Binary Tree having random pointers clone the Binary Tree. The task is to complete the function cloneTree which take one argument
+the root of the tree to be copied and should return the root of the cloned tree. **
+
+    Node* mapp(Node* root, map<Node*, Node*> &mp)
+    {
+        if(root==NULL)
+        return NULL;
+        Node *clonetree=new Node(root->data);
+        mp[root]=clonetree;
+        clonetree->left=mapp(root->left, mp);
+        clonetree->right=mapp(root->right, mp);
+        return clonetree;
+    }
+    void randomp(Node* root, Node* &clone, map<Node*, Node*> mp)
+    {
+        if( root == NULL )
+        return ;
+        mp[root]->random=mp[root->random];
+        randomp(root->left, clone, mp);
+        randomp(root->right, clone, mp);
+    }
+    Node* cloneTree(Node* tree)
+    {
+       map<Node*, Node*> mp;
+       Node *clonetree = mapp(tree, mp);
+       randomp(tree, clonetree, mp);
+       return clonetree;
+    }
