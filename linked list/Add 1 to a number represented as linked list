@@ -1,0 +1,36 @@
+**A number (n) is represented in Linked List such that each digit corresponds to a node in linked list. Add 1 to it.**
+
+
+    Node* funct(Node *head, int &carry)
+    {
+         if(head==NULL)
+        return head;
+       funct(head->next, carry);
+       if(head->data+carry>9)
+       {
+           carry=1;
+           head->data=0;
+       }else
+       {
+            head->data+=carry;
+           carry=0;
+       }
+       return head;
+    }
+    Node *addOne(Node *head)
+    {
+        int car=1;
+        head=funct(head,car);
+        return head;
+    }
+    
+    
+Input:
+456
+123
+999
+
+Output:
+457 
+124 
+1000 
