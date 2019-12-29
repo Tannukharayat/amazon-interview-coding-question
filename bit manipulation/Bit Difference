@@ -1,0 +1,57 @@
+** You are given two numbers A and B. Write a program to count number of bits needed to be flipped to convert A to B.**
+
+General solution:-
+    int main() 
+    {
+      int t , a , b;
+      cin >> t ;
+      while(t--)
+      {
+          cin >> a >> b;
+          int cnt=0;
+          while(a>0&&b>0)
+          {
+              if(a%2!=b%2)
+              cnt++;
+              a=a/2;
+              b=b/2;
+          }
+          while(a>0)
+          {
+              if(a%2==1)
+              cnt++;
+              a=a/2;
+          }
+          while(b>0)
+          {
+              if(b%2==1)
+              cnt++;
+              b=b/2;
+          }
+          cout<<cnt<<endl;
+      }
+      return 0;
+    }
+    
+    
+    Another solution using x-or
+    
+       int main() 
+      {
+        int t , a , b, c;
+        cin >> t ;
+        while(t--)
+        {
+            cin >> a >> b;
+            c=a^b;
+            int cnt=0;
+            while(c>0)
+            {
+                if(c%2==1)
+                cnt++;
+                c=c/2;
+            }
+            cout<<cnt<<endl;
+        }
+        return 0;
+      }
