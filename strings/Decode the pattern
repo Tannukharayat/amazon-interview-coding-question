@@ -1,0 +1,38 @@
+**Given a pattern as below and an integer n your task is to decode it and print nth row of it. The pattern follows as : **
+1
+11
+21
+1211
+111221
+
+
+  int main() 
+  {
+    int t;
+    cin >> t;
+    string s[21];
+    s[1]="1";
+    for(int i = 2 ; i < 21 ; i++ )
+    {
+        //string ans;
+        for(int j = 0 ; j < s[i-1].length() ; j++)
+        {
+            int cnt=1;
+            char c=s[i-1][j];
+            while(s[i-1][j]==s[i-1][j+1])
+            {
+                cnt++;
+                j++;
+            }
+            s[i]+=to_string(cnt);
+            s[i]+=c;
+        }
+    }
+    for( int i = 0 ; i < t ;i++ )
+    {
+        int n;
+        cin >> n;
+        cout<<s[n]<<endl;
+    }
+    return 0;
+  }
