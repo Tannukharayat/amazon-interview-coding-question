@@ -1,0 +1,64 @@
+**Given a pattern containing only I's and D's. I for increasing and D for decreasing.
+Devise an algorithm to print the minimum number following that pattern.
+Digits from 1-9 and digits can't repeat.**
+
+Input
+5
+D
+I
+DD
+IIDDD
+DDIDDIID
+
+Output
+21
+12
+321
+126543
+321654798
+
+      #include <iostream>
+      using namespace std;
+
+      int main() 
+      {
+          int t;
+          cin >> t;
+          for(int i = 0 ; i < t ; i++ )
+          {
+              string s;
+              cin >> s;
+              int arr[s.length()+1];
+              arr[s.length()]=s.length()+1;
+              for(int j = 0 ; j < s.length() ; j++ )
+              {
+                  int cnt = j;
+                  if(s[j]=='D')
+                  {
+                      while(s[cnt]=='D')
+                      {
+                          cnt++;
+                      }
+                  }
+                  if(cnt==j)
+                  {
+                      arr[j]=j+1;
+                  }else
+                  {
+                      int u=cnt+1, k = j ;
+
+                      while( k <= cnt )
+                      {
+                          arr[k]=u--;
+                          k++;
+                      }
+                      j=cnt;
+                  }
+              }
+              for(int j = 0 ; j <= s.length() ; j++)
+              {
+                  cout<< arr[j];
+              }cout<<endl;
+          }
+        return 0;
+      }
