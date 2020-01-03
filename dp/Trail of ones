@@ -1,0 +1,22 @@
+**Given a number N, find the number of binary strings of length N that contains consecutive 1's in them.**
+
+    int main() 
+    {
+      int t, n;
+      cin >> t;
+      for(int i = 0 ; i < t ; i++)
+      {
+          cin >> n;
+          long long int dp[n+1][2];
+          dp[1][0]=1;
+          dp[1][1]=1;
+          for(int j = 2 ; j <= n ; j++ )
+          {
+              dp[j][0]=dp[j-1][1]+dp[j-1][0];
+              dp[j][1]=dp[j-1][0];
+          }
+          long long int x=pow(2,n);
+          cout<<x-dp[n][0]-dp[n][1]<<endl;
+      }
+      return 0;
+    }
