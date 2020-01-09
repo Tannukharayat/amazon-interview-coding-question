@@ -1,0 +1,23 @@
+** Given an array of integers, every element appears twice except for one. Find that single one in linear time complexity and without using 
+extra memory **
+
+    for(int i=0;i<t;i++)
+      {
+          cin>>n;
+          if(n==0)
+          {
+              cout<<n<<endl;
+              continue;
+          }
+          int x=0, num=0;
+          int arr[100000];
+          cin >> x;
+          num=x;
+          for(int j=1;j<n;j++)
+          {
+             cin>>x;
+            num=num^x;
+          }
+          cout<<num<<endl;
+
+      }
