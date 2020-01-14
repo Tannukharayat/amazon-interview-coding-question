@@ -1,0 +1,15 @@
+**Given a Binary Tree where each node has positive and negative values. Convert this to a tree where each node contains the sum of the left
+and right sub trees in the original tree. The values of leaf nodes are changed to 0. **
+
+    int sum(Node *node)
+    {
+        if(node==NULL)
+        return 0;
+        int val = node->data;
+        node->data=sum(node->left)+sum(node->right);
+        return node->data+val;
+    }
+    void toSumTree(Node *node)
+    {
+        sum(node);
+    }
