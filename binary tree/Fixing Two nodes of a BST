@@ -1,0 +1,48 @@
+**Two of the nodes of a Binary Search Tree (BST) are swapped. Fix (or correct) the BST**
+
+Method 1:
+
+      void inorder(struct Node* root, vector<int> &v)
+      {
+          if(root==NULL)
+          return;
+          inorder(root->left, v);
+          v.push_back(root->data);
+          inorder(root->right, v);
+      }
+      void inorder1(struct Node* &root, int index1 , int index2)
+      {
+          if(root==NULL)
+          return;
+          inorder1(root->left, index1 , index2);
+          if(root->data==index1)
+          root->data=index2;
+          else if(root->data==index2)
+          root->data=index1;
+          inorder1(root->right, index1, index2);
+      }
+      struct Node *correctBST( struct Node* root )
+      {
+          vector<int> v , v1;
+          inorder(root, v);
+          for(int i = 0 ; i < v.size() ; i++)
+          {
+              v1.push_back(v[i]);
+          }sort(v1.begin(), v1.end());
+          int index1=0, index2=0;
+          for(int i = 1 ; i < v.size() ; i++)
+          {
+              if(v[i]!=v1[i])
+              {
+                  index1=v[i];
+                  index2=v1[i];
+                  break;
+              }
+          }
+          inorder1(root,index1,index2);
+          return root;
+      }
+      
+     
+Method 2:
+
