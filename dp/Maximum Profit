@@ -1,0 +1,32 @@
+**In stock market , a person buys a stock and sells it on some future date. Given the stock prices of N days in an form of an array A[ ] 
+and a positive integer K, find out the maximum profit a person can make in atmost K transactions. A transaction is equivalent to (buying +
+selling) of a stock and new transaction can start only when the previous transaction has been completed**
+
+    while(t--)
+      {
+          int k , n ;
+          int a[100];
+          cin >> k >> n ;
+          for(int i = 0 ; i < n ;i++ )
+          {
+              cin >> a[i];
+          }
+          int dp[k+1][n+1];
+          for(int i = 0 ; i <= k ; i++)
+          dp[i][0]=0;
+          for(int i = 0 ; i <= n ; i++)
+          dp[0][i]=0;
+          for(int i = 1 ; i <= k ; i++)
+          {
+              for(int j = 1 ; j < n ; j++)
+              {
+                  dp[i][j]=-10000;
+                  for(int k = 0 ; k < j ; k++)
+                  {
+                      dp[i][j]=max(dp[i][j], a[j]-a[k]+dp[i-1][k]);
+                  }dp[i][j]=max(dp[i][j-1],dp[i][j]);
+              }
+          }
+          cout<<dp[k][n-1]<<endl;
+      }
+
