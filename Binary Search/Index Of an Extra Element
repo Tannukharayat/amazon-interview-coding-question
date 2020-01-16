@@ -1,0 +1,29 @@
+**Given two sorted arrays. There is only 1 difference between the arrays. First array has one element extra added in between. Find the 
+index of the extra element **
+
+      int findExtra(int a[],int b[],int n)
+      {
+              int l = 0, h = n-1 , ans;
+              if(a[0]!=b[0])
+                  ans = 0;
+              else if(a[n-1]!=b[n-2]&&a[n-2]==b[n-2])
+                  ans = n-1;
+              else 
+              {
+                  while(l <= h)
+                  {
+                      int mid = (l+h)/2;
+                      if(a[mid-1]==b[mid-1]&&a[mid+1]==b[mid])
+                      {
+                          //cout<<"**";
+                          ans = mid;
+                          break;
+                      }
+                      else if(a[mid]==b[mid])
+                              l=mid+1;
+                      else 
+                              h=mid-1;
+                  }
+              }
+              return ans ;
+      }
