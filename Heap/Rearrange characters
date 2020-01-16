@@ -34,3 +34,26 @@ characters are same. **
             cout<<"0"<<endl;
             else cout<<"1"<<endl;
         }
+
+Method 2: //we will check the maximum frequency and remaining elements
+            int main() 
+            {
+                  cin>>t;
+                  for(int i=0;i<t;i++)
+                  {
+                      cin>>s;
+                      long long int mx=0;
+                      long long int cnt[26];
+                      memset(cnt,0,sizeof(cnt));
+                      for(int j=0;j<s.length();j++)
+                      {
+                          cnt[s[j]-'a']++;
+                          mx=max(mx,cnt[s[j]-'a']);
+                      }
+                      int mx1=s.length()-mx;
+                      if((mx-mx1)>1)
+                      cout<<"0"<<endl;
+                      else cout<<"1"<<endl;
+                  }
+                  return 0;
+            }
