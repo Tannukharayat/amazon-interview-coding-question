@@ -1,0 +1,36 @@
+**Given a string S with repeated characters (only lowercase). The task is to rearrange characters in a string such that no two adjacent 
+characters are same. **
+
+      for(int i=0;i<t;i++)
+        {
+            cin>>s;
+            priority_queue<pair<int,char> >pq;
+            long long int cnt[26];
+            memset(cnt,0,sizeof(cnt));
+            for(int j=0;j<s.length();j++)
+            {
+                cnt[s[j]-'a']++;
+            }
+            for(int j=0;j<26;j++)
+            {
+                if(cnt[j]>0)
+                pq.push({cnt[j],j+'a'});
+            }
+            pair<int,char> prev,curr;
+            prev.first=0,prev.second='-';
+            string st;
+
+            while(!pq.empty())
+            {
+                curr=pq.top();
+                pq.pop();
+                 st+=curr.second;
+                 if(prev.first>0)
+               pq.push(prev);
+               curr.first--;
+                prev=curr;
+            }
+            if(s.length()!=st.length())
+            cout<<"0"<<endl;
+            else cout<<"1"<<endl;
+        }
