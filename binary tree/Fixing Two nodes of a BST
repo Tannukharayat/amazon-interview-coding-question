@@ -46,3 +46,46 @@ Method 1:
      
 Method 2:
 
+                  void inorder(struct Node* root, struct Node* &prev, Node* &next, struct Node* &prev1,struct Node* &prev2)
+                  {
+                      if(root==NULL||(prev1!=NULL&&prev2!=NULL))
+                      return ;
+                      inorder(root->left, prev, next, prev1, prev2);
+                      if(prev!=NULL&&root->data<prev->data)
+                      {
+                          if(prev1==NULL)
+                          {
+                              prev1=prev;
+                              next=root;
+                          }
+
+                          else
+                          {
+                               prev2=root;
+                          }
+                      }
+                      prev = root;
+                      inorder(root->right,prev,next,prev1,prev2);
+                  }
+                  struct Node *correctBST( struct Node* root )
+                  {
+                      Node *prev1 = NULL;
+                      Node *prev2 = NULL;
+                      Node *prev = NULL;
+                      Node *next = NULL;
+                      inorder(root, prev , next,prev1, prev2);
+                     if(prev1!=NULL&&prev2!=NULL)
+                     {
+                     int tmp=prev2->data;
+                     prev2->data=prev1->data;
+                     prev1->data=tmp;
+                     }else if(prev1!=NULL)
+                     {
+                         int tmp=prev1->data;
+                         prev1->data=next->data;
+                         next->data=tmp;
+                     }
+                      return root;
+                  }
+
+
