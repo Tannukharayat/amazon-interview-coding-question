@@ -1,0 +1,19 @@
+**Given a binary tree in which each node element contains a number. Find the maximum possible sum from one leaf node to another**
+
+      int sum(struct Node *root, int &ans)
+      {
+          if(root==NULL)
+          return 0;
+          int l = sum(root->left, ans);
+          int r = sum(root->right, ans);
+          ans = max(ans,root->data+l+r);
+          root->data+=max(l,r);
+          return root->data;
+      }
+      int maxPathSum(struct Node *root)
+      {
+          int ans = INT_MIN ;
+          sum(root, ans);
+          return ans ;
+
+      }
