@@ -1,0 +1,43 @@
+**Given a BST with N nodes and a target node K. The task is to find an integer having minimum absolute difference with given target value
+K and return this difference **
+
+Method 1:
+
+
+      void inorder(Node *root, int k, int &ans )
+      {
+          while(root!=NULL)
+          {
+              ans = min(ans , abs(root->data-k));
+              if(k>root->data)
+              {
+                  root=root->right;
+              }else root=root->left;
+          }
+      }
+      int maxDiff(Node *root, int k)
+      {
+          int ans = INT_MAX ;
+          inorder(root, k , ans);
+          return ans ;
+      
+      
+Method 2:
+
+      void inorder(Node *root, int k, int &ans )
+      {
+          if(root==NULL)
+          return ;
+          inorder(root->left, k , ans );
+          int x = root->data-k;
+          if(x<0)
+          x=-x;
+          ans = min(ans , x);
+          inorder(root->right, k , ans );
+      }
+      int maxDiff(Node *root, int k)
+      {
+          int ans = INT_MAX ;
+          inorder(root, k , ans);
+          return ans ;
+      }
