@@ -1,0 +1,33 @@
+**Given a Binary Tree, print the diagnol traversal of the binary tree.**
+
+      void diagonalPrint(Node *root)
+      {
+         queue<pair<Node*,int> > q;
+         q.push({root,100});
+         int ans = 0;
+         vector<int> v[101];
+         while(!q.empty())
+         {
+             queue<pair<Node*,int> >q1;
+             while(!q.empty())
+             {
+                 pair<Node*,int> np;
+                 np=q.front();
+                 q.pop();
+                 v[np.second].push_back(np.first->data);
+                 ans = min(ans ,np.second);
+                 if(np.first->left!=NULL)
+                 q1.push({np.first->left,np.second-1});
+                  if(np.first->right!=NULL)
+                 q1.push({np.first->right,np.second});
+             }
+             q=q1;
+         }
+         for(int i = 100 ; i >= ans ; i-- )
+         {
+             for(int j = 0 ; j < v[i].size() ; j++ )
+             {
+                 cout<<v[i][j]<<" ";
+             }
+         }
+      }
