@@ -1,0 +1,44 @@
+**Given two integers ‘L’ and ‘R’, write a program that finds the count of numbers having prime number of set bits in their binary 
+representation in the range [L, R] *****
+
+      int setbit(int x)
+      {
+          int cnt = 0 ;
+          while(x>0)
+          {
+              x=x&(x-1);
+              cnt++;
+          }
+          return cnt;
+      }
+      int main() 
+      {
+        int t ;
+        cin >> t ; 
+        int prime[99001];
+        memset(prime,0,sizeof(prime));
+        prime[1]=prime[0]=1;
+        for(int j = 2 ; j*j < 100 ; j++)
+        {
+            if(prime[j]==0)
+            for(int k = j*j ; k < 100 ; k+=j )
+            {
+                prime[k]=1;
+            }
+        }
+        int dp[100001];
+        dp[0] = 0 ;
+        for(int i = 1 ; i < 100000 ; i++ )
+        {
+            if(prime[setbit(i)]==0)
+            dp[i]=dp[i-1]+1;
+            else dp[i]= dp[i-1];
+        }
+        for(int i = 0 ; i < t ; i++)
+        {
+            int l , r;
+            cin >> l >> r;
+            cout<<dp[r]-dp[l-1]<<endl;
+        }
+        return 0;
+      }
