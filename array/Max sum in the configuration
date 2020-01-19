@@ -1,0 +1,20 @@
+**Given a singly linked list: A0→A1→…→An-1→An, reorder it to: A0→An→A1→An-1→A2→An-2
+For example: Given 1->2->3->4->5 its reorder is 1->5->2->4->3 **
+
+int max_sum(int A[],int N)
+{
+    int sum = 0 , val = 0 , val1 = 0, ans = 0 , prev ;
+    for(int i = 0 ; i < N ; i++)
+    {
+        val1+= i*A[i];
+        val+= (i+1)%N*A[i];
+        sum+=A[i];
+    }
+    ans = max(val, val1), prev = val;
+    for(int i = 1 ; i < N-1 ; i++)
+    {
+        ans = max(ans, prev+sum-(N)*A[N-1-i]);
+        prev = prev+sum-(N)*A[N-1-i];
+    }
+    return ans;
+}
