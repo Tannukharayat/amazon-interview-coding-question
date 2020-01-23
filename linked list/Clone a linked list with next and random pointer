@@ -1,0 +1,72 @@
+**You are given a Singly Linked List with N nodes where each node next pointing to its next node. You are also given M random pointers ,
+where you will be given M number of pairs denoting two nodes a and b  i.e. a->arb = b.**
+
+Method 1: 
+    Node *copyList(Node *head) 
+    {
+
+        Node *clone = NULL, *clone_tmp = NULL , *curr = NULL;
+        Node *temp = head;
+        while(temp!=NULL)
+        {
+            curr=temp;
+            Node *new_node=new Node(temp->data);
+            if(clone==NULL)
+            clone = clone_tmp = new_node;
+            else 
+            {
+                clone_tmp->next = new_node;
+                clone_tmp=new_node;
+            }
+            clone_tmp->arb=curr;
+            temp=temp->next;
+            curr->next=clone_tmp;
+        }
+
+
+        temp=clone;
+        temp=clone;
+        while(temp!=NULL)
+        {
+            Node *curr=temp->arb;
+            if(temp->arb->arb==NULL)
+                temp->arb=NULL;
+            else
+                temp->arb=temp->arb->arb->next;
+            curr->next=
+
+            temp=temp->next;
+        }
+        return clone;
+    }
+    
+Method 2:
+    Node *copyList(Node *head) {
+        Node *curr = head;
+        while(curr!=NULL)
+        {
+            Node* np=new Node(curr->data);
+            if(curr->next!=NULL)
+            np->next=curr->next;
+            curr->next=np;
+            curr=curr->next->next;
+        }curr=head;
+        while(curr!=NULL)
+        {
+            if(curr->arb!=NULL)
+            curr ->next->arb=curr->arb->next;
+            curr=curr->next->next;
+        }
+        Node *clone=head->next;
+        Node *temp=head, *temp1;
+        while(temp->next->next!=NULL)
+        {
+            temp1 = temp->next;
+            temp->next=temp1->next;
+            temp=temp->next;
+            temp1->next= temp->next;
+        }
+        temp->next=NULL;
+
+        return clone;
+    }
