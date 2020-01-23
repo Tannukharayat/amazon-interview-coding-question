@@ -1,0 +1,27 @@
+**Given an array of size N. The task is to sort the array elements by completing functions heapify() and buildHeap() which are used to 
+implement Heap Sort **
+
+      void heapify(int arr[], int n, int i)  
+      {
+            int x = i , l = 2*i + 1, r = 2*i + 2 ;
+            if(l<n&&arr[i]<arr[l])
+            x = l;
+            if(r<n&&arr[x]<arr[r])
+            x = r;
+            if(x<n&&arr[x]>arr[i])
+            {
+                int tmp=arr[x];
+                arr[x]=arr[i];
+                arr[i]=tmp;
+                heapify(arr,n,x);
+            }
+      }
+
+      void buildHeap(int arr[], int n)  
+      { 
+          int st = n/2 -1 ;
+          for(int i = st ; i >= 0 ; i-- )
+          {
+              heapify(arr,n,i);
+          }
+      }
