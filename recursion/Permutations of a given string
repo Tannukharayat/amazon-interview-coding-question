@@ -1,0 +1,42 @@
+**Given a string S. The task is to print all permutations of a given string**
+
+#include <iostream>
+#include <vector>
+#include<set>
+using namespace std;
+void permutation(string s, int l , int r, set<string> &st)
+{
+    if(l==r)
+    {
+        st.insert(s);
+        return ;
+    }
+    
+    for(int i = 0 ; i < s.length() ; i++)
+    {
+       char tmp=s[i];
+        s[i]=s[l];
+        s[l]=tmp;
+        permutation(s,l+1,r,st);
+        tmp=s[i];
+        s[i]=s[l];
+        s[l]=tmp;
+    }
+}
+int main() 
+{
+	int t;
+	cin >> t ;
+	while(t--)
+	{
+	    string s;
+	    cin >> s;
+	    set<string> st;
+	    set<string> :: iterator it;
+	    permutation(s,0,s.length(),st);
+	    for( it = st.begin() ; it != st.end() ; it++)
+	    cout<<*it<<" ";
+	    cout<<endl;
+	}
+	return 0;
+}
