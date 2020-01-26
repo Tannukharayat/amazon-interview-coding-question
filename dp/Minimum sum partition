@@ -1,0 +1,38 @@
+**Given an array, the task is to divide it into two sets S1 and S2 such that the absolute difference between their sums is minimum**
+
+    int funct(int a[100], int n , int total)
+    {
+        int dp[total+1][n+1];
+        memset(dp,0,sizeof(dp));
+        for(int i = 0 ; i <= total; i++)
+        {
+            dp[i][0]=0;
+        }
+        for(int i = 0 ; i <= n ; i++)
+        {
+            dp[0][i]=1;
+        }
+
+        for(int i = 1 ; i <= total ; i++)
+        {
+            for(int j = 1 ; j <= n ; j++)
+            {
+                if(a[j-1]>i)
+                {
+                    dp[i][j] = dp[i][j-1];
+                }else
+                {
+                    dp[i][j] = (dp[i-a[j-1]][j-1]|dp[i][j-1]);
+                }
+            }//cout<<endl;
+        }
+        int ans = 100000 ;
+        for(int i = 0 ; i <= total ; i++)
+        {
+            //cout<<dp[i][n]<<" ";
+            if(dp[i][n]==1)
+            {
+                ans = min( ans , abs(total-2*i) );
+            }
+        }cout<<ans<<endl;
+    }
