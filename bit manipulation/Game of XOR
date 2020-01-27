@@ -1,0 +1,26 @@
+**You are given an array A[] of size N. Now, we call the value of an array the bit-wise XOR of all elements it contains. For example, the 
+value of the array [1,2,3] = 1^2^3. Now, Your task is to find the bit-wise XOR of the values of all sub arrays of array A. **
+
+int main() 
+{
+	int t ;
+	cin >> t ;
+	while(t--)
+	{
+	    int n ;
+	    cin >> n ;
+	    int ans = 0;
+	    int a[n];
+	    for(int i = 1 ; i <= n ; i++)
+	    {
+	        cin >> a[i];
+	        if(((n-i+1)*(i))%2!=0) //no of occurence
+	        {
+	             ans = ans ^ a[i];
+	        }
+	       
+	    }
+	    cout<<ans << endl;
+	}
+	return 0;
+}
