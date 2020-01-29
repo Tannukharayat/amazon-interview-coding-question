@@ -1,0 +1,29 @@
+**Given an array having both positive an negative integers. The task is to complete the function maxLen() which returns the length of 
+maximum subarray with 0 sum. The function takes two arguments an array A and n where n is the size of the array A ***
+
+    int maxLen(int A[],int n)
+    {
+        vector<int> v;
+        map<int, vector<int> > mp;
+        int ans = 0, sum = 0;
+          for(int i = 0 ; i < n ; i++)
+          {
+              sum+=A[i];
+              vector<int> v;
+              if(sum==0)
+              {
+                  ans = max(ans, i+1);
+              }else 
+              {
+                  mp[sum].push_back(i);
+              }
+              v=mp[sum];
+               if(v.size()>1)
+               {
+                   ans = max(ans, v[v.size()-1]-v[0]);
+               }
+
+          }
+
+      return ans;
+    }
