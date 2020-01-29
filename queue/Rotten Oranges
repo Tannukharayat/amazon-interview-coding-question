@@ -1,0 +1,84 @@
+**Given a matrix of dimension r*c where each cell in the matrix can have values 0, 1 or 2 which has the following meaning:
+0 : Empty cell
+1 : Cells have fresh oranges
+2 : Cells have rotten oranges
+
+So, we have to determine what is the minimum time required to rot all oranges. A rotten orange at index [i,j] can rot other fresh orange at
+indexes [i-1,j], [i+1,j], [i,j-1], [i,j+1] (up, down, left and right) in unit time. If it is impossible to rot every orange then simply 
+return -1 **
+
+    while(t--)
+      {
+          int r , c ;
+          cin >> r >> c ;
+          int a[r][c];
+          queue<pair<int,int> > q;
+          for(int i = 0 ; i < r ; i++ )
+          {
+              for(int j = 0 ; j < c ; j++)
+              {
+                  cin >> a[i][j];
+                  if(a[i][j]==2)
+                  {
+                      q.push({i,j});
+                  }
+              }
+          }
+          int cnt = 0;
+          while(!q.empty())
+          {
+              cnt++;
+              queue<pair<int,int> >q1;
+              int x = 0;
+              while(!q.empty())
+              {
+                  pair <int,int> p;
+                  p=q.front();
+                  //cout<<p.first<<" "<<p.second<<endl;
+                  q.pop();
+                  if(a[p.first-1][p.second]==1&&p.first>0)
+                  {
+                      x=1;
+                      a[p.first-1][p.second]=2;
+                      q1.push({p.first-1,p.second});
+                  }
+                  if(a[p.first+1][p.second]==1&&p.first<r-1)
+                  {
+                       x=1;
+                      a[p.first+1][p.second]=2;
+                      q1.push({p.first+1,p.second});
+                  }
+                  if(a[p.first][p.second-1]==1&&p.second>0)
+                  {
+                       x=1;
+                      a[p.first][p.second-1]=2;
+                      q1.push({p.first,p.second-1});
+                  }
+                  if(a[p.first][p.second+1]==1&&p.second<c-1)
+                  {
+                       x=1;
+                      a[p.first][p.second+1]=2;
+                      q1.push({p.first,p.second+1});
+                  }
+              }q=q1;
+              if(x==0)
+              cnt--;
+          }
+          int ans = 1;
+          for(int i = 0 ; i < r ; i++)
+          {
+              for(int j = 0 ; j < c ;j++)
+              {
+                 // cout<<a[i][j]<<" ";
+                  if(a[i][j]==1)
+                  {
+                      ans = 0 ;
+                      break;
+                  }
+              }
+          }
+          if(ans == 0)
+          {
+              cout<<"-1"<<endl;
+          }else cout<<cnt<<endl;
+      }
