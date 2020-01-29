@@ -1,0 +1,32 @@
+**Given a Binary Search Tree and a target sum, write a function that returns true if there is a pair with sum equals to target sum, 
+otherwise return false**
+  
+  void funct(struct node *root, int *a, int &cnt, map<long long int, int> &mp)
+    {
+        if(root==NULL)
+        return;
+        a[cnt]=root->val;
+        cnt++;
+        mp[root->val]++;
+        funct(root->left,a,cnt,mp);
+        funct(root->right,a,cnt,mp);
+    }
+    bool isPairPresent(struct node *root, int target)
+    {
+        int a[100];
+        int cnt = 0;
+        map<long long int, int> mp;
+        funct(root,a,cnt,mp);
+        int ans = 0;
+        for(int i = 0 ; i < cnt ; i++)
+        {
+            mp[a[i]]--;
+            if(mp[target-a[i]]>=1)
+            {
+                ans = 1;
+                break;
+            }
+            mp[a[i]]++;
+        }
+       return ans ;
+    }
