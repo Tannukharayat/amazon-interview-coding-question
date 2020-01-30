@@ -1,0 +1,30 @@
+**Given weights and values related to n items and the maximum capacity allowed for these items. What is the maximum value we can achieve 
+if we can pick any weights any number of times for a total allowed weight of W? **
+
+      while(t--)
+      {
+          int n , w;
+          cin>>n>>w;
+          int val[n], weight[n];
+          for(int i = 0 ; i < n ; i++)
+          cin >> val[i];
+          for(int i = 0 ; i < n ; i++)
+          cin >> weight[i];
+          int dp[w+1][n+1];
+
+          for(int i = 0 ; i <= w ; i++)
+          {
+              for(int j = 0 ; j <= n ; j++)
+              {
+                  if(i==0||j==0)
+                  dp[i][j]=0;
+                  else if(i<weight[j-1])
+                  dp[i][j]=dp[i][j-1];
+                  else dp[i][j]=max(dp[i][j-1],val[j-1]+dp[i-weight[j-1]][j]);
+              }
+          }
+          cout<<dp[w][n]<<endl;
+      }
+
+
+
