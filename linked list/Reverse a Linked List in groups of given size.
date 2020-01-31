@@ -1,0 +1,26 @@
+**Given a linked list of size N. The task is to reverse every k nodes (where k is an input to the function) in the linked list.**
+
+    struct node *reverse (struct node *head, int k)
+    { 
+        node* prev=NULL, *temp=head;
+        while(temp!=NULL)
+        {
+            //cout<<temp->data<<" ";
+            node* first=temp, *last, *tmp_prev=NULL;
+            for(int i = 0 ; i < k&&temp!=NULL ; i++)
+            {
+                if(i==k-1||temp->next==NULL)
+                last=temp;
+                node* nxt=temp->next;
+                temp->next=tmp_prev;
+                tmp_prev=temp;
+                temp=nxt;
+            }
+            if(prev==NULL)
+            head=last;
+            else prev->next=last;
+            if(temp!=NULL)
+            prev=first;
+        }
+        return head;
+    }
