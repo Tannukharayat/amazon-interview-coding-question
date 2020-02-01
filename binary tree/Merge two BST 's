@@ -1,0 +1,107 @@
+**Given two BST, you need to print the elements of both BSTs in sorted form**
+ 
+void merge(Node *root1, Node *root2)
+        {
+            stack<Node*> s1; 
+            stack<Node*> s2;
+            Node *curr1 = root1, *curr2=root2; 
+             while (curr1 !=  NULL) 
+                    { 
+                        s1.push(curr1); 
+                        //cout<<curr1->data<<" ";
+                           curr1 = curr1->left; 
+                    } 
+                 // Node *curr2 = root2;
+                while (curr2 !=  NULL) 
+                    { 
+                        s2.push(curr2); 
+                        curr2 = curr2->left; 
+                    }
+                    curr1=s1.top();
+                    curr2=s2.top();
+             while(curr1&&curr2)
+                    {
+                        if(curr1->data<curr2->data)
+                        {
+                            cout<<curr1->data<<" ";
+                            s1.pop();
+                            curr1=curr1->right;
+                             while (curr1 !=  NULL) 
+                                        { 
+                                             s1.push(curr1); 
+                                            curr1 = curr1->left; 
+                                        } 
+                        }else if(curr1->data>curr2->data)
+                        {
+                            cout<<curr2->data<<" ";
+                            s2.pop();
+                            curr2=curr2->right;
+                             while (curr2 !=  NULL) 
+                                        { 
+                                             s2.push(curr2); 
+                                            curr2 = curr2->left; 
+                                        } 
+                        }else
+                        {
+                            cout<<curr1->data<<" "<<curr2->data<<" ";
+                            curr1=curr1->right;
+                            curr2=curr2->right;
+                            s1.pop();
+                            s2.pop();
+                             while (curr1 !=  NULL) 
+                                        { 
+                                             s1.push(curr1); 
+                                            curr1 = curr1->left; 
+                                        } 
+                             while (curr2 !=  NULL) 
+                                        { 
+                                             s2.push(curr2); 
+                                            curr2 = curr2->left; 
+                                        } 
+                        }
+                        if(!s1.empty())
+                        curr1=s1.top();
+                        if(!s2.empty())
+                        curr2=s2.top();
+                }
+                Node* curr;
+                if(!s1.empty())
+                {
+                    curr = s1.top();
+                    s1.pop();
+                    cout<<curr->data<<" ";
+                    curr=curr->right;
+                     while (curr != NULL || s1.empty() == false) 
+                    { 
+                        while (curr !=  NULL) 
+                        { 
+                            s1.push(curr); 
+                            curr = curr->left; 
+                        } 
+                         curr = s1.top(); 
+                        s1.pop(); 
+
+                        cout << curr->data << " "; 
+                         curr = curr->right; 
+                    }
+                }else if(!s2.empty())
+                {
+                    curr = s2.top();
+                    s2.pop();
+                    cout<<curr->data<<" ";
+                    curr=curr->right;
+                     while (curr != NULL || s2.empty() == false) 
+                    { 
+                        while (curr !=  NULL) 
+                        { 
+                            s2.push(curr); 
+                            curr = curr->left; 
+                        } 
+                         curr = s2.top(); 
+                        s2.pop(); 
+
+                        cout << curr->data << " "; 
+                         curr = curr->right; 
+                    }
+                }
+        }
