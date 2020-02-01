@@ -1,0 +1,54 @@
+**Given a binary tree, print the bottom view from left to right.
+A node is included in bottom view if it can be seen when we look at the tree from bottom.
+
+                      20
+                    /    \
+                  8       22
+                /   \        \
+              5      3       25
+                    /   \      
+                  10    14
+
+For the above tree, the bottom view is 5 10 3 14 25.
+If there are multiple bottom-most nodes for a horizontal distance from root, then print the later one in level traversal. For example, in the below diagram, 3 and 4 are both the bottommost nodes at horizontal distance 0, we need to print 4.
+
+                      20
+                    /    \
+                  8       22
+                /   \     /   \
+              5      3 4     25
+                     /    \      
+                 10       14
+For the above tree the output should be 5 10 4 14 25**
+
+
+      void bottomView(Node *root)
+      {
+          queue<pair<Node*,int> > q;
+          q.push({root,200});
+          int v[1000];
+          int k = 0 ;
+          int mx = 0 , mn = 10000 ;
+          while(!q.empty())
+          {
+              queue<pair<Node*,int> >q1;
+              while(!q.empty())
+              {
+                  pair<Node*,int> p;
+                  p=q.front();
+                  q.pop();
+                  mn=min(mn,p.second);
+                  mx=max(mx,p.second);
+                  v[p.second]=p.first->data;
+                  if(p.first->left!=NULL)
+                  q1.push({p.first->left,p.second-1});
+                  if(p.first->right!=NULL)
+                  q1.push({p.first->right,p.second+1});
+              }q=q1;
+          }
+          for(int i = mn ; i <= mx ; i++)
+          {
+              cout<<v[i]<<" ";
+          }
+      }
+
