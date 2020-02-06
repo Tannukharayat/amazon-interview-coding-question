@@ -1,0 +1,38 @@
+**Given a string, find the minimum number of characters to be inserted to convert it to palindrome**
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              string s , rev;
+              cin >> s ;
+              rev=s;
+              int dp[s.size()+1][s.size()+1]={0};
+              reverse(rev.begin(), rev.end());
+              for(int i = 0 ; i <= s.size() ; i++ )
+              {
+                  for(int j = 0 ; j <= s.size() ; j++ )
+                  {
+                      if(i==0||j==0)
+                      {
+                          dp[i][j]=0;
+                      }else
+                      {
+                          dp[i][j]=max(dp[i-1][j], dp[i][j-1]);
+                          if(s[i-1]==rev[j-1])
+                          dp[i][j]= max(dp[i][j],dp[i-1][j-1]+1);
+                      }
+                  }
+              }
+
+              if(s.size()-dp[s.size()][s.size()]==0)
+              {
+                  cout<<"0"<<endl;
+                  continue;
+              }
+              cout<<s.size()-dp[s.size()][s.size()]<<endl;
+          }
+          return 0;
+        }
