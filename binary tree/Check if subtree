@@ -1,6 +1,7 @@
 **Given two binary trees with head reference as T and S having at most N nodes. The task is to check if S is present as subtree in T.
 A subtree of a tree T1 is a tree T2 consisting of a node in T1 and all of its descendants in T1.**
 
+METHOD:1
   bool isSubTree(Node* T, Node* S) 
   {
       if(T==NULL&&S==NULL)
@@ -15,7 +16,7 @@ A subtree of a tree T1 is a tree T2 consisting of a node in T1 and all of its de
       return 0;
   }
   
-  
+  METHOD:2
   
   bool areIdentical(node * root1, node *root2)  
 {  
