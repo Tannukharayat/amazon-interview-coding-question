@@ -1,0 +1,25 @@
+**Given an array A of positive integers. Find the maximum sum of a subsequence such that no two numbers in the sequence should be adjacent 
+in the array**
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n ;
+              cin >> n ;
+              int a[n];
+              for(int i = 0 ; i < n ; i++ )
+              cin>>a[i];
+              int inc=a[0], exc=0;
+              for(int i = 1 ; i < n ; i++)
+              {
+                 int excc=max(inc,exc);
+                 inc=exc+a[i];
+                 exc=excc;
+              }
+              cout<<max(inc,exc)<<endl;
+          }
+          return 0;
+        }
