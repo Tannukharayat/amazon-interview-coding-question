@@ -1,0 +1,20 @@
+**Given a Binary search tree. Your task is to complete the function which will return the Kth largest element without doing any 
+modification in Binary Search Tree**
+
+        void funct(Node *root, int k , int &cnt)
+        {
+            if(root==NULL)
+            return ;
+            funct(root->right,k,cnt);
+            cnt++;
+            if(cnt==k)
+            {
+                cout<<root->key<<endl;
+                return ;
+            }funct(root->left,k,cnt);
+        }
+        void kthLargest(Node *root, int k)
+        {
+            int cnt = 0;
+            funct(root, k , cnt);
+        }
