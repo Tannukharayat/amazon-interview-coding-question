@@ -1,0 +1,52 @@
+**A number is called stepping number if all adjacent digits have an absolute difference of 1, e.g. '321' is a Stepping Number while 421 is 
+not. Given two integers n and m, find the count of all the stepping numbers in range [n, m]**
+
+
+        int funct(int n , int m , int  num)
+        {
+            int cnt = 0 ;
+            queue<int> q;
+            q.push(num);
+            while(!q.empty())
+            {
+                int num = q.front();
+               // cout<<num<<" "<<n<<" "<<m<<endl;
+                q.pop();
+                if(num>=n&&num<=m)
+                {
+                    cnt++;
+                  //  cout<<num<<" ";
+                }
+                if(num==0||num>m)
+                continue;
+                if(num%10>0)
+                {
+                    int num1 = num*10+((num%10)-1);
+                    q.push(num1);
+                }
+                if(num%10<9)
+                {
+                    int num2 = num*10+((num%10)+1);
+                    q.push(num2);
+                }
+            }
+            return cnt ;
+        }
+        int main() 
+{
+	int t ;
+	cin >> t ;
+	while(t--)
+	{
+	    int n , m ;
+	    cin >> n >> m ;
+	    int ans = 0;
+	    for( int i = 0 ; i <= 9 ; i++ )
+	    {
+	         ans+=funct(n,m,i);
+	        // cout<<"**";
+	    }
+	   cout<<ans<<endl;
+	}
+	return 0;
+}
