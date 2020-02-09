@@ -1,0 +1,26 @@
+**Given an array of size N that represents a Tree in such a way that array indexes are values in tree nodes and array values give the 
+parent node of that particular index (or node). The value of the root node index would always be -1 as there is no parent for root. 
+Construct the standard linked representation of Binary Tree from this array representation **
+
+        Node *createTree(int parent[], int n)
+        {
+            Node *np[n];
+            for(int i = 0 ; i < n ; i++)
+            {
+                np[i]=new Node(i);
+                np[i]->left=NULL;
+                np[i]->right=NULL;
+            }
+            Node* root;
+            for(int i = 0 ; i < n ; i++)
+            {
+                if(parent[i]==-1)
+                {
+                    root=np[i];
+                }else if(np[parent[i]]->left==NULL)
+                {
+                    np[parent[i]]->left=np[i];
+                }else np[parent[i]]->right=np[i];
+            }
+            return root;
+        }
