@@ -1,0 +1,38 @@
+**Given a list of non negative integers, arrange them in such a manner that they form the largest number possible.The result is going to 
+be very large, hence return the result in the form of a string ***
+
+Input:
+2
+5
+3 30 34 5 9
+4
+54 546 548 60
+
+Output:
+9534330
+6054854654
+
+          bool compare(string x, string y)
+          {
+              if(x+y>y+x)
+            return 1;
+            return 0;
+          }
+          int main() 
+          {
+              cin>>t;
+              for(int i=0;i<t;i++)
+              {
+                  cin>>n;
+                  string arr[n];
+                  for(int j=0;j<n;j++)
+                  {
+                      cin>>arr[j];
+                  }
+               sort(arr,arr+n,compare);   
+               for(int j=0;j<n;j++)
+               cout<<arr[j];
+               cout<<endl;
+              }
+            return 0;
+          }
