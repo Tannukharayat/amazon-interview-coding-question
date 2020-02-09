@@ -1,0 +1,32 @@
+**Given K sorted linked lists of different sizes. The task is to merge them in such a way that after merging they will be a single sorted 
+linked list.**
+
+          Node * mergeKLists(Node *arr[], int N)
+          {
+                priority_queue<pair<int, Node*>, vector<pair<int, Node*> > , greater<pair<int, Node*> > >pq;
+                for(int i = 0 ; i < N ; i++)
+                {
+                    pq.push({arr[i]->data,arr[i]->next});
+                }
+                Node* temp, *head=NULL;
+                while(!pq.empty())
+                {
+                    pair<int, Node*> p=pq.top();
+                    pq.pop();
+                    Node *np=new Node(p.first);
+                    if(head==NULL)
+                    {
+                        head=temp=np;
+                    }else
+                    {
+                        temp->next=np;
+                        temp=np;
+                    }
+                    if(p.second!=NULL)
+                    {
+                        pq.push({p.second->data,p.second->next});
+                    }
+                }
+                return head;    
+          }
+
