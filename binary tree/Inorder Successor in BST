@@ -1,0 +1,32 @@
+**Given a BST,  and a reference to a Node x the task is to find the Inorder Successor of the node .**
+
+      void funct(Node *root, Node *&x , int &ans )
+      {
+          if(root==NULL)
+          return ;
+          funct(root->left, x, ans);
+           if(ans == 1)
+          {
+              x=root;
+              ans = 2;
+              return ;
+          }
+          if(root==x)
+          {
+              ans = 1;
+          }
+
+          if(ans == 2)
+          return;
+          funct(root->right, x, ans);
+      }
+      Node * inOrderSuccessor(Node *root, Node *x)
+      {
+         int ans = 0 ;
+         Node* y = x;
+         funct(root,x,ans);
+         if(x==y)
+
+         return NULL;
+         return x;
+      }
