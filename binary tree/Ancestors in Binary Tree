@@ -1,0 +1,32 @@
+Given a Binary Tree and a target key, your task is to complete the function printAncestors() that prints all the ancestors of the key in 
+the given binary tree.
+
+        void funct(struct Node *root, int &flag,int target, int h[])
+        {
+            if(root==NULL||flag==1)
+            return;
+            funct(root->left,flag,target,h);
+            if(flag==1&&h[root->data]==0&&root->data!=target)
+            {
+                cout<<root->data<<" ";
+                h[root->data]=1;
+            }
+            if(root->data==target)
+            {
+                flag=1;
+            }
+            funct(root->right,flag,target,h);
+            if(flag==1&&h[root->data]==0&&root->data!=target)
+            {
+                cout<<root->data<<" ";
+                h[root->data]=1;
+            }
+        }
+        bool printAncestors(struct Node *root, int target)
+        {
+             int flag = 0;
+             int h[100001]={0};
+             funct(root,flag,target, h);
+             cout<<endl;
+              return 1;
+        }
