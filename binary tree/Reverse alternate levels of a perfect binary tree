@@ -1,0 +1,42 @@
+**Write a function to reverse alternate levels  of a perfect binary tree.**
+
+Given tree: 
+               a
+            /     \
+           b       c
+         /  \     /  \
+        d    e    f    g
+       / \  / \  / \  / \
+       h  i j  k l  m  n  o 
+
+Modified tree:
+             a
+            /     \
+           c       b
+         /  \     /  \
+        d    e    f    g
+       / \  / \  / \  / \
+      o  n m  l k  j  i  h
+      
+      
+      
+          void funct(Node *rt1, Node *rt2,int l)
+          {
+              if(rt1==NULL && rt2==NULL)
+              {
+                  return;
+              }
+              if(l%2!=0)
+              {
+              int tmp=rt1->data;
+              rt1->data=rt2->data;
+              rt2->data=tmp;
+              }
+              l++;
+              funct(rt1->left, rt2->right, l);
+              funct(rt1->right, rt2->left , l);
+          }
+          void reverseAlternate(Node *root)
+          {
+              funct(root->left, root->right, 1);
+          }
