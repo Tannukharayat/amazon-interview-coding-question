@@ -1,0 +1,24 @@
+**The hiring team of Google aims to find 3 candidates who are great collectively. Each candidate has his or her ability expressed as an 
+integer. 3 candidates are great collectively if product of their abilities is maximum. Given abilities of N candidates, find the maximum 
+collective ability from the given pool of candidates***
+
+      int main() 
+      {
+        int t;
+        cin >> t;
+        while(t--)
+        {
+            long long int n , ans1 , ans2;
+            cin >> n ;
+            long long int a[n];
+            for(int i = 0 ; i < n ; i++)
+            {
+                cin >> a[i];
+            }
+            sort(a,a+n);
+            ans1=a[0]*a[1]*a[n-1];
+            ans2=a[n-1]*a[n-2]*a[n-3];
+            cout<<max(ans1,ans2)<<endl;
+        }
+        return 0;
+      }
