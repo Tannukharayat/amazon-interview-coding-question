@@ -1,0 +1,42 @@
+***Given inorder and postorder traversals of a Binary Tree in the arrays in[] and post[] respectively. The task is to construct the binary 
+tree from these traversals.
+For example, if given inorder and postorder traversals are {4, 8, 2, 5, 1, 6, 3, 7} and {8, 4, 5, 2, 6, 7, 3, 1}  respectively, then your 
+function should construct below tree.
+
+          1
+       /      \
+     2        3
+   /    \     /  \
+  4     5   6    7
+    \
+      8
+      
+      
+      int search(int arr[], int strt, int end, int value) 
+        { 
+            int i; 
+            for (i = strt; i <= end; i++) { 
+                if (arr[i] == value) 
+                    break; 
+            } 
+            return i; 
+        }
+        Node *build(int in[] , int post[] , int st , int end , int &index)
+        {
+            if(st>end)
+            return NULL;
+            Node *np=new Node(post[index]);
+            index--;
+            if(st==end)
+            return np;
+            int root=search(in,st,end,np->data);
+            np->right=build(in,post,root+1,end,index);
+            np->left=build(in,post,st,root-1,index);
+            return np;
+        }
+        Node *buildTree(int in[], int post[], int n)
+        {
+            int x = n-1;
+            Node *npp=build(in,post,0,n-1,x);
+            return npp;
+        }
