@@ -1,0 +1,47 @@
+**Given a gold mine (M) of n*m dimensions. Each field in this mine contains a positive integer which is the amount of gold in tons. 
+Initially the miner is at first column but can be at any row. He can move only (right->,right up /,right down\) that is from a given cell, 
+the miner can move to the cell diagonally up towards the right or right or diagonally down towards the right. Your task is to find out 
+maximum amount of gold which he can collect.***
+
+        int main() 
+        {
+          int t, n, m;
+          cin >> t;
+          while( t-- )
+          {
+               cin >> n >> m;
+               int arr[n][m];
+               for(int i = 0; i < n; i++)
+               {
+                   for(int j = 0; j < m; j++)
+                   {
+                       cin >> arr[i][j];
+                   }
+               }
+               int ans = 0, right, right_up, right_down;
+               for(int i = m-1 ; i >=0 ; i--)
+               {
+                   for(int j = 0 ; j < n ; j++ )
+                   {
+                       if(j==0||i==m-1)
+                       {
+                                right_up=0;
+                       }else right_up=arr[j-1][i+1];
+                       if(i==m-1||j==n-1)
+                       {
+                           right_down=0;
+                       }else right_down=arr[j+1][i+1];
+                       if(i==m-1)
+                       {
+                           right=0;
+                       }else right=arr[j][i+1];
+                       arr[j][i]=arr[j][i]+max(right,max(right_up,right_down));
+                   }
+               }
+               for(int i = 0 ; i < n ;i++)
+               {
+                   ans = max(ans, arr[i][0]);
+               }cout<<ans<<endl;
+          }
+          return 0;
+        }
