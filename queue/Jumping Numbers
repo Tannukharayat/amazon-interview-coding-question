@@ -1,0 +1,49 @@
+**Given a positive number X. Find all Jumping Numbers smaller than or equal to X. 
+Jumping Number: A number is called Jumping Number if all adjacent digits in it differ by only 1. All single digit numbers are considered as
+Jumping Numbers. For example 7, 8987 and 4343456 are Jumping numbers but 796 and 89098 are not.**
+
+        void funct(int st, int num , vector<int> &v)
+        {
+           queue<int> q;
+           q.push(st);
+           while(!q.empty())
+           {
+                int x = q.front();
+                q.pop();
+                if(x<=num)
+                {
+                    v.push_back(x);
+                    int y=x%10;
+                    if(y-1>=0)
+                    {
+                        q.push(x*10+(y-1));
+                    }
+                    if(y+1<=9)
+                    {
+                        q.push(x*10+(y+1));
+                    }
+                }
+           }
+        }
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n ;
+              cin >> n ;
+              vector<int> v;
+              for(int i = 1 ; i <= 9 ; i++)
+              {
+                  funct(i, n , v);
+              }
+              v.push_back(0);
+              sort(v.begin(), v.end());
+              for(int i = 0 ; i < v .size() ; i++)
+              {
+                  cout<<v[i]<<" ";
+              }cout<<endl;
+          }
+          return 0;
+        }
