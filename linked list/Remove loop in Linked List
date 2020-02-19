@@ -1,0 +1,27 @@
+**You are given a linked list of N nodes. The task is to remove the loop from the linked list, if present.****
+
+
+    void removeTheLoop(Node *head)
+    {
+        Node *tmp=head;
+         Node *slow=head->next, *fst=head->next->next;
+         while(fst!=NULL&&fst->next!=NULL)
+         {
+             if(fst==slow)
+             {
+                 break;
+             }
+             fst=fst->next->next;
+             slow=slow->next;
+         }
+         if(fst==slow)
+         {
+             slow=head;
+             while(slow->next!=fst->next)
+             {
+                 slow=slow->next;
+                 fst=fst->next;
+             }
+             fst->next=NULL;
+         }
+    }
