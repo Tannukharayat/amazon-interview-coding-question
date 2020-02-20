@@ -1,0 +1,53 @@
+**Given a string S, find the longest palindromic substring in S. Substring of string S: S[ i . . . . j ] where 0 ≤ i ≤ j < len(S). 
+Palindrome string: A string which reads the same backwards. More formally, S is palindrome if reverse(S) = S. Incase of conflict, return 
+the substring which occurs first ( with the least starting index ).**
+
+        string longestPalindrome(string A) 
+        {
+           int n = A.length();
+           int dp[n+1][n+1]={0};
+           for(int i = 0 ; i < n ; i++)
+           dp[i][i] = 1 ;
+           int start = -1, end = -1 , mx = 0 ;
+           string st="";
+           for(int k = 1 ; k <= n-1 ; k++ )
+           {
+               for(int i = 0 ; i+k < n ; i++)
+               {
+                   if(k==1)
+                   {
+                       if(A[i]==A[i+k])
+                       {
+                           dp[i][i+k]=1;
+                       }else dp[i][i+k]=0;
+                   }else 
+                   {
+                       if(A[i]==A[i+k]&&dp[i+1][i+k-1]==1)
+                       {
+                           dp[i][i+k]=1;
+                       }else dp[i][i+k]=0;
+                   }
+               }
+           }
+           for(int i = 0 ; i < n ; i++)
+           {
+               for(int j = 0 ; j  < n  ; j++)
+               {
+                   if(mx<(j-i+1)&&dp[i][j]==1)
+                       {
+                           mx = j-i+1;
+                           start = i;
+                           end = j;
+                       }
+             }
+         }
+         if(start!=-1&&end!=-1)
+         {
+         for(int i = start ; i <= end ; i++)
+         {
+             st+=A[i];
+         }
+         }
+        // cout<<st<<endl;
+         return st;
+      }
