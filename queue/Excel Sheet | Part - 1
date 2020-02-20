@@ -1,0 +1,29 @@
+**Given a positive integer N, print its corresponding column title as it would appear in an Excel sheet.
+For N =1 we have column A, for 27 we have AA and so on.**
+
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while(t--)
+        {
+                int n ;
+                cin >> n ;
+                string str="";
+                while(n>0)
+                {
+                    if(n%26!=0)
+                    {
+                        str+=((n%26-1)+'A');
+                        n=n/26;
+                    }else
+                    {
+                        str+='Z';
+                        n=n/26-1;
+                    }
+                }
+               reverse(str.begin(),str.end());
+                cout<<str<<endl;
+        }
+        return 0;
+      }
