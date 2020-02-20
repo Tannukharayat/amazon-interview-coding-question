@@ -1,0 +1,29 @@
+**Given two linked lists, your task is to complete the function mergeList() which inserts nodes of second list into first list at alternate
+positions of first list.**
+
+      void mergeList(struct Node **p, struct Node **q)
+      {
+          int k = 0 ;
+          struct Node *t1=(*p), *t2 = (*q);
+          while(t1!=NULL&&t2!=NULL)
+          {
+                Node *np;
+                  if(t2->next==NULL)
+                  np=NULL;
+                  else np=t2->next;
+                  if(t1->next==NULL)
+                  t2->next=NULL;
+                  else
+                  t2->next=t1->next;
+                  t1->next=t2;
+                  t1=t2->next;
+                  t2=np;
+
+          }
+
+
+         if(t2!=NULL)
+          {
+              (*q)=t2;
+          }else (*q)=NULL;
+      }
