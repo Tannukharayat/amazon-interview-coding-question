@@ -1,0 +1,33 @@
+**Given a Binary Tree find the length of the longest path which comprises of nodes with consecutive values in increasing order. Every node
+is considered as a path of length 1.**
+
+          void funct(Node *root, int p, int cnt , int &ans)
+          {
+
+              if(root==NULL)
+              {
+                  ans = max(ans, cnt);
+                  return ;
+              }
+             //cout<<p<<" "<<root->data<<endl;
+              if((p!=-1&&root->data==p+1)||(p==-1))
+              {
+                  cnt++;
+                  p=root->data;
+              }else
+              {
+                  ans=max(ans,cnt);
+                  p=root->data;
+                  cnt = 1 ;
+              }
+              funct(root->left, p , cnt , ans);
+              funct(root->right, p , cnt , ans);
+          }
+          int longestConsecutive(Node* root)
+          {
+              int ans =  0 ;
+               funct(root, -1, 0 , ans);
+               if(ans ==0||ans==1)
+               ans = -1;
+               return ans;
+          }
