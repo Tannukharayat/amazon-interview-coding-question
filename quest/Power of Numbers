@@ -1,0 +1,39 @@
+**Given a number N, let the reverse of the number be R. The task is to print the output of the Expression pow(N,R), where pow function represents N raised to power R.
+Note: As answers can be very large, print the result modulo 1000000007.**
+
+        int mod = 1000000007;
+        //Modular Exponentiation (Power in Modular Arithmetic)
+        long long int powerr(long long int n , unsigned long long int r)
+        {
+            long long int res=1;
+            while(r>0)
+            {
+                if(r%2!=0)
+                res=((res%mod)*(n%mod))%mod;
+                r=r/2;
+                n=(n%mod)*(n%mod);
+            }
+            return res;
+        }
+        int main() 
+        {
+            int t ;
+            cin >> t ;
+            while(t--)
+            {
+                long long int n , x ,ans = 1;
+                cin >> n ;
+                x=n;
+                ans=n%10;
+                n=n/10;
+                while(n>0)
+                {
+                    ans=ans*10+(n%10);
+                    n=n/10;
+                }
+                //cout<<ans<<endl;
+                cout<<powerr(x,ans)<<endl;
+
+            }
+          return 0;
+        }
