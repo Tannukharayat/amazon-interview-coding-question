@@ -1,0 +1,45 @@
+**In this problem, a String S is composed of lowercase alphabets and wildcard characters i.e. '?'. Here, '?' can be replaced by any of the 
+lowercase alphabets. Now you have to classify the given String on the basis of following rules:
+If there are more than 3 consonants together or more than 5 vowels together, the String is considered to be "BAD". A String is considered 
+"GOOD" only if it is not “BAD”.****
+
+        bool isvowel(char s)
+        {
+            if(s=='a'||s=='e'||s=='i'||s=='o'||s=='u')
+            return 1;
+            return 0;
+        }
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              string s ;
+              cin >> s ;
+              int x = 0 , c = 0 , v = 0 , ans = 1;
+              for(int i = 0 ; i < s.length() ; i++)
+              {
+                  if(s[i]=='?')
+                  {
+                      c++;
+                      v++;
+                  }else if(isvowel(s[i]))
+                  {
+                      v++;
+                      c=0;
+                  }else
+                  {
+                      c++;
+                      v=0;
+                  }
+                  if(c>3||v>5)
+                  {
+                      ans = 0 ;
+                      break;
+                  }
+              }
+              cout<<ans<<endl;
+          }
+          return 0;
+        }
