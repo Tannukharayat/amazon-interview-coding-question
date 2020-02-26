@@ -1,0 +1,40 @@
+**Given a positive integer n, generate all possible unique ways to represent n as sum of positive integers. The output should be printed in
+lexicographically decreasing order partitions.  For example, if given number is 52, then 52 itself should be printed first, then 51 1, then
+50 2,  ... and at the end partition with all 1s.**
+
+        void funct(int n , int num , vector<int> v , vector<int> &ans)
+        {
+            if(n==0)
+            {
+                if(v.size()>0)
+                sort(v.begin(), v.end());
+                for(int i = v.size()-1 ; i >= 0 ; i--)
+                {
+                    ans.push_back(v[i]);
+                }return;
+            }
+             if(num<=0||n<0)
+            return;
+            v.push_back(num);
+            funct(n-num,num,v,ans);
+            v.pop_back();
+            funct(n,num-1,v,ans);
+
+        }
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n ;
+              cin >> n ;
+              vector<int> v, ans;
+              funct(n,n,v,ans);
+              for(int i = 0 ; i < ans.size() ; i++)
+              {
+                  cout<<ans[i]<<" ";
+              }cout<<endl;
+          }
+          return 0;
+        }
