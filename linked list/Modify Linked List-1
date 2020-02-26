@@ -1,0 +1,29 @@
+**Given a singly linked list containing N nodes. Modify the value of first half nodes such that 1st node’s new value is equal to the last 
+node’s value minus first node’s current value, 2nd node’s new value is equal to the second last node’s value minus 2nd node’s current value
+, likewise for first half nodes. If n is odd then the value of the middle node remains unchanged.
+Note: Input in the linked list is like new node will be entered at the head position (1st position).**
+
+        void funct(struct Node *&head,struct Node *&temp, int&c)
+        {
+            if(temp==NULL)
+            return;
+           funct(head,temp->next,c);
+           if(temp->next==head||head==temp)
+           c=1;
+           if(head!=temp)
+           {
+            if(c==0)
+                {
+                    head->data=-temp->data+head->data;
+                }
+           }
+            head=head->next;
+
+        }
+        struct Node* modifyTheList(struct Node *h)
+        {
+            Node* head=h, *temp=h;
+            int  c=0;
+           funct(head,temp,c);
+           return h;
+        }
