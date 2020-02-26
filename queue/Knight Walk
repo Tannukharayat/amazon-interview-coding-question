@@ -1,0 +1,69 @@
+**Given a chess board of order N x M and source points (s1, s2) and destination points (d1, d2). The task to find minimum number of moves 
+required by the Knight to go to the destination cell.**
+
+          int main() 
+          {
+              int t ;
+              cin >> t ;
+              while(t--)
+              {
+                  int n , m , x1, y1, x2, y2;
+                  cin >> n >> m >> x1>> y1>>x2 >> y2;
+                  queue<pair<pair<int,int> , int> > q;
+                  pair<pair<int,int>, int>p;
+                  q.push({{x1,y1},0});
+                  int dp[100][100]={0};
+                  int vis[100][100]={0};
+                  int ans = 0 ;
+                  while(!q.empty())
+                  {
+                   p=q.front();
+                      q.pop();
+                     dp[p.first.first][p.first.second]=p.second;
+                     vis[p.first.first][p.first.second]=1;
+                      if(p.first.first==x2&&p.first.second==y2)
+                      {
+                          ans =1 ;
+                          break;
+                      } p.second++;
+                      if(dp[p.first.first+2][p.first.second+1]==0&&p.first.first+2<=n&&p.first.second+1<=m&&vis[p.first.first+2][p.first.second+1]==0)
+                      {
+                          q.push({{p.first.first+2,p.first.second+1},p.second});
+                      }
+                      if(dp[p.first.first-2][p.first.second-1]==0&&p.first.first-2>0&&p.first.second-1>0&&vis[p.first.first-2][p.first.second-1]==0)
+                      {
+                          q.push({{p.first.first-2,p.first.second-1},p.second});
+
+                      }
+                      if(dp[p.first.first+1][p.first.second+2]==0&&p.first.first+1<=n&&p.first.second+2<=m&&vis[p.first.first+1][p.first.second+2]==0)
+                      {
+                          q.push({{p.first.first+1,p.first.second+2},p.second});
+
+                      }
+                      if(dp[p.first.first-1][p.first.second-2]==0&&p.first.first-1>0&&p.first.second-2>0&&vis[p.first.first-1][p.first.second-2]==0)
+                      {
+                          q.push({{p.first.first-1,p.first.second-2},p.second});
+
+                      }
+                      if(dp[p.first.first+2][p.first.second-1]==0&&p.first.first+2<=n&&p.first.second-1>0&&vis[p.first.first+2][p.first.second-1]==0)
+                      {
+                          q.push({{p.first.first+2,p.first.second-1},p.second});
+                      }
+                      if(dp[p.first.first-1][p.first.second+2]==0&&p.first.first-1>0&&p.first.second+2<=m&&vis[p.first.first-1][p.first.second+2]==0)
+                      {
+                          q.push({{p.first.first-1,p.first.second+2},p.second});
+                      }
+                      if(dp[p.first.first+1][p.first.second-2]==0&&p.first.first+1<=n&&p.first.second-2>0&&vis[p.first.first+1][p.first.second-2]==0)
+                      {
+                          q.push({{p.first.first+1,p.first.second-2},p.second});
+                      }
+                      if(dp[p.first.first-2][p.first.second+1]==0&&p.first.first-2>0&&p.first.second+1<=m&&vis[p.first.first-2][p.first.second+1]==0)
+                      {
+                          q.push({{p.first.first-2,p.first.second+1},p.second});
+                      }
+                  }if(ans==1)
+                  cout<<p.second<<endl;
+                  else cout<<"-1"<<endl;
+              }
+            return 0;
+          }
