@@ -3,6 +3,7 @@
 where the solutions are a permutation of [1,2,3..n] in increasing order, here the number in the ith place denotes that the ith-column queen
 is placed in the row with that number. For eg below figure represents a chessboard [3 1 4 2].**
 
+*************
           bool isvalid(int a[100][100], int r , int col)
           {
               for(int i = 0 ; i < col ; i++ )
@@ -83,3 +84,54 @@ is placed in the row with that number. For eg below figure represents a chessboa
             return 0;
           }
 
+***************
+
+                    void isqueen(int a[][100], int n ,int col, vector<int> v , int &ans, int row[100], int d1[100], int d2[100])
+                    {
+                        if(col>=n)
+                        {
+                            if(v.size()>0)
+                            ans=1;
+                            else return;
+                            cout<<"[";
+                            for(int i = 0 ; i < v.size() ; i++)
+                            {
+                                cout<<v[i]+1<<" ";
+                            }cout<<"] ";
+                            return ;
+                        }
+                        for(int i = 0 ; i < n ; i++)
+                        {
+                            if(row[i]==0&&d1[i+col]==0&&d2[(i-col+n)]==0)
+                            {
+                                a[i][col]=row[i]=d1[i+col]=d2[(i-col+n)]=1;
+                                v.push_back(i);
+                                isqueen(a,n,col+1,v,ans,row,d1,d2);
+                                v.pop_back();
+                                a[i][col]=row[i]=d1[i+col]=d2[(i-col+n)]=0;
+                            }
+                        }
+                        return ;
+                    }
+                    int main() 
+                    {
+                              int t ;
+                              cin >> t ;
+                              while(t--)
+                              {
+                                  int n ;
+                                  cin >> n ;
+                                  int a[100][100], row[100], d1[100], d2[100];
+                                  memset(a,0,sizeof(a));
+                                  memset(row,0,sizeof(row));
+                                  memset(d1,0,sizeof(d1));
+                                  memset(d2,0,sizeof(d2));
+                                  vector<int> v;
+                                  int ans = 0 ;
+                                  isqueen(a,n,0,v,ans,row,d1,d2);
+                                  if(ans==0)
+                                  cout<<"-1";
+                                  cout<<endl;
+                              }
+                              return 0;
+                    }
