@@ -1,0 +1,37 @@
+**Given an integer N denoting the Length of a line segment. you need to cut the line segment in such a way that the cut length of a line 
+segment each time is integer either x , y or z. and after performing all cutting operation the total number of cutted segments must be 
+maximum. **
+
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while ( t-- )
+          {
+              int n ;
+              cin >> n ;
+              int x , y , z ;
+              cin >> x >> y >> z;
+              int dp[n+1] = {0};
+               memset ( dp , 0 , sizeof(dp) );
+              dp[x] = dp[y] = dp[z] = 1;
+              for(int i = 1 ; i <= n ;i++ )
+              {
+                  if( (dp[i-x] > 0 && i-x > 0 ) )
+                  {
+                  dp[i] = max( dp[i] , dp[i-x] + 1 );
+                  }
+                  if( ( dp[i-y] > 0 && i-y > 0 )  )
+                  {
+                  dp[i] = max( dp[i] , dp[i-y] + 1 ) ;
+                  }
+                  if( ( dp[i-z] > 0 && i-z > 0) )
+                  {
+                  dp[i] = max( dp[i] , dp[i-z] + 1) ;
+                  }
+              }
+              cout << dp[n] << endl;
+          }
+          return 0;
+        }
