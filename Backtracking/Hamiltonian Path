@@ -62,3 +62,63 @@ task is to check if a Hamiltonian path is present in it or not.**--undirected an
           }
           return 0;
         }
+
+*******METHOD-2*********
+
+                        bool dfs(vector<int> graph[100], int vis[100], int pos, int n,int v)
+                        {
+                            v++;
+                            if(v==n)
+                            {
+                                return 1;
+                            }
+
+                           vis[pos]=1;
+                           for(int i = 0 ; i < graph[pos].size() ;i++)
+                           {
+                               if(vis[graph[pos][i]]==0)
+                               {
+                                   if(dfs(graph,vis,graph[pos][i], n, v)==1)
+                                   return 1;
+                               }
+                           }  v--;
+                           vis[pos]=0;
+                           return 0;
+                        }
+                        int main() 
+                        {
+                                int t ;
+                                cin >> t ;
+                                while(t--)
+                                {
+                                    int n , m ;
+                                    cin >> n >> m ;
+                                    vector<int> graph[100];
+                                    int vis[100]={0};
+                                    int a, b ,ans=0;
+                                    for(int j = 0 ; j < m ; j++)
+                                    {
+                                            cin >> a >> b;
+                                            a--;
+                                            b--;
+                                            graph[a].push_back(b);
+                                            graph[b].push_back(a);
+                                   }int cnt=0;
+                                   int v=0;
+                                    for(int i = 0 ; i < n ; i++)
+                                    {
+
+                                        vis[i]=1;
+                                        cnt=1;
+                                       if(dfs(graph,vis,i,n,v)==1)
+                                       {
+                                           ans=1;
+                                           break;
+                                       }
+
+                                       vis[i]=0;
+                                    }
+                                    cout<<ans<<endl;
+                                }
+                                return 0;
+                        }
