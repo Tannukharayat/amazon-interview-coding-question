@@ -1,0 +1,62 @@
+**Given a string, a partitioning of the string is a palindrome partitioning if every sub-string of the partition is a palindrome. For 
+example, “aba|b|bbabb|a|b|aba” is a palindrome partitioning of “ababbbabbababa”. Determine the fewest cuts needed for palindrome 
+partitioning of a given string. For example, minimum 3 cuts are needed for “ababbbabbababa”. The three cuts are “a|babbbab|b|ababa”**
+
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              string s;
+              cin >> s ;
+              int pal[s.length()+1][s.length()+1], part[s.length()+1];
+              for(int i = 0 ; i < s.length() ; i++)
+              {
+                  pal[i][i]=1;
+              }
+              for(int l = 2 ; l <= s.length() ; l++)
+              {
+                  for(int i = 0 ; i < s.length()-l+1 ; i++)
+                  {
+                      int j = i+l-1;
+                      if(l==2)
+                      {
+                          if(s[i]==s[j])
+                          {
+                              pal[i][j]=1;
+                          }else
+                          {
+                              pal[i][j]=0;
+                          }
+                      }else
+                      {
+                          if(s[i]==s[j]&&pal[i+1][j-1]==1)
+                          {
+                              pal[i][j]=1;
+                          }else pal[i][j]=0;
+                      }
+                  }
+              }
+              for(int i = 0 ; i < s.length() ; i++)
+              {
+                  if(pal[0][i]==1)
+                  {
+                      part[i]=0;
+                  }else
+                  {
+                      part[i]=10000;
+                          for(int k = 0 ; k < i ; k++)
+                          {
+                              if(pal[k+1][i]==1&&part[i]>part[k]+1)
+                              {
+                                  part[i]=min(part[i], part[k]+1);
+                              }
+                          }
+                  }
+              }
+              cout<<part[s.length()-1]<<endl;
+          }
+          return 0;
+        }
