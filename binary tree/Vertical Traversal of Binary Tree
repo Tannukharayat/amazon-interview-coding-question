@@ -1,0 +1,42 @@
+**You are given a binary tree for which you have to print its vertical order traversal. your task is to complete the function verticalOrder which takes one argument the root of the binary tree and prints the node of the binary tree in vertical order as shown below.
+If there are multiple nodes passing through a vertical line, then they should be printed as they appear in level order traversal.**
+
+      void verticalOrder(Node *root)
+      {
+          map<int,vector<int> >v; //for big value of n vector<int>[n] will give segmentation fault
+          queue<pair<Node*, int> >q;
+          q.push({root,5001});
+          int mn=INT_MAX, mx=0;
+          while(!q.empty())
+          {
+              queue<pair<Node*, int> >q1;
+              while(!q.empty())
+              {
+                  pair<Node*, int>p;
+                  p=q.front();
+                  q.pop();
+                  v[p.second].push_back(p.first->data);
+                  mn=min(mn,p.second);
+                  mx=max(mx,p.second);
+                  if(p.first->left!=NULL)
+                  {
+                      q1.push({p.first->left,p.second-1});
+                  }
+                  if(p.first->right!=NULL)
+                  {
+                      q1.push({p.first->right,p.second+1});
+                  }
+              }
+              q=q1;
+          }
+          for(int i=mn ; i <= mx ;i++)
+          {
+              for(int j=0;j<v[i].size();j++)
+              {
+                  cout<<v[i][j]<<" ";
+              }
+          }
+
+      }
+
+
