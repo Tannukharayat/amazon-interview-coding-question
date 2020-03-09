@@ -1,0 +1,52 @@
+**Given an input stream of N characters consisting only of lower case alphabets. The task is to find the first non repeating character, 
+each time a character is inserted to the stream. If no non repeating element is found print -1.**
+
+      for(int i=0;i<t;i++)
+            {
+                int n ; 
+                cin>>n;
+                queue<char> q;
+                map<char,int> mp;
+                char ch , uni  , invalid = '-1'; 
+                cin>>ch;
+                uni=ch;
+                mp[ch]++;
+                cout<<ch<<" ";
+                q.push(ch);
+                for(int j=1;j<n;j++)
+                {
+                    cin>>ch;
+                    int c=0;
+                    mp[ch]++;
+                    if(mp[ch]==1)
+                        q.push(ch);
+                    if(mp[uni] == 1&&uni!=invalid)
+                    {
+                       cout<<uni<<" ";
+                       c=1;
+                    }
+                    else 
+                    {
+                        while(!q.empty() and mp[q.front()]>1)
+                        {
+                            q.pop();
+                        }
+                        if(!q.empty())
+                        {
+                            uni=q.front();
+                            cout<<uni<<" ";
+                            c=1;
+                        }
+                        else
+                        {
+                            uni=invalid;
+                            cout<<"-1 ";
+                           c=1;
+                        }
+                    }
+                    if(c==0)
+                    cout<<"-1 ";
+                }
+                cout<<endl;
+        }
+
