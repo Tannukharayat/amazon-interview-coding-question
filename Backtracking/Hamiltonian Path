@@ -1,0 +1,64 @@
+**A Hamiltonian path, is a path in an undirected or directed graph that visits each vertex exactly once. Given an undirected graph  the 
+task is to check if a Hamiltonian path is present in it or not.**--undirected and first vertex npt included
+
+        bool issafe(int graph[100][100], int path[] , int v, int pos)
+        {
+            if(graph[path[pos-1]][v]==0)
+            return 0;
+            for(int i = 0 ; i < pos ; i++)
+            {
+                if(path[i]==v)
+                return 0;
+            }
+            return 1;
+        }
+        bool hamcycle(int graph[100][100], int path[],int pos, int V)
+        {
+            if(pos==V)
+            {
+                 return 1;
+            }
+            for(int ij = 0 ; ij < V ; ij++)
+            {
+                if(issafe(graph,path,ij, pos))
+                {
+                    path[pos]=ij;
+                    if(hamcycle(graph,path,pos+1,V)==1)
+                    return 1;
+                    path[pos]=-1;
+                }
+            }return 0;
+        }
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n , m ;
+              cin >> n >> m ;
+              int graph[100][100]={0};
+              int path[n];
+              int a, b ,ans=0;
+              memset(path,-1,sizeof(path));
+              for(int j = 0 ; j < m ; j++)
+              {
+                      cin >> a >> b;
+                      a--;
+                      b--;
+                      graph[a][b] = 1;
+                      graph[b][a] =1 ;
+             }
+              for(int i = 0 ; i < n ; i++)
+              {
+                  path[0]=i;
+                  if(hamcycle(graph,path,1,n)==1)
+                  {
+                     ans=1;
+                      break;
+                  }
+              }
+              cout<<ans<<endl;
+          }
+          return 0;
+        }
