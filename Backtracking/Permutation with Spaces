@@ -1,0 +1,43 @@
+**Given a string you need to print all possible strings that can be made by placing spaces (zero or one) in between them. Output should 
+be printed in sorted increasing order of strings.
+
+Input:  str[] = "ABC"
+Output: (A B C)(A BC)(AB C)(ABC) ****
+
+
+      void funct(string s, char str[],int i, int j, vector<string> &v)
+      {
+          if(i==s.length())
+          {
+              str[j]='\0';
+             v.push_back(str);
+              return;
+          }
+              str[j]=s[i];
+              funct(s,str,i+1,j+1,v);
+              str[j]=' ';
+              str[j+1]=s[i];
+              funct(s,str,i+1,j+2,v);
+      }
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while(t--)
+        {
+            string s;
+            cin >> s ;
+            vector<string> v;
+            char str[100];
+            str[0]=s[0];
+            funct(s,str,1,1,v);
+           sort(v.begin(), v.end());
+            for(int i= 0 ; i < v.size() ; i++)
+            {
+                 cout<<"(";
+                cout<<v[i];
+                cout<<")";
+            }cout<<endl;
+        }
+        return 0;
+      }
