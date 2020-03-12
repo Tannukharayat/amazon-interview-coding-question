@@ -1,0 +1,51 @@
+**Given a matrix your task is to find the kth element which is obtained while traversing the matrix spirally. You need to complete the 
+method findK which takes four arguments the first argument is the matrix A and the next two arguments will be n and m denoting the size 
+of the matrix A and then the forth argument is an integer  k denoting the kth element . The function will return the kth element 
+obtained while traversing the matrix spirally.***
+
+
+      int findK(int a[MAX][MAX], int n, int m, int kl)
+      {
+          int i = 0 , j = 0 , size=2*m+2*n-4 , N=n, M=m, size1, size2;
+          while(kl>size)
+          {
+              kl-=size;
+              n-=2;
+              m-=2;
+          }
+
+          size1=n;
+          size2=m;
+          n=(N-n)/2;
+          m=(M-m)/2;
+
+          for(int i = 0 ; i < size2 ; i++)
+          {
+              kl--;
+             //cout<<a[n][i+m]<<" ";
+              if(kl==0)
+              return a[n][i+m];
+          }
+          for(int i = 1 ; i < size1 ; i++)
+          {
+              kl--;
+              if(kl==0)
+              return a[i+n][m+size2-1];
+          }
+          if(size1>1)
+          {
+              for(int i = size2-2 ; i >= 0 ; i--)
+              {
+                  kl--;
+                  if(kl==0)
+                  return a[n+size1-1][i+m];
+              }
+          }
+          for(int i = size1-2 ; i >= 0 ; i--)
+          {
+              kl--;
+              if(kl==0)
+              return a[n+i][m];
+          }
+      }
+
