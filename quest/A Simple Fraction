@@ -1,0 +1,70 @@
+**Given a fraction. Convert it into a decimal. So simple :P
+
+eg.
+10/2 = 5
+3/5 = 0.6
+
+(The Question Begins Now)  :D
+If the decimals are repeating recursively, then enclose them inside  ().
+
+eg.
+8/3 = 2.(6)
+
+as 8/3 = 2.66666666.......  infinitly**
+
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int a , b , point1 , cnt = 0;
+              cin >> a >> b ;
+              cout<<a/b;
+              a=a%b;
+              vector<int> v;
+              int mp[10001]={0}, mp1[10001]={0};
+              int ans=-1;
+              while(a>0)
+              {
+                  if(mp[a]==1)
+                  {
+                      ans=1;
+                     cnt++;
+                  }else if(mp[a]==2)
+                  {
+                      break;
+                  }
+                //  cout<<a<<" "<<(a*10)/b<<endl;
+                  mp1[(a*10)/b]++;
+                  mp[a]++;
+                  if(mp[a]==1)
+                  v.push_back((a*10)/b);
+                  a=(a*10)%b;
+              }
+              if(v.size()==0)
+              {
+                  cout<<endl;
+                  continue;
+              }
+              cout<<".";
+              int i = 0 ;
+              while(i<v.size()-cnt)
+              {
+                  cout<<v[i];
+                  i++;
+              }if(i==v.size())
+              {cout<<endl;
+              continue;
+              }
+              cout<<"(";
+              while(i<v.size())
+              {
+                  cout<<v[i];
+                  i++;
+              }cout<<")";
+              cout<<endl;
+          }
+          return 0;
+        }
