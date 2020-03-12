@@ -1,0 +1,114 @@
+**Given two numbers represented by two linked lists of size N and M. The task is to return a sum list. The sum list which is a linked 
+list representation of addition of two input numbers.**
+
+Input:
+2
+2
+4 5
+3
+3 4 5
+2
+6 3
+1
+7
+
+Output:
+0 9 3 
+0 7
+
+      int add(Node *first,Node *second,int &c,vector<int>&v)
+      {
+          if(first->next!=NULL&&second->next!=NULL)
+          add(first->next,second->next,c,v);
+          else
+          if(first->next!=NULL)
+          add(first->next,second,c,v);
+          else if(second->next!=NULL)
+          add(first,second->next,c,v);
+          int sum=first->data+second->data+c;
+          v.push_back(sum%10);
+          c=sum/10;
+      }
+      int sizee(Node* node)
+      {
+          int cnt=0;
+          while(node!=NULL)
+          {
+              node=node->next;
+              cnt++;
+          }
+          return cnt;
+      }
+      int same_size(Node** first,int diff)
+      {
+          for(int i=0;i<diff;i++)
+          {
+              (*first)=(*first)->next;
+          }
+      }
+      int add_remaining(Node *first,int s,int &c,vector<int>&v)
+      {
+          for(int i=0;i<s-1;i++)
+          add_remaining(first->next,s,c,v);
+          int sum=first->data+c;
+          v.push_back(sum%10);
+          c=sum/10;
+      }
+      Node* addTwoLists(Node* first, Node* second) 
+      {
+          int c=0,sum;
+          Node *result=NULL,*tmp= NULL;
+          while(first!=NULL&&second!=NULL)
+          {
+              sum=first->data+second->data+c;
+              Node* np=new Node(sum%10);
+              c=sum/10;
+              if(result==NULL)
+              {
+                  result=tmp=np;
+              }else
+              {
+                  tmp->next=np;
+                  tmp=tmp->next;
+              }
+              first=first->next;
+              second=second->next;
+          }
+          while(first!=NULL)
+          {
+               sum=first->data+c;
+              Node* np=new Node(sum%10);
+              c=sum/10;
+              if(result==NULL)
+              {
+                  result=tmp=np;
+              }else
+              {
+                  tmp->next=np;
+                  tmp=tmp->next;
+              }
+              first=first->next;
+          }
+          while(second!=NULL)
+          {
+               sum=second->data+c;
+              Node* np=new Node(sum%10);
+              c=sum/10;
+              if(result==NULL)
+              {
+                  result=tmp=np;
+              }else
+              {
+                  tmp->next=np;
+                  tmp=tmp->next;
+              }
+              second=second->next;
+          }
+          if(c==1)
+          {
+                   Node* np=new Node(1);
+                   tmp->next=np;
+          }
+
+          return result;
+      }
