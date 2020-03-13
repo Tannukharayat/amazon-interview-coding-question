@@ -1,0 +1,45 @@
+**Determine the row index with minimum number of ones. The given 2D matrix has only zeroes and ones and also the matrix is sorted row wise.
+If two or more rows have same number of 1's than print the row with smallest index.**
+
+    int main() 
+    {
+        int t;
+        cin>>t ;
+        while(t--)
+        {
+            int n , m ;
+            cin >> n >> m ;
+            int a[n][m];
+            for(int i = 0 ; i < n ; i++)
+            {
+                for(int j =0 ; j < m ; j++)
+                {
+                    cin >> a[i][j];
+                }
+            }
+            int mx = m+1, index=-1;
+            for(int i = 0 ; i < n ; i++)
+            {
+                int l=0, high=m;
+                while(l<high)
+                {
+                    int mid = l + (high - l) / 2;
+                    if(a[i][mid]==1)
+                    {
+                        high=mid;
+                    }else l=mid+1;
+                }
+                if(m-l<mx&&l!=m)
+                {
+                    index=i;
+                    mx=m-l;
+                }
+            }
+           // cout<<l<<" "<<mx<<endl;
+            if(mx==0)
+            cout<<"-1"<<endl;
+            else cout<<index<<endl;
+        }
+      return 0;
+    }
+
