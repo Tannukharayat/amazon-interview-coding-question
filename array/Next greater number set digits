@@ -1,0 +1,39 @@
+**Given a number n, find the smallest number that has same set of digits as n and is greater than n. If x is the greatest possible number 
+with its set of digits, then print “not possible”.**
+
+
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while(t--)
+        {
+            string s, s1;
+            cin >> s;
+            s1=s;
+            for(int i=s.length()-2 ; i >=0 ; i--)
+            {
+                int mx=i;
+                for(int j = i+1 ; j < s.length() ; j++)
+                {
+                    if((mx==i&&s[j]>s[i])||(mx!=i&&s[j]<s[mx]&&s[j]>s[i]))
+                    {
+                        mx=j;
+                    }
+                }
+                if(mx!=i)
+                {
+                    char tmp=s[i];
+                    s[i]=s[mx];
+                    s[mx]=tmp;
+                        sort(s.begin()+i+1,s.end());
+                      break;
+                }
+            }
+            if(s1==s)
+            {
+                cout<<"not possible"<<endl;
+            }else cout<<s<<endl;
+        }
+        return 0;
+      }
