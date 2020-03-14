@@ -1,0 +1,63 @@
+**Given a number, in the form of an array a[] containing digits from 1 to 9(inclusive). The task is to find the next smallest palindrome 
+larger than this number.**
+
+
+        int main() 
+        {
+          cin>>t;
+          for(int i=0;i<t;i++)
+          {
+              cin>>n;
+              vector<int> v;
+              long long int a[n];
+              for(int j=0;j<n;j++)
+              cin>>a[j];
+              for(int j=0;j<(n+1)/2;j++)
+              {
+                  v.push_back(a[j]);
+              }
+              for(int j=n/2-1;j>=0;j--)
+              {
+                  v.push_back(v[j]);
+              }
+              int ans=0;
+              for(int j=0;j<n;j++)
+              {
+                  if(v[j]>a[j])
+                  {
+                       for(int jq=0;jq<n;jq++)
+                           cout<<v[jq]<<" ";
+                           ans=1;
+                           cout<<endl;
+                           break;
+                  }else 
+                  if(v[j]<a[j])
+                  {
+                      break;
+                  }
+              }
+              if(ans==1)
+              continue;
+              int c=1;
+              for(int j=(n+1)/2-1;j>=0;j--)
+              {
+                  if(c==0)
+                  break;
+                  v[j]=v[j]+c;
+                  c=v[j]/10;
+                  v[j]=v[j]%10;
+              }
+              for(int j=0;j<(n+1)/2;j++)
+              {
+                  a[n-j-1]=v[j];
+                  a[j]=v[j];
+              }
+              if(ans==0)
+              {
+              for(int j=0;j<n;j++)
+              cout<<a[j]<<" ";
+              cout<<endl;
+              }
+          }
+          return 0;
+        }
