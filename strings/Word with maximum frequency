@@ -1,0 +1,38 @@
+**You are given a string that is made up of words separated by spaces. Your task is to find the word with highest frequency, i.e. it 
+appears maximum times in the sentence. If multiple words have maximum frequency, then print the word that occurs first in the sentence.**
+
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        cin.ignore(500, '\n');
+        while(t--)
+        {
+            string str, stringg="";
+            int ans=0;
+            int i=0;
+            //cin.ignore();
+            getline(cin,str);
+            map<string,int> mp, mp1;
+          while(i<str.length())
+            {
+                int j=i, cnt=0;
+                for(; str[i]!=' '&&i<str.length(); i++)
+                {
+                    cnt++;
+                }i++;
+                string st=str.substr(j,cnt);
+                mp[st]++;
+                if(mp1[st]==0)
+                mp1[st]=j+1;
+
+                if(ans<mp[st]||(ans==mp[st]&&mp1[st]<mp1[stringg]))
+                {
+                    ans=mp[st];
+                    stringg=st;
+                }
+            }
+            cout<<stringg<<" "<<ans<<endl;
+        }
+        return 0;
+      }
