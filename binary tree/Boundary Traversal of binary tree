@@ -1,0 +1,67 @@
+**Write a function to print Boundary Traversal of a binary tree. Boundary Traversal of a binary tree here means that you have to print 
+boundary nodes of the binary tree Anti-Clockwise starting from the root.
+Note: Boundary node means nodes present at the boundary of left subtree and nodes present at the right subtree also including leaf nodes
+.
+For the below tree, the function should print 20 8 4 10 14 25 22 **
+
+
+      void dfs(Node *npp, vector<int> &v)
+      {
+          if(npp!=NULL)
+          {
+              if(npp->left==NULL&&npp->right==NULL)
+              v.push_back(npp->data);
+              dfs(npp->left,v);
+              dfs(npp->right,v);
+          }
+      }
+      void printBoundary(Node *root)
+      {
+          queue<Node* > q;
+          vector<int> v1,v3;
+          int k=0;
+          Node *npp=root;
+          map<int,int> mp;
+          if(npp->left!=NULL)
+          {
+              while(npp!=NULL)
+              {
+                  v1.push_back(npp->data);
+                  if(npp->left!=NULL)
+                  npp=npp->left;
+                  else npp=npp->right;
+              }
+          }else v1.push_back(npp->data);
+          npp=root;
+          if(npp->right!=NULL)
+          {
+              while(npp!=NULL)
+              {
+                  v3.push_back(npp->data);
+                  if(npp->right!=NULL)
+                  npp=npp->right;
+                  else npp=npp->left;
+              }
+          }else v3.push_back(npp->data);
+          npp=root;
+          vector<int> v2;
+         dfs(npp,v2);
+          for(int i=0;i<v1.size();i++)
+          {
+              if(mp[v1[i]]==0)
+              cout<<v1[i]<<" ";
+              mp[v1[i]]=1;
+          }
+          for(int i=0;i<v2.size();i++)
+          {
+              if(mp[v2[i]]==0)
+              cout<<v2[i]<<" ";
+              mp[v2[i]]=1;
+          }
+          for(int i=v3.size()-1;i>=0;i--)
+          {
+              if(mp[v3[i]]==0)
+              cout<<v3[i]<<" ";
+              mp[v3[i]]=1;
+          }
+      }
