@@ -1,0 +1,57 @@
+**You are given a binary string S. In a single operation, you can choose two indices L and R such that 1 ≤ L ≤ R ≤ N and complement the 
+characters between L and R i.e SL, SL+1, …, SR. By complement, we mean change character 0 to 1 and vice-versa.
+
+You task is to perform ATMOST one operation such that in final string number of 1s is maximised. If there is no need to completement, 
+i.e., string contains all 1s, return -1. Else, return the two values denoting L and R. If there are multiple solutions, return the 
+lexicographically smallest pair of L and R.**
+
+
+        while(t--)
+          {
+              int n , cnt  = 0 ;
+              cin >> n ;
+              string s;
+              cin >> s;
+              int ans=0, mx=0, l = 0, r=0;
+              for(int i = 0 ; i < s.length() ; i++)
+              if(s[i]=='1')
+              cnt++;
+              if(cnt==s.length())
+              {
+                  cout<<"-1"<<endl;
+                  continue;
+              }
+              int li=-1, ri=-1;
+              for(int i = 0 ; i < s.length() ; i++)
+              {
+                  int val;
+                  if(s[i]=='1')
+                  {
+                      val=-1;
+                  }else val=1;
+                  int curr=max(val,val+mx);
+                  if(curr<0)
+                  {
+                      mx=0;
+                      l=r=i+1;
+                      continue;
+                  }
+                  if(val<=val+mx)
+                  {
+                      mx=val+mx;
+                      r=i;
+                  }else 
+                  {
+                      mx=val;
+                      l=r=i;
+                  }
+
+                      if(mx>ans)
+                      {
+                          ans=mx;
+                          li=l;
+                          ri=r;
+                      }
+              }
+              cout<<li+1<<" "<<ri+1<<endl;
+          }
