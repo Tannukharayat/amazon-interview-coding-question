@@ -1,0 +1,35 @@
+sorted insertion in circular linked list******
+
+void sortedInsert(Node** head_ref, int x)
+{
+    Node *np=new Node(x);
+   if((*head_ref)==NULL)
+   {
+       (*head_ref)=new Node(x);
+       return;
+   }
+   Node *h=(*head_ref);
+   if(x<h->data)
+   {
+       while(h->next!=(*head_ref))
+       {
+           h=h->next;
+       }h->next=np;
+       np->next=(*head_ref);
+       (*head_ref)=np;
+       return;
+   }
+   while(h->next!=(*head_ref))
+   {
+       if(x>=h->data&&x<h->next->data)
+       {
+            np->next=h->next;
+            h->next=np;
+            return;
+       }
+       h=h->next;
+   }
+   np->next=h->next;
+   h->next=np;
+   return;
+}
