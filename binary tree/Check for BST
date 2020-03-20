@@ -1,0 +1,16 @@
+**Given a binary tree, return true if it is BST, else false.**
+
+    bool isbstutil(Node* root, int mn , int mx)
+    {
+        if(root==NULL)
+        return 1;
+        if(root->data<=mn||root->data>=mx)
+        return 0;
+        return isbstutil(root->left,mn,root->data)&&isbstutil(root->right,root->data,mx);
+    }
+    bool isBST(Node* root) 
+    {
+        return (isbstutil(root,INT_MIN,INT_MAX));
+    }
+
+
