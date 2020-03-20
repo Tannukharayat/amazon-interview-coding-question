@@ -1,0 +1,41 @@
+**You will be given an array A of N non negative integers. Your task is to find the right most non zero digit in the product of array 
+elements.**
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              long long int n , cnt2=0, cnt5=0;
+              cin >> n ;
+              long long int a[n];
+              long long int ans=1;
+              for(int i = 0 ; i < n ; i++)
+              {
+                  cin >> a[i];
+                  while(a[i]%5==0&&a[i]>0)
+                  {
+                      a[i]=a[i]/5;
+                      cnt5++;
+                  }
+              }
+               for(int i = 0 ; i < n ; i++)
+              {
+                  while(a[i]%2==0&&cnt5>0&&a[i]>0)
+                  {
+                      a[i]=a[i]/2;
+                      cnt5--;
+                  }
+                  ans=(ans*(a[i]%10))%10;
+              }
+              if(cnt5>0)
+              cnt5=5;
+              else cnt5=1;
+              if((ans*cnt5)%10==0)
+              cout<<"-1"<<endl;
+              else
+              cout<<(ans*cnt5)%10<<endl;
+          }
+          return 0;
+        }
