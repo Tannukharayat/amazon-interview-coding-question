@@ -1,5 +1,5 @@
 **You will be given an array A of N non negative integers. Your task is to find the right most non zero digit in the product of array 
-elements.**
+elements.** //5*2=5*4=10/20
 
         int main() 
         {
