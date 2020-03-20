@@ -1,0 +1,29 @@
+**Given a set of m distinct positive integers and a value ‘N’. The problem is to count the total number of ways we can form ‘N’ by doing 
+sum of the array elements. Repetitions and different arrangements are allowed.**
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n , sum;
+              cin >> n >> sum;
+               int a[n];
+              for(int i = 0 ; i < n ; i++)
+              cin >> a[i];
+              int dp[sum+1]={0};
+              dp[0]=1;
+              for(int i = 1 ; i <= sum ; i++)
+              {
+                  for(int j = 1 ; j <= n ; j++)
+                  {
+                      if(i>=a[j-1])
+                      {
+                          dp[i]=((dp[i]%mod)+(dp[i-a[j-1]]%mod))%mod;
+                      }
+                  }
+              } cout<<(dp[sum])%mod<<endl;
+          }
+          return 0;
+        }
