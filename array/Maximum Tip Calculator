@@ -1,0 +1,56 @@
+**Rahul and Ankit are the only two waiters in Royal Restaurant. Today, the restaurant received N orders. The amount of tips may differ when
+handled by different waiters, if Rahul takes the ith order, he would be tipped Ai rupees and if Ankit takes this order, the tip would be 
+Bi rupees.In order to maximize the total tip value they decided to distribute the order among themselves. One order will be handled by one 
+person only. Also, due to time constraints Rahul cannot take more than X orders and Ankit cannot take more than Y orders. It is guaranteed 
+that X + Y is greater than or equal to N, which means that all the orders can be handled by either Rahul or Ankit. Find out the maximum 
+possible amount of total tip money after processing all the orders.**
+
+      bool comp(pair<int,int> p1, pair<int,int>p2)
+      {
+          if(abs(p1.first-p1.second)>abs(p2.first-p2.second))
+          {
+              return 1;
+          } return 0;
+      }
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while(t--)
+        {
+            int n , x , y ;
+            cin >> n >> x >> y ;
+            vector<pair<int,int> >v;
+            int a[n], b[n];
+            for(int i = 0 ; i < n ; i++)
+            {
+                cin >> a[i];
+            }
+            for(int i = 0 ; i < n ; i++)
+            {
+                cin >> b[i];
+            }
+
+            for(int i = 0 ; i < n ; i++)
+            {
+                v.push_back({a[i],b[i]});
+            }
+            sort(v.begin(), v.end(),comp);
+            int ans=0;
+            for(int i = 0 ; i < v.size() ; i++)
+            {
+               // cout<<v[i].first<<" "<<v[i].second<<endl;
+                if((v[i].first>v[i].second&&x>0)||(y==0))
+                {
+                    ans+=v[i].first;
+                    x--;
+                }else{
+                    y--;
+                     ans+=v[i].second;
+                }
+            }
+            cout<<ans<<endl;
+
+        }
+        return 0;
+      }
