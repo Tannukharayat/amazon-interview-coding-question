@@ -1,0 +1,45 @@
+**We have a string of length n, which consist only UPPER and LOWER CASE characters and we have a number k (always less than n and greater 
+than 0). We can make at most k changes in our string such that we can get a sub-string of maximum length which have all same characters.**
+
+
+          int funct(string s, char ch, int k, int &ans)
+          {
+              int l=0, prev=-1, r=0, cnt=0;
+              while(r<s.length())
+              {
+                  if(s[r]!=ch)
+                  cnt++;
+                  if(cnt>k)
+                  {
+                      ans=max(ans,r-l);
+                      while(s[l]==ch)
+                      {
+                          l++;
+                      }l++;
+                      cnt--;
+                  }
+                  r++;
+              } ans=max(ans,r-l);
+          }
+          int main() 
+          {
+            int t ;
+            cin >> t ;
+            while(t--)
+            {
+                int n , k ;
+                cin >> n >> k ;
+                string s;
+                cin >> s ;
+                int final=0, ans=0;
+                for(int i = 0 ; i < 26 ; i++)
+                {
+                    funct(s,'a'+i,k,ans);
+                    final=max(final,ans);
+                    funct(s,'A'+i,k,ans);
+                    final=max(final,ans);
+                }
+                cout<<final<<endl;
+            }
+            return 0;
+          }
