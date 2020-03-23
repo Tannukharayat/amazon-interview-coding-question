@@ -1,0 +1,23 @@
+**Given a number d, representing the number of digits of a number. Find the total count of positive integers which have at-least one zero 
+in them and consist d or less digits.**
+
+      long long int funct(int d)
+      {
+          return 9*pow(10,d-1)-pow(9,d);
+      }
+      int main() 
+      {
+        int t;
+        cin >> t ;
+        while(t--)
+        {
+            long long int n , ans = 0 ;
+            cin >> n ;
+            for(int i = 2 ; i <= n ; i++)
+            {
+                ans+=funct(i);
+            }
+            cout<<ans<<endl;
+        }
+        return 0;
+      }
