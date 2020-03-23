@@ -1,0 +1,26 @@
+**Charlie loves squares. So his friend Jack gives him a task to completely fill a rectangle of size AxB using squares of any sizes such 
+that no two squares overlap. Now charlie wants to use minimum number of squares to complete this task. He needs help to count minimum number
+of squares to complete this task. The task is to find the minimum number of squares needed to fill the rectangle.**
+
+      long long int mod=1000000007;
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while(t--)
+        {
+            long long int n , m , cnt=0;
+            cin>>n>>m;
+            if(n>m)
+            swap(n,m);
+            while(n && m)
+            {
+                if(n > m)swap(n, m);
+               long long int x=m/n;
+                cnt=(cnt%mod+x%mod)%mod;
+                m %= n;
+            }
+           cout<<cnt<<endl;
+        }
+        return 0;
+      }
