@@ -1,0 +1,64 @@
+**Given an array A of N integers, find a combination of four elements in the array whose sum is equal to a given value X.**
+//we cannot use map here .. two elements can have same sum so position cannot be differentiate so we have to create a class object for each sum
+//qsort for sorting object
+
+      class abc
+      {
+          public:
+          int sum;
+          int first;
+          int second;
+      };
+      int compare (const void *a, const void * b)  
+      {  
+          return ( (*(abc *)a).sum - (*(abc*)b).sum );  
+      }
+      bool common(abc a, abc b)
+      {
+          if(a.first!=b.first&&a.first!=b.second&&a.second!=b.first&&a.second!=b.second)
+          return 0;
+          return 1;
+
+      }
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while(t--)
+        {
+            int n , k ;
+            cin >> n ;
+            int a[n];
+            for(int i=0;i<n;i++)
+            cin >> a[i];
+            cin >> k ;
+            int size=(n*(n-1))/2;
+            abc arr[size];
+            int kl=0;
+            for(int i=0;i<n;i++)
+            {
+                for(int j=i+1; j < n ; j++)
+                {
+                    arr[kl].sum=a[i]+a[j];
+                    arr[kl].first=i;
+                    arr[kl].second=j;
+                    kl++;
+                }
+            }
+            qsort(arr,size,sizeof(arr[0]),compare);
+            int i = 0 , j = kl-1 , ans=0;
+            while(i<=j)
+            {
+                if(arr[i].sum+arr[j].sum==k&&!common(arr[i],arr[j]))
+                {
+                    ans=1;
+                    break;
+                }else if(arr[i].sum+arr[j].sum>k)
+                {
+                    j--;
+                }else i++;
+            }
+            cout<<ans<<endl;
+        }
+        return 0;
+      }
