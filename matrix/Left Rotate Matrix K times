@@ -1,0 +1,46 @@
+**Given a Matrix of size M x N. Your task is to print the matrix K times left rotated.**
+
+          int main() 
+          {
+            int t;
+            cin >> t ;
+            while(t--)
+            {
+                int n , m , k ;
+                cin >> n >> m >> k ;
+                k=k%m;
+                int a[n][m];
+                for(int i = 0 ; i < n ; i++)
+                {
+                    for(int j = 0 ; j < m ; j++)
+                    {
+                        cin >> a[i][j];
+                    }
+                }
+                int temp[m]={0};
+                for(int i = 0 ; i < n ; i++)
+                {
+                    for(int j = 0 ; j < k ; j++)
+                    {
+                        temp[j]=a[i][j];
+                    }
+                    for(int j = 0 ; j < m-k ; j++)
+                    {
+                        a[i][j]=a[i][j+k];
+                    }
+                    int l = 0;
+                    for(int j = m-k ; j < m ; j++)
+                    {
+                        a[i][j]=temp[l++];
+                    }
+                }
+                 for(int i = 0 ; i < n ; i++)
+                {
+                    for(int j = 0 ; j < m ; j++)
+                    {
+                        cout << a[i][j] <<" ";
+                    }
+                }cout<<endl;
+            }
+            return 0;
+          }
