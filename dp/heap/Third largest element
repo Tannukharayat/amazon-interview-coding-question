@@ -1,0 +1,42 @@
+**Given an array of distinct elements. Your task is to find the third largest element in it. You have to complete the function thirdLargest
+which takes two argument. The first argument is the array a[] and the second argument is the size of the array (n). The function returns 
+an integer denoting the third largest element in the array a[]. The function should return -1 if there are less than 3 elements in input.**
+
+
+        void max_heap(long long int a[], int k, int n)
+        {
+            int curr=k;
+            if(2*k+1<n&&a[2*k+1]>a[curr])
+            {
+                curr=2*k+1;
+            }
+             if(2*k+2<n&&a[2*k+2]>a[curr])
+            {
+                curr=2*k+2;
+            }   
+            if(curr!=k)
+            {
+                swap(a[k],a[curr]);
+                max_heap(a,curr,n);
+            }
+
+        }
+        void build_max_heap(long long int a[], int n)
+        {
+            for(int k = (n/2)-1 ; k >= 0 ; k--)
+            {
+                max_heap(a,k,n);
+            }
+             for(int i = n- 1 ; i >= 0 ; i--)
+            {
+                swap(a[0],a[i]);
+                 max_heap(a, 0, i);
+            }
+        }
+        long long thirdLargest(long long a[], long long n)
+        {
+             if(n<3)
+             return -1;
+             build_max_heap(a,n);
+             return a[n-3];
+        }
