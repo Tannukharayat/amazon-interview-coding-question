@@ -1,0 +1,65 @@
+**Given a binary matrix your task is to complete the function printMat which prints all unique rows of the given matrix. The function takes
+three arguments the first argument is a matrix M and the next two arguments are row and col denoting the rows and columns of the matrix.**
+
+          class node
+          {
+                      public:
+                       int f, f1;
+                      node *child[26];
+                       node()
+                      {
+                          f=f1=0;
+                          for(int i = 0 ; i < 26 ; i++)
+                          {
+                              child[i]=NULL;
+                          }
+                      }
+
+
+                  };
+                  class trie
+                  {
+                      public:
+                      node *root;
+                      trie()
+                      {
+                          root=(node*)calloc(1,sizeof(node));
+                      }
+
+
+                      bool insert(node *np,int s[MAX][MAX],int x,int m)
+                      {
+                          int cnt=0;
+                          for(int i = 0 ; i < m ; i++)
+                          {
+                              if(np->child[s[x][i]]==NULL)
+                              {
+                                  np->child[s[x][i]]=new node;
+                                  np=np->child[s[x][i]];
+                                  cnt++;
+                              }else 
+                              {
+                                  np=np->child[s[x][i]];
+                              }
+                          }
+                          if(cnt==0&&np->f==1)
+                          return 1;
+                          np->f=1;
+                          return 0;
+                      }
+          };
+          void printMat(int M[MAX][MAX],int row,int col)
+          {
+              trie t;
+              for(int i = 0 ; i < row ; i++)
+              {
+                  node *np=t.root;
+                  if(t.insert(np,M,i,col)==0)
+                  {
+                 for(int j = 0 ; j < col ; j++)
+                  cout<<M[i][j]<<" ";
+                  cout<<"$";
+                  }
+                 // cout<<endl;
+              }
+          }
