@@ -1,0 +1,59 @@
+**Given a singly linked list of size N, and an integer K. You need to swap the Kth node from beginning and Kth node from end in linked list.
+Note: You need to swap the nodes through the links and not changing the content of the nodes.**
+
+
+
+    Node *swapkthnode(Node* head, int num, int K)
+    {
+        if(K>num)
+        return head;
+        K=min(K,num-K+1);
+        if(head->next==NULL)
+        return head;
+        if(head->next->next==NULL)
+        {
+            Node *tmp=head->next;
+            tmp->next=head;
+            tmp->next->next=NULL;
+            head=tmp;
+            return head;
+        }
+        if(K==num-K+1)
+        {
+            return head;
+        }
+        Node *temp1=head, *temp2=head , *temp1_prev=NULL, *temp2_prev=NULL;
+        for(int i = 0 ; i <  K-1&&temp1!=NULL ; i++)
+        {
+            temp1_prev=temp1;
+            temp1=temp1->next;
+        }
+        for(int i = 0 ; i < num-K&&temp2!=NULL ; i++)
+        {
+            temp2_prev=temp2;
+            temp2=temp2->next;
+        }
+        if(K==1)
+        {
+            Node *tmp=temp1->next;
+            temp2_prev->next=temp1;
+            temp1->next=NULL;
+            temp2->next=tmp;
+            return temp2;
+        }
+        if(temp2==temp1->next)
+        {
+            temp1->next=temp2->next;
+            temp1_prev->next=temp2;
+            temp2->next=temp1;
+            return head;
+        }
+        Node *tmp=temp2->next;
+        temp2->next=temp1->next;
+        temp2_prev->next=temp1;
+        temp1->next=tmp;
+        temp1_prev->next=temp2;
+
+        return head;
+
+    }
