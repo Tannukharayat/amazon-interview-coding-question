@@ -70,3 +70,40 @@ Method 2:
 
         return clone;
     }
+Method : 3
+
+                    Node *copyList(Node *head) 
+                {
+                    Node *tmp=head;
+                    while(tmp!=NULL)
+                    {
+                        Node *np = new Node(tmp->data);
+                        np->next=tmp->next;
+                        tmp->next=np;
+                        tmp=tmp->next->next;
+                    }
+                    tmp=head;
+                    while(tmp!=NULL)
+                    {
+                        if(tmp->arb==NULL)
+                        tmp->next->arb=NULL;
+                        else
+                        tmp->next->arb=tmp->arb->next;
+                        tmp=tmp->next->next;
+                    }
+                    tmp=head;
+                   Node *head1=NULL,*temp1=NULL;
+                    while(tmp)
+                    {
+                        if(head1==NULL)
+                        head1=temp1=tmp->next;
+                        else 
+                        {
+                            temp1->next=tmp->next;
+                            temp1=temp1->next;
+                        }
+                        tmp->next=tmp->next->next;
+                        tmp=tmp->next;
+                    }
+                    return head1;
+                }
