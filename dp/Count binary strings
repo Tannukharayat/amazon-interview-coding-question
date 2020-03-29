@@ -1,0 +1,32 @@
+**Given two integers n and k, count the number of binary strings of length n with k as number of times adjacent 1’s appear.**
+
+      int mod=1e9+7;
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while ( t-- )
+        {
+            int n , k ;
+            cin >> n >> k ;
+            int dp[n+1][k+1][2];
+            memset(dp, 0 ,sizeof(dp) ) ;
+            dp[1][0][0] = 1;
+            dp[1][0][1] = 1;
+
+            for ( int i = 2 ; i <= n ; i++ )
+            {
+                for( int j = 0 ; j <=k ; j++ )
+                {
+                    if( i-1 >= j)
+                    dp[i][j][0] = (dp[i-1][j][0]%mod + dp[i-1][j][1]%mod)%mod ;
+                    if(i-1 >= j)
+                    dp[i][j][1] = dp[i-1][j][0]%mod;
+                    if( j-1 >= 0)
+                    dp[i][j][1] = (dp[i][j][1]%mod+dp[i-1][j-1][1]%mod)%mod;
+                }
+            }
+            cout << (dp[n][k][0]%mod + dp[n][k][1]%mod)%mod << endl ; 
+        }
+        return 0;
+      }
