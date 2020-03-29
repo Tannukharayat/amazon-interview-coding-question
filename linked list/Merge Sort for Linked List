@@ -1,0 +1,79 @@
+            Node* findmid(Node* h)
+            {
+                Node* slow=h;
+                Node* fast=h;
+                while(fast->next!=NULL&&fast->next->next!=NULL)
+                {
+                    slow = slow->next;
+                    fast = fast->next->next;
+                }
+                return slow;
+            }
+            Node* merge(Node* a , Node* b)
+            {
+                Node *hd=NULL;
+                Node *temp;
+                while(a!=NULL&&b!=NULL)
+                {
+                    Node *np;
+                    if(a->data<b->data)
+                    {
+                        np=a;
+                        a=a->next;
+                    }else
+                    {
+                        np=b;
+                        b=b->next;
+                    }
+                    if(hd==NULL)
+                        {
+                            hd=temp=np;
+                        }else
+                        {
+                            temp->next=np;
+                            temp=np;
+                        }
+                }
+                while(a!=NULL)
+                {
+                    if(hd==NULL)
+                        {
+                            hd=temp=a;
+                        }else
+                        {
+                            temp->next=a;
+                            temp=a;
+                        }
+                        a=a->next;
+                }
+                 while(b!=NULL)
+                {
+                    if(hd==NULL)
+                        {
+                            hd=temp=b;
+                        }else
+                        {
+                            temp->next=b;
+                            temp=b;
+                        }
+                        b=b->next;
+                }
+                return hd;
+            }
+            Node* mergeSortt(Node** head)
+            {
+                if((*head)==NULL||(*head)->next==NULL)
+                return *head;
+                Node* mid = findmid(*head);
+                Node* first = *head;
+                Node* second=mid->next;
+                mid->next=NULL;
+                mergeSortt(&first);
+                mergeSortt(&second);
+                *head=merge(first, second);
+               return (*head);
+            }
+            Node* mergeSort(Node* head)
+            {
+                return mergeSortt(&head);
+            }
