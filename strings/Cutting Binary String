@@ -1,0 +1,57 @@
+**Given a string s containing 0's and 1's. You have to return a smallest positive integer C, such that the binary string can be
+cut into C pieces and each piece should be of the power of 5  with no leading zeros.**
+         
+         map<long long int,int>mp;
+        int num(string s, int i , int j)
+        {
+            int k =0 , ans= 0;
+            for(int l=j ; l >= i ; l--)
+            {
+                ans+=pow(2,k++)*(s[l]-'0');
+            }
+            if(mp[ans]==1)
+            return 1;
+            return 0;
+        }
+        int main() 
+        {
+            int t ;
+            cin >> t ;
+            while(t--)
+            {
+                string s;
+                cin >> s ;
+                int dp[s.length()+1]={0};
+                for(int i = 0 ; i < 100 ; i++)
+                {
+                    mp[pow(5,i)]=1;
+                }
+                if(s[0]=='0')
+                {
+                    cout<<"-1"<<endl;
+                    continue;
+                }
+                for(int i = 0 ; i < s.length() ; i++)
+                {
+                    if(num(s,0,i)==1)
+                    {
+                        dp[i]=1;
+                        continue;
+                    } dp[i]=100001;
+                    for(int j = 0 ; j < i ; j++)
+                    {
+                        if(s[j+1]=='0')
+                        continue;
+                        if(dp[j]!=100001&&num(s,j+1,i)==1)
+                        {
+                            dp[i]=min(dp[i],dp[j]+1);
+                        }
+                    }
+                }
+                if(dp[s.length()-1]==100001)
+                cout<<"-1"<<endl;
+                else
+                cout<<dp[s.length()-1]<<endl;
+            }
+          return 0;
+        }
