@@ -1,0 +1,33 @@
+**Given a string containing of ‘0’, ‘1’ and ‘?’ wildcard characters, generate all binary strings that can be formed by replacing
+each wildcard character by ‘0’ or ‘1’.**
+
+
+      void funct(string s , int i, string str)
+      {
+          if(i==s.length())
+          {
+              cout<<str<<" ";
+              return;
+          }
+          if(s[i]=='?')
+          {
+              funct(s,i+1,str+'0');
+              funct(s,i+1,str+'1');
+          }else funct(s,i+1,str+s[i]);
+        //  str=str+s[i];
+      }
+      int main() 
+      {
+        int t ;
+        cin >> t ;
+        while(t--)
+        {
+            string s;
+            cin >> s ;
+            string str="";
+            funct(s,0,str);
+            cout<<endl;
+        }
+        return 0;
+      }
+
