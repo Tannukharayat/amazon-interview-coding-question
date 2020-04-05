@@ -1,0 +1,32 @@
+**Given a paper of size A x B. Task is to cut the paper into squares of any size. Find the minimum number of squares that can
+be cut from the paper.**   
+   
+   
+   
+   int funct(int n , int m, int dp[1000][1000])
+        {
+            if(n==m)
+            return 1;
+            if(dp[n][m]!=-1)
+            return dp[n][m];
+            int x=INT_MAX, y=INT_MAX;
+            for(int i = 1 ; i <= n/2 ; i++ )
+            x=min(funct(i,m,dp)+funct(n-i,m,dp),x);
+             for(int j = 1 ; j <= m/2 ; j++ )
+            y=min(y,funct(n,j,dp)+funct(n,m-j,dp));
+            return dp[n][m]=min(x,y);
+        }
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n , m ;
+              cin >> n >> m ;
+              int dp[1000][1000];
+              memset(dp,-1,sizeof(dp));
+              cout<<funct(n,m,dp)<<endl;
+          }
+          return 0;
+        }
