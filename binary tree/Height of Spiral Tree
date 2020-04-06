@@ -1,0 +1,31 @@
+**Given a special binary tree of size N, whose leaf nodes are connected to form a circular doubly linked list, your task is to 
+complete the function findTreeHeight(), that should return the height of the tree.
+For Example:
+
+   1
+  /   \ 
+ 2    3
+ /  \
+4  5
+/  
+6 
+
+In the above binary tree, 6, 5 and 3 are leaf nodes and they form a circular doubly linked list. Here, the left pointer of leaf
+node will act as a previous pointer of circular doubly linked list and its right pointer will act as next pointer of circular 
+doubly linked list.**
+
+
+        int findTreeHeight(Node* node)
+        {
+          if(!node)
+            return 0;
+            if(node->right && node==node->right->left) //condition for leaf node
+            return 1;
+            int a=findTreeHeight(node->left);
+            int b=findTreeHeight(node->right);
+            if(a>=b)
+            return a+1;
+            else
+            return b+1;
+        }
+
