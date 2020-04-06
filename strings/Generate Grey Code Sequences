@@ -1,0 +1,30 @@
+**Given a number N, your task is to complete the function which generates all n-bit grey code sequences, a grey code sequence 
+is a sequence such that successive patterns in it differ by one bit.**
+
+        string funct(int x, int n)
+        {
+            string str="";
+            while(x>0)
+            {
+                char ch=x%2+'0';
+                str=ch+str;
+                x=x/2;
+                n--;
+            }
+            while(n>0)
+            {
+                n--;
+                str='0'+str;
+            }
+            return str;
+        }
+        void generateCode(int N)
+        {
+            //cout<<N<<" ";
+             for(int i = 0 ; i < (1<<N)  ; i++)
+             {
+                 int x=i^(i>>1);
+                // cout<<x<<" ";
+                 cout<<funct(x,N)<<" ";
+             }
+        }
