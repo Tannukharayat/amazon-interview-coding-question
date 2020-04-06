@@ -1,0 +1,37 @@
+**Given an array arr[] of N nodes representing preorder traversal of BST. The task is to print its postorder traversal.**
+
+        void pretopost(int pre[] , int size , int post[] , int min , int max, int &curr, int &x)
+        {
+            if(curr==size)
+            return ;
+             int val=pre[curr];
+            if(val<min||val>max)
+            return;
+           curr++;
+            pretopost(pre,size,post,min,val,curr,x);
+            pretopost(pre,size,post,val,max,curr,x);
+            post[x++]=val;
+        }
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n ;
+              cin >> n ;
+              int in[10001], pre[10001], post[10001];
+              for(int i = 0 ; i < n ; i++)
+              {
+                  cin >> in[i];
+                  pre[i] = in[i] ;
+              }
+          int x=0, y=0;
+          pretopost(pre, n , post, -INT_MAX,INT_MAX,x,y);
+          for(int i = 0 ; i < n ; i++ )
+          {
+              cout<<post[i]<<" ";
+          }cout<<endl;
+      }
+      return 0;
+    }
