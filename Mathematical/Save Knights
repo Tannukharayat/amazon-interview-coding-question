@@ -1,0 +1,25 @@
+**How many non-attacking knights K(n) can be placed on an n x n chessboard. 
+Recall that a knight can attack another knight if their vertical distance on the chessboard is 2 and their horizontal distance 
+is 1, or if their vertical distance is 1 and their horizontal distance is 2. Only one knight may be placed on each square of the
+chessboard.**
+
+        int main() 
+        {
+          int t ;
+          cin >> t ;
+          while(t--)
+          {
+              int n ;
+              cin >> n ;
+              if(n==1)
+              {
+                  cout<<"1"<<endl;
+                  continue;
+              }
+              if(n==2)
+              cout<<"4"<<endl;
+              else
+              cout<<((n*n)+1)/2<<endl;
+          }
+          return 0;
+        }
