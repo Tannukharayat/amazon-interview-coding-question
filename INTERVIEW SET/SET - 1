@@ -95,3 +95,10 @@ Question 4: Design a data structure for the following operations:
 Question 5: Find an element in a sorted rotated integer array.
          Method 1:- linear search O(n) & O(1) space
          Methods 2 :- binary search O(log n) time and O(1) space
+         
+Question 6: There is a big file of words which is dynamically changing. We are continuously adding some words into it. How would you 
+keep track of top 10 trending words at each moment?
+        Method 1: hashing (hash all words one by one then traverse)
+        Method 2: use trie and heap , trie for storing i.e inserting words and its frequency and heap for maintaining top 10 words so we 
+        compare current word with minimum of heap.
+        
