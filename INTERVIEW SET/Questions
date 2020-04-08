@@ -1,3 +1,6 @@
 https://www.geeksforgeeks.org/print-longest-leaf-leaf-path-binary-tree/
 
 https://www.geeksforgeeks.org/maximum-path-sum-starting-cell-0-th-row-ending-cell-n-1-th-row/
+
+There is a binary tree of size N. All nodes are numbered between 1-N(inclusive). There is a N*N integer matrix Arr[N][N], all elements are 
+initialized to zero. So for all the nodes A and B, put Arr[A][B] = 1 if A is an ancestor of B (NOT just the immediate ancestor).
