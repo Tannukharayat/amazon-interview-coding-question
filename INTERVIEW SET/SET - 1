@@ -71,7 +71,7 @@ code for minheapify() function:-
             } 
         } 
 
-Question 3: Design a data structure for the following operations:
+Question 4: Design a data structure for the following operations:
 
         I.Enqueue :-  1) Check if x is already present by doing a hash map lookup.
                       2) If not present, then insert it at the end of the array.
@@ -90,3 +90,8 @@ Question 3: Design a data structure for the following operations:
         IV.isNumberPresent :- we can check it by hash table
 
         All these operations should take O(1) time.
+        
+        
+Question 5: Find an element in a sorted rotated integer array.
+         Method 1:- linear search O(n) & O(1) space
+         Methods 2 :- binary search O(log n) time and O(1) space
