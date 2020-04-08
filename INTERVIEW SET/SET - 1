@@ -1,0 +1,92 @@
+Question 1: Check if a character link list is palindrome or not.
+
+    METHOD 1 (Use a Stack) :- O(n) time and O(n) space
+    push elements into stack (it will reversed the list) and then compare first element of list with top element of stack.
+
+    METHOD 2 (By reversing the list) :- O(n) time and O(1) extra space.
+    1) Get the middle of the linked list.
+    2) Reverse the second half of the linked list.
+    3) Check if the first half and second half are identical.
+
+    METHOD 3 (Using Recursion)
+    Time Complexity: O(n)
+    Auxiliary Space: O(n) if Function Call Stack size is considered, otherwise O(1).
+
+Question 2: A sorted array has been rotated r times to the left. Find r in least possible time.
+
+    Method 1 (Using linear search) :- O(n) time and O(1`) space
+
+    Method 2 (Efficient Using Binary Search):- O(log(n)) time and O(1) space
+    
+Question 3: Clone a singly link list whose nodes contain, apart from next pointers, an extra pointer to any random node. The random 
+pointer of a node N could be after N, before N or the node N itself.
+
+      Method 1 (Uses O(n) extra space)
+        1) Create all nodes in copy linked list using next pointers.
+        2) Store the node and its next pointer mappings of original linked list. //to restore original list at the end
+        3) Change next pointer of all nodes in original linked list to point to the corresponding node in copy linked list.
+        Following diagram shows status of both Linked Lists after above 3 steps. The red arrow shows arbit pointers and black arrow 
+        shows next 
+        pointers.
+        4) Change the arbit pointer of all nodes in copy linked list to point to corresponding node in original linked list.
+        5) Now construct the arbit pointer in copy linked list as below and restore the next pointer of nodes in the original linked ist.
+               copy_list_node->arbit = copy_list_node->arbit->arbit->next;
+               copy_list_node = copy_list_node->next; 
+        6) Restore the next pointers in original linked list from the stored mappings(in step 2).
+
+        Time Complexity:  O(n)
+        Auxiliary Space:  O(n)
+        
+       Method 2
+          1. Traverse the original linked list and make a copy in terms of data.
+          2. Make a hash map of key value pair with original linked list node and copied linked list node.
+          3. Traverse the original linked list again and using the hash map adjust the next and random reference of cloned linked list nodes.
+          Time complexity : O(n)
+          Auxiliary space : O(n)
+        
+       Method 3: O(n) time and O(1) space
+           Create the copy of node 1 and insert it between node 1 & node 2 in original Linked List, create a copy of 2 and insert it between
+           2 & 3. Continue in this fashion, add the copy of N after the Nth node
+            original->next->random= original->random->next; 
+            Now restore the original and copy linked lists in this fashion in a single loop.
+                original->next = original->next->next;
+                copy->next = copy->next->next;
+            Ensure that original->next is NULL and return the cloned list
+
+
+code for minheapify() function:- 
+        void MinHeap::MinHeapify(int i) 
+        { 
+            int l = left(i); 
+            int r = right(i); 
+            int smallest = i; 
+            if (l < heap_size && harr[l] < harr[i]) 
+                smallest = l; 
+            if (r < heap_size && harr[r] < harr[smallest]) 
+                smallest = r; 
+            if (smallest != i) 
+            { 
+                swap(&harr[i], &harr[smallest]); 
+                MinHeapify(smallest); 
+            } 
+        } 
+
+Question 3: Design a data structure for the following operations:
+
+        I.Enqueue :-  1) Check if x is already present by doing a hash map lookup.
+                      2) If not present, then insert it at the end of the array.
+                      3) Add in the hash table also, x is added as key and last array index as the index.
+
+        II.Dequeue:-  1) Check queue is empty.
+                      2) If not empty, then delete last element.
+
+        III.Delete a given number(if it is present in the queue, else do nothing):- 
+                      1) Check if x is present by doing a hash map lookup.
+                      2) If present, then find its index and remove it from a hash map.
+                      3) Swap the last element with this element in an array and remove the last element.
+                      Swapping is done because the last element can be removed in O(1) time.
+                      4) Update index of the last element in a hash map.
+
+        IV.isNumberPresent :- we can check it by hash table
+
+        All these operations should take O(1) time.
