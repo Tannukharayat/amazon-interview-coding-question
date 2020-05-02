@@ -1,0 +1,27 @@
+  private void maxHeapify(int pos) 
+    { 
+        if (isLeaf(pos)) 
+            return; 
+  
+        if (Heap[pos] < Heap[leftChild(pos)] ||  
+            Heap[pos] < Heap[rightChild(pos)]) { 
+  
+            if (Heap[leftChild(pos)] > Heap[rightChild(pos)]) { 
+                swap(pos, leftChild(pos)); 
+                maxHeapify(leftChild(pos)); 
+            } 
+            else { 
+                swap(pos, rightChild(pos)); 
+                maxHeapify(rightChild(pos)); 
+            } 
+        } 
+    } 
+  
+    public int extractMax() 
+    { 
+        int popped = Heap[1]; 
+        Heap[1] = Heap[size--]; 
+        maxHeapify(1); 
+        return popped; 
+    } 
+
