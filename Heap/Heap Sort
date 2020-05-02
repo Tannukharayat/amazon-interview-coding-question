@@ -1,7 +1,7 @@
 **Given an array of size N. The task is to sort the array elements by completing functions heapify() and buildHeap() which are used to 
 implement Heap Sort **
 
-      void heapify(int arr[], int n, int i)  
+      void heapify(int arr[], int n, int i)   //O(log(n))
       {
             int x = i , l = 2*i + 1, r = 2*i + 2 ;
             if(l<n&&arr[i]<arr[l])
@@ -20,8 +20,12 @@ implement Heap Sort **
       void buildHeap(int arr[], int n)  
       { 
           int st = n/2 -1 ;
-          for(int i = st ; i >= 0 ; i-- )
+          for(int i = st ; i >= 0 ; i-- )/n
           {
               heapify(arr,n,i);
           }
       }
+      Time Complexity of building a heap:- 
+     the running time is O(nlg(n)), since each call to Heapify costs O(lg(n)) and Build-Heap makes O(n) such calls.
+      This upper bound, though correct, is not asymptotically tight.  it depends on the height of the element in the heap.
+      
