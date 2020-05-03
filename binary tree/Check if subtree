@@ -2,6 +2,51 @@
 A subtree of a tree T1 is a tree T2 consisting of a node in T1 and all of its descendants in T1.**
 
 METHOD:1
+Node* find_head(Node* T,int x)
+{  
+    //if(T!=NULL)
+    //ut<<T->data<<" ";
+    if(T==NULL)
+    return NULL;
+     if(x==T->data)
+    {
+       /// cout<<"*"<<x<<"*"<<T->data;
+        return T;
+    }
+    if(T!=NULL)
+    {
+        find_head(T->left,x);
+        find_head(T->right,x);
+    }
+}
+int check_sub(Node* T1, Node *T2)
+{
+    if(T1==NULL&&T2==NULL)
+    return 1;
+    if(T1==NULL||T2==NULL)
+    return 0;
+    if(T1->data==T2->data&&check_sub(T1->left,T2->left)&&check_sub(T1->right,T2->right))
+    {
+        return 1;
+    }
+    return 0;
+}
+bool isSubtree(Node* T1, Node* T2) 
+{
+   T1=find_head(T1,T2->data);
+   //cout<<T1->data<<" ";
+   if(T1==NULL)
+   {
+       //cout<<" *** ";
+       return 0;
+   }else 
+   {
+       int y=check_sub(T1,T2);
+       return y;
+   }
+}
+or
+
   bool isSubTree(Node* T, Node* S) 
   {
       if(T==NULL&&S==NULL)
