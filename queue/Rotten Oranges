@@ -82,3 +82,68 @@ return -1 **
               cout<<"-1"<<endl;
           }else cout<<cnt<<endl;
       }
+Complexity Analysis:
+Time Complexity: O( R *C).
+Each element of the matrix can be inserted into the queue only once so the upperbound of iteration is O(R*C), i.e. the number of elements. So time complexity is O(R *C).
+Space Complexity: O(R*C).
+To store the elements in a queue O(R*C) space is needed
+
+int main()
+{
+    bool changed = false; 
+    int no = 2; 
+    while (true) 
+    { 
+        for (int i = 0; i < R; i++) 
+        { 
+            for (int j = 0; j < C; j++) 
+            { 
+                  if (v[i][j] == no) 
+                  { 
+                     if (issafe(i + 1, j) && v[i + 1][j] == 1) 
+                        { 
+                            v[i + 1][j] = v[i][j] + 1; 
+                            changed = true; 
+                        } 
+                      if (issafe(i, j + 1) && v[i][j + 1] == 1) 
+                      { 
+                        v[i][j + 1] = v[i][j] + 1; 
+                        changed = true; 
+                     } 
+                     if (issafe(i - 1, j) && v[i - 1][j] == 1) 
+                     { 
+                        v[i - 1][j] = v[i][j] + 1; 
+                        changed = true; 
+                     } 
+                     if (issafe(i, j - 1) && v[i][j - 1] == 1) 
+                     { 
+                        v[i][j - 1] = v[i][j] + 1; 
+                        changed = true; 
+                     } 
+                 } 
+            } 
+        } 
+     if (!changed) 
+            break; 
+        changed = false; 
+        no++; 
+    } 
+  
+    for (int i = 0; i < R; i++) 
+    { 
+        for (int j = 0; j < C; j++) 
+        { 
+  
+           if (v[i][j] == 1) 
+                return -1; 
+        } 
+    } 
+    return no - 2; 
+}
+
+Complexity Analysis:
+Time Complexity : O(max(R,C) * R *C).
+The matrix needs to be traversed again and again until there is no change in the matrix, that can happen max(R,C) times. So time complexity is O(max(R,C) * R *C).
+Space Complexity:O(1).
+No extra space is required.
+   
