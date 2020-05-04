@@ -31,3 +31,34 @@ Left view of following tree is 1 2 4 8.
              funct(root,mp,l);
              return ;
           }
+OR
+          void leftViewUtil(node* root, int level, int* max_level) 
+          { 
+              // Base Case 
+              if (root == NULL) 
+                  return; 
+
+              // If this is the first node of its level 
+              if (*max_level < level) 
+              { 
+                  cout << root->data << "\t"; 
+                  *max_level = level; 
+              } 
+
+              // Recur for left and right subtrees 
+              leftViewUtil(root->left, level + 1, max_level); 
+              leftViewUtil(root->right, level + 1, max_level); 
+          } 
+
+          // A wrapper over leftViewUtil() 
+          void leftView(node* root) 
+          { 
+              int max_level = 0; 
+              leftViewUtil(root, 1, &max_level); 
+          } 
+          Time Complexity: The function does a simple traversal of the tree, so the complexity is O(n).
+          Auxiliary Space: O(n), due to the stack space during recursive call.
+  OR
+  
+          
+          
