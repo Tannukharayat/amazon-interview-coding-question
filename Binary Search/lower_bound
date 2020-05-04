@@ -1,0 +1,25 @@
+**program to find lower bound in sorted aray**
+
+int lower_bound ( vector < int > v , int x )
+    {
+        
+        int low =0 , high = v.size() -1 ; 
+        int ans = v.size() ; 
+        while ( low <= high )
+        {
+            int mid = ( low + high ) / 2 ; 
+            
+            if ( v [ mid ] >= x )
+            {
+                ans = mid ; 
+                high = mid - 1 ; 
+            }
+            else 
+                low = mid + 1 ; 
+            
+        }
+        
+        
+        return ans ; 
+        
+    }
