@@ -2,7 +2,8 @@
 on his/her turn can pick a coin from any of the two corners of the row. The player that collects coins with more value wins the
 game. Develop a strategy for the player making the first turn, such he/she never looses the game.**
 
-
+his problem is different from Optimal Strategy for a Game | DP-31. There the target is to get maximum value. Here the target 
+is to not loose. we wil defonitely win in optimal strategy we just have to maximise amount.
 The player that makes the first move can always make sure that the other player is never able to choose an even coin if sum of 
 even coins is higher. Similarly, he/she can make sure that the other player is never able to choose an odd coin if sum of odd 
 coins is higher.
