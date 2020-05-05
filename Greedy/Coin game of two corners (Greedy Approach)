@@ -1,0 +1,47 @@
+**Consider a two player coin game where each player gets turn one by one. There is a row of even number of coins, and a player 
+on his/her turn can pick a coin from any of the two corners of the row. The player that collects coins with more value wins the
+game. Develop a strategy for the player making the first turn, such he/she never looses the game.**
+
+
+The player that makes the first move can always make sure that the other player is never able to choose an even coin if sum of 
+even coins is higher. Similarly, he/she can make sure that the other player is never able to choose an odd coin if sum of odd 
+coins is higher.
+
+void printCoins(int arr[], int n) 
+{ 
+    // Find sum of odd positioned coins 
+    int oddSum = 0; 
+    for (int i = 0; i < n; i += 2) 
+        oddSum += arr[i]; 
+  
+    // Find sum of even positioned coins 
+    int evenSum = 0; 
+    for (int i = 1; i < n; i += 2) 
+        evenSum += arr[i]; 
+  
+    // Print even or odd coins depending upon 
+    // which sum is greater. 
+    int start = ((oddSum > evenSum) ? 0 : 1); 
+    for (int i = start; i < n; i += 2) 
+        cout << arr[i] << " "; 
+} 
+  
+// Driver program to test above function 
+int main() 
+{ 
+    int arr1[] = { 8, 15, 3, 7 }; 
+    int n = sizeof(arr1) / sizeof(arr1[0]); 
+    printCoins(arr1, n); 
+    cout << endl; 
+  
+    int arr2[] = { 2, 2, 2, 2 }; 
+    n = sizeof(arr2) / sizeof(arr2[0]); 
+    printCoins(arr2, n); 
+    cout << endl; 
+  
+    int arr3[] = { 20, 30, 2, 2, 2, 10 }; 
+    n = sizeof(arr3) / sizeof(arr3[0]); 
+    printCoins(arr3, n); 
+  
+    return 0; 
+} 
