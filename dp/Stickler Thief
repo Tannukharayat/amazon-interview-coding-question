@@ -1,0 +1,69 @@
+**Stickler the thief wants to loot money from a society having n houses in a single line. He is a weird person and follows a 
+certain rule when looting the houses. According to the rule, he will never loot two consecutive houses. At the same time, he 
+wants to maximize the amount he loots. The thief knows which house has what amount of money but is unable to come up with an 
+optimal looting strategy. He asks for your help to find the maximum money he can get if he strictly follows the rule. Each 
+house has a[i] amount of money present in it.**
+
+
+int maxLoot(int *hval, int n) 
+{ 
+    if (n == 0) 
+        return 0; 
+    if (n == 1) 
+        return hval[0]; 
+    if (n == 2) 
+        return max(hval[0], hval[1]); 
+  
+    // dp[i] represent the maximum value stolen 
+    // so far after reaching house i. 
+    int dp[n]; 
+  
+    // Initialize the dp[0] and dp[1] 
+    dp[0] = hval[0]; 
+    dp[1] = max(hval[0], hval[1]); 
+  
+    // Fill remaining positions 
+    for (int i = 2; i<n; i++) 
+        dp[i] = max(hval[i]+dp[i-2], dp[i-1]); 
+  
+    return dp[n-1]; 
+} 
+Complexity Analysis:
+Time Complexity: O(n).
+Only one traversal of original array is needed. So the time complexity is O(n)
+Space Complexity: O(n).
+An array is required of size n, so space complexity is O(n).
+
+
+int maxLoot(int *hval, int n) 
+{ 
+    if (n == 0) 
+        return 0; 
+  
+    int value1 = hval[0]; 
+    if (n == 1) 
+        return value1; 
+  
+    int value2 = max(hval[0], hval[1]); 
+    if (n == 2) 
+        return value2; 
+  
+    // contains maximum stolen value at the end 
+    int max_val; 
+  
+    // Fill remaining positions 
+    for (int i=2; i<n; i++) 
+    { 
+        max_val = max(hval[i]+value1, value2); 
+        value1 = value2; 
+        value2 = max_val; 
+    } 
+  
+    return max_val; 
+    
+} 
+
+Complexity Analysis:
+Time Complexity: O(n), Only one traversal of original array is needed. So the time complexity is O(n).
+Auxiliary Space: O(1), No extra space is required so the space complexity is constant.
+
