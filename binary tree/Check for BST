@@ -1,5 +1,26 @@
 **Given a binary tree, return true if it is BST, else false.**
 
+    int isBST(struct node* node)  
+{  
+  if (node == NULL)  
+    return 1;  
+      
+  /* false if the max of the left is > than us */
+  if (node->left!=NULL && maxValue(node->left) > node->data)  
+    return 0;  
+      
+  /* false if the min of the right is <= than us */
+  if (node->right!=NULL && minValue(node->right) < node->data)  
+    return 0;  
+    
+  /* false if, recursively, the left or right is not a BST */
+  if (!isBST(node->left) || !isBST(node->right))  
+    return 0;  
+      
+  /* passing all that, it's a BST */
+  return 1;  
+}  
+'OR****************
     bool isbstutil(Node* root, int mn , int mx)
     {
         if(root==NULL)
@@ -13,4 +34,77 @@
         return (isbstutil(root,INT_MIN,INT_MAX));
     }
 
+OR********************
 
+bool isBST(Node* root, Node* l=NULL, Node* r=NULL) 
+{ 
+    // Base condition 
+    if (root == NULL) 
+        return true; 
+  
+    // if left node exist then check it has 
+    // correct data or not i.e. left node's data 
+    // should be less than root's data 
+    if (l != NULL and root->data <= l->data) 
+        return false; 
+  
+    // if right node exist then check it has 
+    // correct data or not i.e. right node's data 
+    // should be greater than root's data 
+    if (r != NULL and root->data >= r->data) 
+        return false; 
+  
+    // check recursively for every node. 
+    return isBST(root->left, l, root) and 
+           isBST(root->right, root, r); 
+} 
+
+OR*********************************
+
+bool isBST(node* root)  
+{  
+    static node *prev = NULL;  
+      
+    // traverse the tree in inorder fashion  
+    // and keep track of prev node  
+    if (root)  
+    {  
+        if (!isBST(root->left))  
+        return false;  
+  
+        // Allows only distinct valued nodes  
+        if (prev != NULL &&  
+            root->data <= prev->data)  
+        return false;  
+  
+        prev = root;  
+  
+        return isBST(root->right);  
+    }  
+  
+    return true;  
+}  
+ 
+ Time Complexity: O(n)
+  OR********
+  
+  bool isBSTUtil(struct Node* root, Node *&prev) 
+{ 
+    // traverse the tree in inorder fashion and  
+    // keep track of prev node 
+    if (root) 
+    { 
+        if (!isBSTUtil(root->left, prev)) 
+          return false; 
+   
+        // Allows only distinct valued nodes  
+        if (prev != NULL && root->data <= prev->data) 
+          return false; 
+   
+        prev = root; 
+   
+        return isBSTUtil(root->right, prev); 
+    } 
+   
+    return true; 
+} 
