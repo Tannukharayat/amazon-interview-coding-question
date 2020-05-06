@@ -1,0 +1,29 @@
+
+bool isPerfectRec(struct Node* root, int d, int level = 0) 
+{ 
+    // An empty tree is perfect 
+    if (root == NULL) 
+        return true; 
+  
+    // If leaf node, then its depth must be same as 
+    // depth of all other leaves. 
+    if (root->left == NULL && root->right == NULL) 
+        return (d == level+1); 
+  
+    // If internal node and one child is empty 
+    if (root->left == NULL || root->right == NULL) 
+        return false; 
+  
+    // Left and right subtrees must be perfect. 
+    return isPerfectRec(root->left, d, level+1) && 
+           isPerfectRec(root->right, d, level+1); 
+} 
+  
+// Wrapper over isPerfectRec() 
+bool isPerfect(Node *root) 
+{ 
+   int d = findADepth(root); 
+   return isPerfectRec(root, d); 
+} 
+OR 
+USING 2 QUEUE
