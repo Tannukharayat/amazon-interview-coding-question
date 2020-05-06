@@ -1,0 +1,71 @@
+**Given two n-ary tree's the task is to check if they are mirror of each other or not.**
+
+we are comparing the first with last and second and second last.
+bool mirrorUtil(vector<stack<int> >& tree1, 
+                      vector<queue<int> >& tree2) 
+{ 
+    // Traversing each node in tree. 
+    for (int i = 1; i < tree1.size(); ++i) 
+    { 
+        stack<int>& s = tree1[i]; 
+        queue<int>& q = tree2[i]; 
+  
+        // While stack is not empty && Queue is not empty 
+        while (!s.empty() && !q.empty()) { 
+  
+            // checking top element of stack and front 
+            // of queue. 
+            if (s.top() != q.front()) 
+                return false; 
+  
+            s.pop(); 
+            q.pop(); 
+        } 
+  
+        // If queue or stack is not empty, return false. 
+        if (!s.empty() || !q.empty()) 
+            return false; 
+    } 
+    
+  
+    return true; 
+} 
+    OR
+    
+    CONVERT GIVEN TRE INTO N-ARY TREE
+    
+    // C++ program to mirror an n-ary tree 
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+// Represents a node of an n-ary tree 
+struct Node 
+{ 
+    int key; 
+    vector<Node *>child; 
+}; 
+  
+// Function to convert a tree to its mirror 
+void mirrorTree(Node * root) 
+{ 
+    // Base case: Nothing to do if root is NULL 
+    if (root==NULL) 
+        return; 
+  
+    // Number of children of root 
+    int n = root->child.size(); 
+  
+    // If number of child is less than 2 i.e. 
+    // 0 or 1 we do not need to do anything 
+    if (n < 2) 
+        return; 
+  
+    // Calling mirror function for each child 
+    for (int i=0; i<n; i++) 
+        mirrorTree(root->child[i]); 
+  
+    // Reverse vector (variable sized array) of child 
+    // pointers 
+    reverse(root->child.begin(), root->child.end()); 
+} 
+  
