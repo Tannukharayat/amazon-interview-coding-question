@@ -8,6 +8,32 @@ Output: "121"
 Note:
 The input n is a positive integer represented by string, whose length will not exceed 18.
 If there is a tie, return the smaller one as answer.**
+      
+      
+      int closestPlandrome(int num) { 
+  
+  // case1 : largest palindrome number 
+  // which is smaller to given number 
+  int RPNum = num - 1; 
+  
+  while (!isPalindrome(convertNumIntoString(abs(RPNum))))  
+    RPNum--;   
+  
+  // Case 2 : smallest palindrome number 
+  // which is greater than given number 
+  int SPNum = num + 1; 
+  
+  while (!isPalindrome(convertNumIntoString(SPNum)))  
+    SPNum++;   
+  
+  // check absolute difference 
+  if (abs(num - RPNum) > abs(num - SPNum)) 
+    return SPNum; 
+  else
+    return RPNum; 
+} 
+
+OR
 
 
 
