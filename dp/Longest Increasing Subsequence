@@ -1,0 +1,8 @@
+Longest Increasing Subsequence
+Method : 1 using Longest Common Subsequence Algorithm
+take first sequence as given sequence and second sequence as sorted given sequence
+then take common of both string or LCS.
+
+Time Complexity: O(n2) where n is the length of the sequence.
+
+Method : 2 
