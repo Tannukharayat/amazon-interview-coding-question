@@ -1,5 +1,5 @@
 
-bool isPerfectRec(struct Node* root, int d, int level = 0) 
+bool isPerfectRec(struct Node* root, int d, int level = 0)  /USING 2 TRAVERSAL OR WE CAN DO ONLY IN ONE TRAVERSAL
 { 
     // An empty tree is perfect 
     if (root == NULL) 
