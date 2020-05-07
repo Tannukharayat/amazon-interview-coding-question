@@ -1,0 +1,72 @@
+**Given a binary tree with parent pointers, find the right sibling of a given node(pointer to the node will be given), if it doesn’t exist return null. Do it in O(1) space and O(n) time?
+
+Examples:
+
+             1
+            / \
+           2   3
+          /  \  \
+         4    6  5
+        /      \  \
+       7        9  8
+       /         \
+      10         12
+Input : Given above tree with parent pointer and node 10
+Output : 12**
+
+  Node* findRightSibling(Node* node, int level) 
+{ 
+    if (node == NULL || node->parent == NULL) 
+        return NULL; 
+  
+    // GET Parent pointer whose right child is not 
+    // a parent or itself of this node. There might 
+    // be case when parent has no right child, but, 
+    // current node is left child of the parent 
+    // (second condition is for that). 
+    while (node->parent->right == node 
+           || (node->parent->right == NULL 
+               && node->parent->left == node)) { 
+        if (node->parent == NULL 
+            || node->parent->parent == NULL) 
+            return NULL; 
+  
+        node = node->parent; 
+        level--; 
+    } 
+  
+    // Move to the required child, where right sibling 
+    // can be present 
+    node = node->parent->right; 
+  
+    if (node == NULL) 
+        return NULL; 
+    // find right sibling in the given subtree(from current 
+    // node), when level will be 0 
+    while (level < 0) { 
+  
+        // Iterate through subtree 
+        if (node->left != NULL) 
+            node = node->left; 
+        else if (node->right != NULL) 
+            node = node->right; 
+        else
+  
+                // sibling in this path 
+            break; 
+  
+        level++; 
+    } 
+  
+    if (level == 0) 
+        return node; 
+  
+    // This is the case when we reach 9 node in the tree, 
+    // where we need to again recursively find the right 
+    // sibling 
+    return findRightSibling(node, level); 
+} 
+  
+
+
+  
