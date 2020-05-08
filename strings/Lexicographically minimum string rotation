@@ -78,3 +78,5 @@ Output: EEKSFORGEEKSG
                 for (int i = 0; i < n; i++) 
                     cout << S[(starting_index + i) % n]; 
             }
+            Time Complexity : O(n^2)
+            Auxiliary Space : O(1)
