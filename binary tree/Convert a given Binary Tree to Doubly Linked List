@@ -1,0 +1,109 @@
+Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL). The left and right pointers in nodes are to be used as 
+previous and next pointers respectively in converted DLL. The order of nodes in DLL must be same as Inorder of the given Binary
+Tree. The first node of Inorder traversal (left most node in BT) must be head node of the DLL.
+
+void fixPrevPtr(node *root)  
+{  
+    static node *pre = NULL;  
+  
+    if (root != NULL)  
+    {  
+        fixPrevPtr(root->left);  
+        root->left = pre;  
+        pre = root;  
+        fixPrevPtr(root->right);  
+    }  
+}  
+  
+// Changes right pointers to work  
+// as next pointers in converted DLL  
+node *fixNextPtr(node *root)  
+{  
+    node *prev = NULL;  
+  
+    // Find the right most node  
+    // in BT or last node in DLL  
+    while (root && root->right != NULL)  
+        root = root->right;  
+  
+    // Start from the rightmost node,  
+    // traverse back using left pointers.  
+    // While traversing, change right pointer of nodes.  
+    while (root && root->left != NULL)  
+    {  
+        prev = root;  
+        root = root->left;  
+        root->right = prev;  
+    }  
+  
+    // The leftmost node is head  
+    // of linked list, return it  
+    return (root);  
+}  
+  
+// The main function that converts  
+// BST to DLL and returns head of DLL  
+node *BTToDLL(node *root)  
+{  
+    // Set the previous pointer  
+    fixPrevPtr(root);  
+  
+    // Set the next pointer and return head of DLL  
+    return fixNextPtr(root);  
+}  
+
+Time Complexity: O(n)
+
+2:- 
+
+void BinaryTree2DoubleLinkedList(node *root, node **head) 
+{ 
+    // Base case 
+    if (root == NULL) return; 
+  
+    // Initialize previously visited node as NULL. This is 
+    // static so that the same value is accessible in all recursive 
+    // calls 
+    static node* prev = NULL; 
+  
+    // Recursively convert left subtree 
+    BinaryTree2DoubleLinkedList(root->left, head); 
+  
+    // Now convert this node 
+    if (prev == NULL) 
+        *head = root; 
+    else
+    { 
+        root->left = prev; 
+        prev->right = root; 
+    } 
+    prev = root; 
+  
+    // Finally convert right subtree 
+    BinaryTree2DoubleLinkedList(root->right, head); 
+} 
+  time complexity: O(N)
+  
+  void BToDLL(Node* root, Node** head_ref)  //head_ref=NUL initialy
+{ 
+    // Base cases 
+    if (root == NULL) 
+        return; 
+  
+    // Recursively convert right subtree 
+    BToDLL(root->right, head_ref); 
+  
+    // insert root into DLL 
+    root->right = *head_ref; 
+  
+    // Change left pointer of previous head 
+    if (*head_ref != NULL) 
+        (*head_ref)->left = root; 
+  
+    // Change head of Doubly linked list 
+    *head_ref = root; 
+  
+    // Recursively convert left subtree 
+    BToDLL(root->left, head_ref); 
+} 
+Time Complexity: O(n)
