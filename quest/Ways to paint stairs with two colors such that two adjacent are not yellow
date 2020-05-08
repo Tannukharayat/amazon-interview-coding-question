@@ -1,0 +1,29 @@
+Given n stairs and we have 2 colour yellow and green the task is that we have to paint given stairs by given colour with condition is that we cannot paints two yellow steps directly after each other.
+
+Examples :
+
+Input : n = 1
+Output : 2
+A single stair can be colored either
+as green or yellow.
+
+Input : n = 3
+Output : 5
+
+
+int ways(int n) 
+{ 
+    int W[n + 1]; 
+  
+    // take base case for 1 and 2 
+    W[1] = 2; 
+    W[2] = 3; 
+  
+    for (int i = 3; i <= n; i++)  
+        W[i] = W[i - 1] + W[i - 2]; 
+      
+    return W[n]; 
+} 
+  
+Time Complexity : O(n)
+Extra Space : O(n)
