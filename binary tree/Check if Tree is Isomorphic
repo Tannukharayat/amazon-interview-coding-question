@@ -14,3 +14,4 @@ swapped. Two empty trees are isomorphic **
         return 1;
         return 0;
     }
+       Time complexity:- O(min(m,n)*2) or O(min(m,n))
