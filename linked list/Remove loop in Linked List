@@ -1,27 +1,187 @@
 **You are given a linked list of N nodes. The task is to remove the loop from the linked list, if present.****
 
+Method 1 (Check one by one):- 
+int detectAndRemoveLoop(struct Node* list) 
+{ 
+    struct Node *slow_p = list, *fast_p = list; 
+  
+    while (slow_p && fast_p && fast_p->next) { 
+        slow_p = slow_p->next; 
+        fast_p = fast_p->next->next; 
+  
+        /* If slow_p and fast_p meet at some point then there 
+           is a loop */
+        if (slow_p == fast_p) { 
+            removeLoop(slow_p, list); 
+  
+            /* Return 1 to indicate that loop is found */
+            return 1; 
+        } 
+    } 
+  
+    /* Return 0 to indeciate that ther is no loop*/
+    return 0; 
+} 
 
-    void removeTheLoop(Node *head)
+void removeLoop(struct Node* loop_node, struct Node* head) 
+{ 
+    struct Node* ptr1; 
+    struct Node* ptr2; 
+    ptr1 = head; //starts ptr from head till loop starting
+    while (1) 
     {
-        Node *tmp=head;
-         Node *slow=head->next, *fst=head->next->next;
-         while(fst!=NULL&&fst->next!=NULL)
-         {
-             if(fst==slow)
-             {
-                 break;
-             }
-             fst=fst->next->next;
-             slow=slow->next;
-         }
-         if(fst==slow)
-         {
-             slow=head;
-             while(slow->next!=fst->next)
-             {
-                 slow=slow->next;
-                 fst=fst->next;
-             }
-             fst->next=NULL;
-         }
-    }
+      ptr2 = loop_node; //check till ptr->next!=loop start
+        while (ptr2->next != loop_node && ptr2->next != ptr1) 
+            ptr2 = ptr2->next; 
+  
+        if (ptr2->next == ptr1) 
+            break; 
+  
+        ptr1 = ptr1->next; 
+    } 
+    ptr2->next = NULL; 
+} 
+ 
+ Method 2 (Better Solution)
+ 
+ int detectAndRemoveLoop(struct Node* list) 
+{ 
+    struct Node *slow_p = list, *fast_p = list; 
+  
+    // Iterate and find if loop exists or not 
+    while (slow_p && fast_p && fast_p->next) { 
+        slow_p = slow_p->next; 
+        fast_p = fast_p->next->next; 
+  
+        /* If slow_p and fast_p meet at some point then there 
+           is a loop */
+        if (slow_p == fast_p) { 
+            removeLoop(slow_p, list); 
+  
+            /* Return 1 to indicate that loop is found */
+            return 1; 
+        } 
+    } 
+  
+    /* Return 0 to indeciate that ther is no loop*/
+    return 0; 
+} 
+  
+/* Function to remove loop. 
+ loop_node --> Pointer to one of the loop nodes 
+ head -->  Pointer to the start node of the linked list */
+void removeLoop(struct Node* loop_node, struct Node* head) 
+{ 
+    struct Node* ptr1 = loop_node; 
+    struct Node* ptr2 = loop_node; 
+    unsigned int k = 1, i; 
+    while (ptr1->next != ptr2) 
+    { 
+        ptr1 = ptr1->next; 
+        k++; 
+    } 
+  //k->length of loop
+    // Fix one pointer to head 
+    ptr1 = head; 
+  
+    // And the other pointer to k nodes after head 
+    ptr2 = head; 
+    for (i = 0; i < k; i++) 
+        ptr2 = ptr2->next; 
+   //now ptr2 is k from head i.e ptr2=k
+    /*  Move both pointers at the same pace, 
+      they will meet at loop starting node */
+   //   now if ptr1 moves n distance i.e head to loop start , ptr2 will move n+k which is start of loop so they will met at 
+   same point
+    while (ptr2 != ptr1) { 
+        ptr1 = ptr1->next; 
+        ptr2 = ptr2->next; 
+    } 
+  
+    // Get pointer to the last node 
+    while (ptr2->next != ptr1) 
+        ptr2 = ptr2->next; 
+  
+    /* Set the next node of the loop ending node 
+      to fix the loop */
+    ptr2->next = NULL; 
+} 
+  
+  
+  Method 3 (Optimized Method 2: Without Counting Nodes in Loop)
+  Distance traveled by fast pointer = 2 * (Distance traveled 
+                                         by slow pointer)
+
+(m + n*x + k) = 2*(m + n*y + k)
+
+Note that before meeting the point shown above, fast
+was moving at twice speed.
+
+x -->  Number of complete cyclic rounds made by 
+       fast pointer before they meet first time
+
+y -->  Number of complete cyclic rounds made by 
+       slow pointer before they meet first time
+
+From above equation, we can conclude below
+
+    m + k = (x-2y)*n
+
+Which means m+k is a multiple of n.
+
+void detectAndRemoveLoop(Node* head) 
+{ 
+    // If list is empty or has only one node 
+    // without loop 
+    if (head == NULL || head->next == NULL) 
+        return; 
+  
+    Node *slow = head, *fast = head; 
+  
+    // Move slow and fast 1 and 2 steps 
+    // ahead respectively. 
+    slow = slow->next; 
+    fast = fast->next->next; 
+  
+    // Search for loop using slow and 
+    // fast pointers 
+    while (fast && fast->next) { 
+        if (slow == fast) 
+            break; 
+        slow = slow->next; 
+        fast = fast->next->next; 
+    } 
+  
+    /* If loop exists */
+    if (slow == fast) { 
+        slow = head; 
+        while (slow->next != fast->next) { 
+            slow = slow->next; 
+            fast = fast->next; 
+        } 
+  
+        /* since fast->next is the looping point */
+        fast->next = NULL; /* remove loop */
+    } 
+} 
+  Method 4 Hashing: Hash the address of the linked list nodes
+  void hashAndRemove(Node* head) 
+{ 
+    // hash map to hash addresses of the linked list nodes 
+    unordered_map<Node*, int> node_map; 
+    // pointer to last node 
+    Node* last = NULL; 
+    while (head != NULL) { 
+        // if node not present in the map, insert it in the map 
+        if (node_map.find(head) == node_map.end()) { 
+            node_map[head]++; 
+            last = head; 
+            head = head->next; 
+        } 
+        // if present, it is a cycle, make the last node's next pointer NULL 
+        else { 
+            last->next = NULL; 
+            break; 
+        } 
+    } 
+} 
