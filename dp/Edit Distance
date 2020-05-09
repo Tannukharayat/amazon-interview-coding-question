@@ -23,7 +23,7 @@ Both the strings are of lowercase***
                     for(int j = 0 ; j <= t.length() ; j++)
                     {
                         if(i==0)
-                        dp[i][j]=j;
+                        dp[i][j]=j; 
                         else if(j==0)
                         dp[i][j]=i;
                         else if(s[i-1]==t[j-1])
