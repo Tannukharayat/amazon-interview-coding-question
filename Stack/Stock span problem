@@ -41,3 +41,23 @@ For example, if an array of 7 days prices is given as {100, 80, 60, 70, 60, 75, 
         }
         return 0;
       }
+Time Complexity: O(n). 
+Auxiliary Space: O(n) 
+
+OR
+
+      void calculateSpan(int A[], int n, int ans[]) 
+{ 
+    // Span value of first element is always 1 
+    ans[0] = 1; 
+  
+    // Calculate span values for rest of the elements 
+    for (int i = 1; i < n; i++) { 
+        int counter = 1; 
+        while ((i - counter) >= 0 && A[i] >= A[i - counter]) { 
+            counter += ans[i - counter]; 
+        } 
+        ans[i] = counter; 
+    } 
+} 
+
