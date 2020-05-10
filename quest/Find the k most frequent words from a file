@@ -1,0 +1,178 @@
+  //structure of the node of trie  
+  struct TrieNode 
+  {
+      bool IsEnd  ;    // If this node is end node 
+      int  HeapIndex ;           //  To store the index of this word in heap. 
+      TrieNode * children [ 26 ] ; // To store its children. 
+      int frequency ;  // To store the frequency of word ending at this 
+      TrieNode () : HeapIndex ( -1 ) , IsEnd ( false ),   frequency (0)               // Constructure .
+      {
+         for ( int i = 0 ; i < 26 ; i ++ ) 
+               children [ i ]= nullptr ; 
+      }
+  };
+
+  struct HeapNode 
+  {
+  string word ; // To store the word.
+  int frequency ;                // to store the frequency of word.
+  TrieNode* TN ;       // To store the last Triendnode of this word.
+  HeapNode () : frequency (0) ,TN ( nullptr)  
+  {
+
+
+  }
+  };
+
+
+  class Trie {
+  TrieNode * root ; 
+  public:
+
+      Trie() 
+      {
+  root = new TrieNode() ; 
+      }
+
+
+      TrieNode*  insert( string word) 
+      {
+  TrieNode * temp = root ;
+  for ( int i = 0 ; i < word.length() ; i ++ )
+  {
+      if ( temp -> children [ word [ i ] - 'a' ] == NULL  )
+      {
+          TrieNode * node = new TrieNode() ; 
+          temp -> children [ word [ i ] - 'a' ] = node ; 
+      }
+      temp = temp -> children [ word [ i ] - 'a' ] ; 
+  }
+
+       temp ->  frequency = 1 ;
+  temp -> IsEnd = 1 ; 
+  return temp ; 
+      }
+
+
+
+
+      TrieNode* search(string word) 
+      {
+  TrieNode * temp = root ;
+  for ( int i = 0 ; i < word.length() ; i ++ )
+  {
+      if ( temp -> children [ word [ i ] - 'a' ]== NULL  )
+              return nullptr ; 
+      temp = temp -> children [ word [ i ] - 'a' ] ; 
+  }
+  if (  temp -> IsEnd )   
+  return temp ; 
+  else
+  return nullptr ; 
+      }
+  };
+
+
+  class MinHeap 
+  {
+  int capacity , count  ;
+  HeapNode * arr ; 
+  public : 
+  MinHeap ( int capacity )
+  {
+  this ->  capacity = capacity ; 
+  count = 0 ; 
+  arr = new HeapNode [ capacity ] ; 
+  }
+  void Display ()
+  {
+  for ( int i = 0 ; i < capacity ; i ++ ) 
+  cout << arr [ i ] .word << ":" << arr [ i ] .frequency  << endl ;   ; 
+  }
+  void MinHeapify ( int idx  ) 
+  {
+  int left = 2 * idx + 1 ; 
+  int right = 2 * idx + 2 ; 
+  int minidx = idx ; 
+  if ( left < count and arr[ left ] .frequency  < arr [ minidx ] .frequency )
+  minidx = left ;
+  if ( right  < count and arr[ right ] .frequency  < arr [ minidx ] .frequency )
+  minidx = right ; 
+  if ( minidx != idx )
+  {
+  arr [ idx ] .TN -> HeapIndex = minidx ;
+  arr [ minidx ] .TN -> HeapIndex = idx ; 
+  swap ( arr [ idx ] , arr [ minidx ] ) ; 
+  MinHeapify ( minidx ) ; 
+  }
+  }
+  void Build ( int idx )
+  { 
+  int n = count - 1 ; 
+  for ( int i =  ( n - 1 ) / 2   ; i >= 0 ; i -- )
+  MinHeapify ( i ) ; 
+  }
+  void insert ( TrieNode *  TN , string word  ) 
+  {
+  if ( TN -> HeapIndex  != -1 )     //When word is already present in the heap. 
+  {
+  //cout << 1 << endl  ; 
+  arr [ TN -> HeapIndex ] .frequency ++ ; 
+  MinHeapify ( TN ->  HeapIndex ) ; 
+  }
+  else if ( count < capacity )  // When heap size is less than k 
+  {
+  //cout << 2 << endl  ; 
+  arr [ count ]. word = word ; 
+  arr [ count ]. frequency = 1 ; 
+  arr [ count ] . TN = TN ; 
+  TN -> HeapIndex = count ;
+  count ++ ; 
+  Build ( count ) ; 
+
+  }
+  else if ( TN ->  frequency > arr [ 0 ] . frequency ) 
+  {
+  //cout << 3 << endl  ; 
+  arr [ 0 ] .TN -> HeapIndex = -1 ;
+  arr [ 0 ] . word = word ; 
+  arr [ 0 ] . frequency = TN -> frequency ; 
+  arr [ 0 ] . TN = TN ; 
+  TN -> HeapIndex = 0 ; 
+  MinHeapify ( 0 ) ; 
+  }
+  }
+  };
+  void TopKFrequentWords ( string FileName , int k )
+  {
+  MinHeap MH ( k ) ;
+  Trie   T ; 
+  fstream file  ( FileName ) ; 
+  //file.open  ( FileName.c_str() ) ; 
+       string word ; 
+       while ( file >> word  )
+  {
+  TrieNode * TN = T.search ( word ) ;
+
+  if ( !TN  )
+  {
+  //cout << word << "**" << endl ; 
+  TN = T.insert ( word ) ;
+  }
+  else
+  {
+  //cout << word << "&&&&"  << endl ; 
+  TN -> frequency ++ ; 
+  }
+  MH.insert ( TN , word ) ; 
+  }
+  MH.Display() ; 
+  }
+  int main()
+  {
+  int k ;
+  cin >> k ; 
+  string FileName  ; 
+  cin >> FileName ; 
+  TopKFrequentWords ( FileName , k ) ; 
+  }
