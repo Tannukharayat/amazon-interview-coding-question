@@ -38,3 +38,7 @@
             cout << " No Triplet Found" << endl; 
     } 
 
+Complexity Analysis:
+        ◦ Time Complexity : O(n2).
+only two nested loops is required, so the time complexity is O(n2).
+        ◦ Auxiliary Space : O(1), no extra space is required, so the time complexity is constant.
