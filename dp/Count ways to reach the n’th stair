@@ -1,0 +1,35 @@
+Input->n=5,m=3(let)
+temp=0
+res[0]=1
+res[1]=>temp=res[0]
+res[2]=>temp=res[0]+res[1]
+res[3]=>temp=res[0]+res[1]+res[2]
+res[4]=> temp=res[0]+res[1]+res[2]+res[3]-{res[0]}(The subtraction takes place so as to maintain a window of ‘m’ possible climbings)
+res[5]=> temp=res[1]+res[2]+res[3]+res[4]-{res[1]}
+int countWays(int n, int m) { 
+    int res[n+1]; 
+    int temp = 0; 
+    res[0] = 1; 
+    for (int i=1; i <= n; i++) { 
+        int s = i - m - 1; 
+        int e = i - 1; 
+        if (s >= 0) { 
+            temp -= res[s]; 
+        } 
+        temp += res[e]; 
+        res[i] = temp; 
+    } 
+    return res[n]; 
+} 
+  
+// Driver Program to test countWays function: 
+int main () { 
+    int n = 5, m = 3; 
+    printf("Number of ways = %d", countWays(n, m)); 
+    return 0; 
+} 
+Complexity Analysis:
+    • Time Complexity: O(n).
+As a single loop is used from ‘1’ to ‘n’.
+    • Auxiliary Space: O(n).
+Since, an array has been used for storing values.
