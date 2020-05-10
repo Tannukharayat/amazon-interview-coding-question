@@ -1,0 +1,53 @@
+  struct Node { 
+      int data; 
+      struct Node* left; 
+      struct Node* right; 
+  }; 
+
+  // function that allocates a new node 
+  // with the given data and NULL left 
+  // and right pointers. 
+  struct Node* newNode(int data) 
+  { 
+      struct Node* node = new struct Node; 
+      node->data = data; 
+      node->left = NULL; 
+      node->right = NULL; 
+      return (node); 
+  } 
+
+  // Function to modify tree 
+  struct Node* modifytree(struct Node* root) 
+  { 
+      struct Node* right = root->right; 
+      struct Node* rightMost = root; 
+
+      // if the left tree exists 
+      if (root->left) { 
+
+          // get the right-most of the 
+          // original left subtree 
+          rightMost = modifytree(root->left); 
+
+          // set root right to left subtree 
+          root->right = root->left; 
+          root->left = NULL; 
+      } 
+
+      // if the right subtree does 
+      // not exists we are done! 
+      if (!right)  
+          return rightMost; 
+
+      // set right pointer of right-most 
+      // of the original left subtree 
+      rightMost->right = right; 
+
+      // modify the rightsubtree 
+      rightMost = modifytree(right); 
+      return rightMost; 
+  } 
+  The Time complexity of both BFS and DFS will be O(V + E), where V is the number of vertices, and E is the number of Edges.
+  This again depends on the data strucure that we user to represent the graph. If it is an adjacency matrix, it will be
+  O(V^2) . If we use an adjacency list, it will be O(V+E).
+
