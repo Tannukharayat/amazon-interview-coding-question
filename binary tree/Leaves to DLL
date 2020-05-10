@@ -100,3 +100,38 @@ Node *convertToDLL(Node *root,Node **head_ref)
     }
     convertToDLL(root->right, head_ref);
 }
+
+OR
+
+Node* extractLeafList(Node *root, Node **head_ref)  
+{  
+// Base cases  
+if (root == NULL) return NULL;  
+  
+if (root->left == NULL && root->right == NULL)  
+{  
+    // This node is going to be added  
+    // to doubly linked list of leaves, 
+    // set right pointer of this node  
+    // as previous head of DLL. We  
+    // don't need to set left pointer   
+    // as left is already NULL  
+    root->right = *head_ref;  
+  
+    // Change left pointer of previous head  
+    if (*head_ref != NULL) (*head_ref)->left = root;  
+  
+    // Change head of linked list  
+    *head_ref = root;  
+  
+    return NULL; // Return new root  
+}  
+  
+// Recur for right and left subtrees  
+root->right = extractLeafList(root->right, head_ref);  
+root->left = extractLeafList(root->left, head_ref);  
+  
+return root;  
+}  
+  
+Time Complexity: O(n), 
