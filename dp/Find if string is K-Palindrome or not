@@ -1,0 +1,119 @@
+Given a string, find out if the string is K-Palindrome or not. A k-palindrome string transforms into a palindrome on removing 
+at most k characters from it.
+
+int isKPalRec(string str1, string str2, int m, int n) 
+{ 
+    // If first string is empty, the only option is to 
+    // remove all characters of second string 
+    if (m == 0) return n; 
+  
+    // If second string is empty, the only option is to 
+    // remove all characters of first string 
+    if (n == 0) return m; 
+  
+    // If last characters of two strings are same, ignore 
+    // last characters and get count for remaining strings. 
+    if (str1[m-1] == str2[n-1]) 
+        return isKPalRec(str1, str2, m-1, n-1); 
+  
+    // If last characters are not same, 
+    // 1. Remove last char from str1 and recur for m-1 and n 
+    // 2. Remove last char from str2 and recur for m and n-1 
+    // Take minimum of above two operations 
+    return 1 + min(isKPalRec(str1, str2, m-1, n), // Remove from str1 
+                   isKPalRec(str1, str2, m, n-1)); // Remove from str2 
+} 
+
+OR
+
+int isKPalDP(string str1, string str2, int m, int n) 
+{ 
+    // Create a table to store results of subproblems 
+    int dp[m + 1][n + 1]; 
+  
+    // Fill dp[][] in bottom up manner 
+    for (int i = 0; i <= m; i++) 
+    { 
+        for (int j = 0; j <= n; j++) 
+        { 
+            // If first string is empty, only option is to 
+            // remove all characters of second string 
+            if (i == 0) 
+                dp[i][j] = j; // Min. operations = j 
+  
+            // If second string is empty, only option is to 
+            // remove all characters of first string 
+            else if (j == 0) 
+                dp[i][j] = i; // Min. operations = i 
+  
+            // If last characters are same, ignore last character 
+            // and recur for remaining string 
+            else if (str1[i - 1] == str2[j - 1]) 
+                dp[i][j] = dp[i - 1][j - 1]; 
+  
+            // If last character are different, remove it 
+            // and find minimum 
+            else
+             dp[i][j] = 1 + min(dp[i - 1][j], // Remove from str1 
+                             dp[i][j - 1]); // Remove from str2 
+        } 
+    } 
+  
+    return dp[m][n]; 
+} 
+  
+// Returns true if str is k palindrome. 
+bool isKPal(string str, int k) 
+{ 
+    string revStr = str; 
+    reverse(revStr.begin(), revStr.end()); 
+    int len = str.length(); 
+  
+    return (isKPalDP(str, revStr, len, len) <= k*2); 
+} 
+
+OR
+
+int lcs( string X, string Y, int m, int n ) 
+{ 
+    int L[m + 1][n + 1]; 
+  
+    /* Following steps build L[m+1][n+1] in bottom up 
+        fashion. Note that L[i][j] contains length of 
+        LCS of X[0..i-1] and Y[0..j-1] */
+    for (int i = 0; i <= m; i++) 
+    { 
+        for (int j = 0; j <= n; j++) 
+        { 
+            if (i == 0 || j == 0) 
+                L[i][j] = 0; 
+            else if (X[i - 1] == Y[j - 1]) 
+                L[i][j] = L[i - 1][j - 1] + 1; 
+            else
+                L[i][j] = max(L[i - 1][j], L[i][j - 1]); 
+        } 
+    } 
+    // L[m][n] contains length of LCS for X and Y 
+    return L[m][n]; 
+} 
+  
+// find if given string is K-Palindrome or not 
+bool isKPal(string str, int k) 
+{ 
+    int n = str.length(); 
+  
+    // Find reverse of string 
+    string revStr = str; 
+    reverse(revStr.begin(), revStr.end()); 
+  
+    // find longest palindromic subsequence of 
+    // given string 
+    int lps = lcs(str, revStr, n, n); 
+  
+    // If the difference between longest palindromic 
+    // subsequence and the original string is less 
+    // than equal to k, then the string is k-palindrome 
+    return (n - lps <= k); 
+}
+Time complexity of above solution is O(n2).
+Auxiliary space used by the program is O(n2)
