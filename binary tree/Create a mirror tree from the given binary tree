@@ -1,0 +1,35 @@
+void mirrorify(node* root, node** mirror) 
+{ 
+    if (root == NULL) { 
+        mirror = NULL; 
+        return; 
+    } 
+  
+    // Create new mirror node from original tree node 
+    *mirror = createNode(root->val); 
+    mirrorify(root->left, &((*mirror)->right)); 
+    mirrorify(root->right, &((*mirror)->left)); 
+} 
+  
+// Driver code 
+int main() 
+{ 
+  
+    node* tree = createNode(5); 
+    tree->left = createNode(3); 
+    tree->right = createNode(6); 
+    tree->left->left = createNode(2); 
+    tree->left->right = createNode(4); 
+  
+    // Print inorder traversal of the input tree 
+    printf("Inorder of original tree: "); 
+    inorder(tree); 
+    node* mirror = NULL; 
+    mirrorify(tree, &mirror); 
+  
+    // Print inorder traversal of the mirror tree 
+    printf("\nInorder of mirror tree: "); 
+    inorder(mirror); 
+  
+    return 0; 
+}
