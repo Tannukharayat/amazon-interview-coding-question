@@ -1,0 +1,23 @@
+Int vist [ n ] = 0 ; 
+For ( int i = 0 ; i < n ; i ++ )
+{
+	If ( !visit [ i ] ) 
+		Dfs ( x ) ; 
+}
+										
+
+Void dfs ( int x ) 
+{
+	If ( visit [ x ] == 1 )
+{
+	Flag = true ; 
+	Return ; 
+}
+
+Vsist [ x ] = 1 ; 
+
+For ( auro i : v [ x ] ) 
+	Dfs ( x) ;
+
+Vsit [ x ] =0 ;   0 -> 1 
+}
