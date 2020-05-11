@@ -1,0 +1,64 @@
+A Better Solution is to use auxiliary space to solve the problem in O(n) time.
+
+For all positions of 0’s calculate left[] and right[] which defines the number of consecutive 1’s to the left of i and right of
+i respectively.
+
+For example, for arr[] = {1, 1, 0, 1, 1, 0, 0, 1, 1, 1} and m = 1, left[2] = 2 and right[2] = 2, left[5] = 2 and right[5] = 0, 
+left[6] = 0 and right[6] = 3.
+
+left[] and right[] can be filled in O(n) time by traversing array once and keeping track of last seen 1 and last seen 0. While 
+filling left[] and right[], we also store indexes of all zeroes in a third array say zeroes[]. For above example, this third 
+array stores {2, 5, 6}
+
+Now traverse zeroes[] and for all consecutive m entries in this array, compute the sum of 1s that can be produced. This step 
+can be done in O(n) using left[] and right[].
+
+void findZeroes(int arr[], int n, int m) 
+{ 
+    // Left and right indexes of current window 
+    int wL = 0, wR = 0;  
+  
+    // Left index and size of the widest window  
+    int bestL = 0, bestWindow = 0;  
+  
+    // Count of zeroes in current window 
+    int zeroCount = 0;  
+  
+    // While right boundary of current window doesn't cross  
+    // right end 
+    while (wR < n) 
+    { 
+        // If zero count of current window is less than m, 
+        // widen the window toward right 
+        if (zeroCount <= m) 
+        { 
+            if (arr[wR] == 0) 
+              zeroCount++; 
+            wR++; 
+        } 
+  
+        // If zero count of current window is more than m, 
+        // reduce the window from left 
+        if (zeroCount > m) 
+        { 
+            if (arr[wL] == 0) 
+              zeroCount--; 
+            wL++; 
+        } 
+  
+        // Updqate widest window if this window size is more 
+        if ((wR-wL > bestWindow) && (zeroCount<=m)) 
+        { 
+            bestWindow = wR-wL; 
+            bestL = wL; 
+        } 
+    } 
+  
+    // Print positions of zeroes in the widest window 
+    for (int i=0; i<bestWindow; i++) 
+    { 
+        if (arr[bestL+i] == 0) 
+           cout << bestL+i << " "; 
+    } 
+} 
+O(n) time and O(1) space
