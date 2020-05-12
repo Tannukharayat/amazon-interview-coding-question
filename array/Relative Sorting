@@ -1,0 +1,86 @@
+int first(int arr[], int low, int high, int x, int n) 
+{ 
+  
+    // Checking condition 
+    if (high >= low) { 
+  
+        // FInd the mid element 
+        int mid = low + (high - low) / 2; 
+  
+        // Check if the element is the extreme left 
+        // in the left half of the array 
+        if ((mid == 0 || x > arr[mid - 1]) && arr[mid] == x) 
+            return mid; 
+  
+        // If the element lies on the right half 
+        if (x > arr[mid]) 
+            return first(arr, (mid + 1), high, x, n); 
+  
+        // Check for element in the left half 
+        return first(arr, low, (mid - 1), x, n); 
+    } 
+  
+    // ELement not found 
+    return -1; 
+} 
+  
+// Sort A1[0..m-1] according to the order defined by A2[0..n-1]. 
+void sortAccording(int A1[], int A2[], int m, int n) 
+{ 
+    // The temp array is used to store a copy of A1[] and visited[] 
+    // is used mark the visited elements in temp[]. 
+    int temp[m], visited[m]; 
+    for (int i = 0; i < m; i++) { 
+        temp[i] = A1[i]; 
+        visited[i] = 0; 
+    } 
+  
+    // Sort elements in temp 
+    sort(temp, temp + m); 
+  
+    // for index of output which is sorted A1[] 
+    int ind = 0; 
+  
+    // Consider all elements of A2[], find them in temp[] 
+    // and copy to A1[] in order. 
+    for (int i = 0; i < n; i++) { 
+        // Find index of the first occurrence of A2[i] in temp 
+        int f = first(temp, 0, m - 1, A2[i], m); 
+  
+        // If not present, no need to proceed 
+        if (f == -1) 
+            continue; 
+  
+        // Copy all occurrences of A2[i] to A1[] 
+        for (int j = f; (j < m && temp[j] == A2[i]); j++) { 
+            A1[ind++] = temp[j]; 
+            visited[j] = 1; 
+        } 
+    } 
+  
+    // Now copy all items of temp[] 
+    // which are not present in A2[] 
+    for (int i = 0; i < m; i++) 
+        if (visited[i] == 0) 
+            A1[ind++] = temp[i]; 
+} 
+ 
+ Time complexity: The steps 1 and 2 require O(m) time. Step 3 requires O(M * Log M) time. Step 5 requires O(N Log M) time. 
+ Therefore overall time complexity is O(M Log M + N Log M).
+
+Method 2 (Using Self-Balancing Binary Search Tree)
+
+Create a self balancing BST of all elements in A1[]. In every node of BST, also keep track of count of occurrences of the key and a bool field visited which is initialized as false for all nodes.
+Initialize the output index ind as 0.
+Do following for every element of A2[i] in A2[]
+Search for A2[i] in the BST, if present then copy all occurrences to A1[ind] and increment ind. Also mark the copied elements visited in the BST node.
+Do an inorder traversal of BST and copy all unvisited keys to A1[].
+Time Complexity of this method is same as the previous method. Note that in a self balancing Binary Search Tree, all operations require logm time.
+
+Method 3 (Use Hashing)
+
+Loop through A1[], store the count of every number in a HashMap (key: number, value: count of number)
+Loop through A2[], check if it is present in HashMap, if so, put in output array that many times and remove the number from HashMap.
+Sort the rest of the numbers present in HashMap and put in output array.
+
+
