@@ -1,0 +1,95 @@
+Write a function which takes an array and prints the majority element (if it exists), otherwise prints “No Majority Element”. A 
+majority element in an array A[] of size n is an element that appears more than n/2 times (and hence there is at most one such 
+element).
+
+
+void findMajority(int arr[], int n)  
+{  
+    int maxCount = 0;  
+    int index = -1; // sentinels  
+    for(int i = 0; i < n; i++)  
+    {  
+        int count = 0;  
+        for(int j = 0; j < n; j++)  
+        {  
+            if(arr[i] == arr[j])  
+            count++;  
+        }  
+          
+        // update maxCount if count of  
+        // current element is greater  
+        if(count > maxCount)  
+        {  
+            maxCount = count;  
+            index = i;  
+        }  
+    }  
+      
+    // if maxCount is greater than n/2  
+    // return the corresponding element  
+    if (maxCount > n/2)  
+    cout << arr[index] << endl;  
+      
+    else
+        cout << "No Majority Element" << endl;  
+}  
+
+Compelxity Analysis:
+Time Complexity: O(n*n).
+Auxiliary Space : O(1).
+
+METHOD 2 (Using Binary Search Tree)
+
+Time Complexity : If a Binary Search Tree is used then time complexity will be O(n^2). If a self-balancing-binary-search tree is used then it will be O(nlogn)
+Auxiliary Space : O(n).
+As extra space is needed to store the array in tree.
+ 
+ METHOD 4 (Using Hashmap):
+ void findMajority(int arr[], int size) 
+{ 
+    unordered_map<int, int> m; 
+    for(int i = 0; i < size; i++) 
+        m[arr[i]]++; 
+    int count = 0; 
+    for(auto i : m) 
+    { 
+        if(i.second > size / 2) 
+        { 
+            count =1; 
+            cout << "Majority found :- " << i.first<<endl; 
+            break; 
+        } 
+    } 
+    if(count == 0) 
+        cout << "No Majority element" << endl; 
+} 
+
+Complexity Analysis:
+Time Complexity: O(n).
+One traversal of the array is needed, so the time complexity is linear.
+Auxiliary Space : O(n).
+
+OR
+
+The idea is to sort the array.
+Complexity Analysis:
+Time Complexity : O(nlogn).
+Sorting requires O(n log n) time complexity.
+Auxiliary Space : O(1).
+
+OR
+
+int majorityNumber(int arr[], int n) 
+{ 
+    int ans = -1; 
+    unordered_map<int, int>freq; 
+    for (int i = 0; i < n; i++) 
+    { 
+        freq[arr[i]]++; 
+        if (freq[arr[i]] > n / 2) 
+            ans = arr[i]; 
+    } 
+    return ans; 
+}  
+Time Complexity : O(n)
+Auxiliary Space : O(n)
