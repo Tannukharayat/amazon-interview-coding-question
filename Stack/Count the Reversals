@@ -1,0 +1,42 @@
+NAIVE:- (2^N)
+WE WIL CONSIDER TWO CASES FOR EACH ELEMENT ONE CLOSING AND ONE OPENING BRSACKRT
+ 
+OR
+Given a string S consisting only of opening and closing curly brackets '{' and '}' find out the minimum number of reversals 
+required to make a balanced expression.
+
+ int main() 
+  {
+    int t ;
+    cin >> t ;
+    while(t--)
+    {
+        string s ;
+        cin >> s;
+        int cntr = 0 , cntl = 0 , l = 0 , r = 0, ans = 0 ;
+        for(int i = 0 ; i < s.length() ; i++)
+        {
+            if(s[i]=='}')
+            {
+                r++;
+            }else l++;
+            if(r>l)
+            {
+               int cnt = (r-l);
+              // cout<<cnt<<"- ";
+               ans += (cnt/2)+(cnt%2);
+               l+=cnt/2+(cnt%2);
+               r-=cnt/2+(cnt%2);
+               //cout<<l<<" "<<r<<endl;
+            }
+        }
+       int cnt = abs(l-r);
+        ans += (cnt/2)+(cnt%2);
+        if(cnt%2!=0)
+        {
+            ans = -1;
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+  }
