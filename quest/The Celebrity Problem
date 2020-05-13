@@ -1,0 +1,202 @@
+In a party of N people, only one person is known to everyone. Such a person may be present in the party, if yes, (s)he doesn’t 
+know anyone in the party. We can only ask questions like “does A know B? “. Find the stranger (celebrity) in the minimum number
+of questions.
+
+bool knows(int a, int b) 
+{ 
+    return MATRIX[a][b]; 
+} 
+   
+// Returns -1 if celebrity 
+// is not present. If present, 
+// returns id (value from 0 to n-1). 
+int findCelebrity(int n) 
+{ 
+    //the graph needs not be constructed 
+    //as the edges can be found by 
+    //using knows function 
+      
+    //degree array; 
+    int indegree[n]={0},outdegree[n]={0}; 
+      
+    //query for all edges 
+    for(int i=0; i<n; i++) 
+    { 
+        for(int j=0; j<n; j++) 
+        { 
+            int x = knows(i,j); 
+              
+            //set the degrees 
+            outdegree[i]+=x; 
+            indegree[j]+=x; 
+        } 
+    } 
+      
+    //find a person with indegree n-1 
+    //and out degree 0 
+    for(int i=0; i<n; i++) 
+    if(indegree[i] == n-1 && outdegree[i] == 0) 
+        return i; 
+      
+    return -1; 
+} 
+   
+// Driver code 
+int main() 
+{ 
+    int n = 4; 
+    int id = findCelebrity(n); 
+    id == -1 ? cout << "No celebrity" : 
+               cout << "Celebrity ID " << id; 
+    return 0; 
+} 
+
+Complexity Analysis:
+Time Complexity: O(n2).
+A nested loop is run traversing the array, SO the time complexity is O(n2)
+Space Complexity: O(n).
+Since extra space of size n is required.
+
+OR
+
+bool knows(int a, int b) 
+{ 
+    return MATRIX[a][b]; 
+} 
+  
+// Returns -1 if celebrity 
+// is not present. If present, 
+// returns id (value from 0 to n-1). 
+int findCelebrity(int n) 
+{ 
+    // Handle trivial  
+    // case of size = 2 
+  
+    stack<int> s; 
+  
+    int C; // Celebrity 
+  
+    // Push everybody to stack 
+    for (int i = 0; i < n; i++) 
+        s.push(i); 
+  
+    // Extract top 2 
+    int A = s.top(); 
+    s.pop(); 
+    int B = s.top(); 
+    s.pop(); 
+  
+    // Find a potential celevrity 
+    while (s.size() > 1) 
+    { 
+        if (knows(A, B)) 
+        { 
+            A = s.top(); 
+            s.pop(); 
+        } 
+        else
+        { 
+            B = s.top(); 
+            s.pop(); 
+        } 
+    } 
+  
+    // Potential candidate? 
+    C = s.top(); 
+    s.pop(); 
+  
+    // Last candidate was not  
+    // examined, it leads one  
+    // excess comparison (optimize) 
+    if (knows(C, B)) 
+        C = B; 
+  
+    if (knows(C, A)) 
+        C = A; 
+  
+    // Check if C is actually 
+    // a celebrity or not 
+    for (int i = 0; i < n; i++) 
+    { 
+        // If any person doesn't  
+        // know 'a' or 'a' doesn't  
+        // know any person, return -1 
+        if ( (i != C) && 
+                (knows(C, i) ||  
+                 !knows(i, C)) ) 
+            return -1; 
+    } 
+  
+    return C; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    int n = 4; 
+    int id = findCelebrity(n); 
+    id == -1 ? cout << "No celebrity" : 
+               cout << "Celebrity ID " << id; 
+    return 0; 
+} 
+Complexity Analysis:
+Time Complexity: O(n).
+Total number of comparisons 3(N-1), so the time complexity is O(n).
+Space Complexity: O(n).
+n extra space is needed to store the stack.
+
+bool knows(int a, int b) 
+{ 
+    return MATRIX[a][b]; 
+} 
+  
+// Returns id of celebrity 
+int findCelebrity(int n) 
+{ 
+    // Initialize two pointers  
+    // as two corners 
+    int a = 0; 
+    int b = n - 1; 
+  
+    // Keep moving while  
+    // the two pointers 
+    // don't become same.  
+    while (a < b) 
+    { 
+        if (knows(a, b)) 
+            a++; 
+        else
+            b--; 
+    } 
+  
+    // Check if a is actually 
+    // a celebrity or not 
+    for (int i = 0; i < n; i++) 
+    { 
+        // If any person doesn't  
+        // know 'a' or 'a' doesn't 
+        // know any person, return -1 
+        if ( (i != a) && 
+                (knows(a, i) ||  
+                !knows(i, a)) ) 
+            return -1; 
+    } 
+  
+    return a; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    int n = 4; 
+    int id = findCelebrity(n); 
+    id == -1 ? cout << "No celebrity" : 
+               cout << "Celebrity ID " 
+                    << id; 
+    return 0; 
+} 
+Complexity Analysis:
+Time Complexity: O(n).
+Total number of comparisons 2(N-1), so the time complexity is O(n).
+Space Complexity : O(1).
+No extra space is required.
