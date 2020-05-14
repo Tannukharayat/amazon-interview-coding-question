@@ -1,0 +1,165 @@
+Given a binary tree, print it vertically. The following example illustrates vertical order traversal.
+           1
+        /    \
+       2      3
+      / \    / \
+     4   5  6   7
+             \   \
+              8   9 
+               
+              
+The output of print this tree vertically will be:
+4
+2
+1 5 6
+3 8
+7
+9 
+
+void findMinMax(Node *node, int *min, int *max, int hd) 
+{ 
+    // Base case 
+    if (node == NULL) return; 
+  
+    // Update min and max 
+    if (hd < *min)  *min = hd; 
+    else if (hd > *max) *max = hd; 
+  
+    // Recur for left and right subtrees 
+    findMinMax(node->left, min, max, hd-1); 
+    findMinMax(node->right, min, max, hd+1); 
+} 
+  
+// A utility function to print all nodes on a given line_no. 
+// hd is horizontal distance of current node with respect to root. 
+void printVerticalLine(Node *node, int line_no, int hd) 
+{ 
+    // Base case 
+    if (node == NULL) return; 
+  
+    // If this node is on the given line number 
+    if (hd == line_no) 
+        cout << node->data << " "; 
+  
+    // Recur for left and right subtrees 
+    printVerticalLine(node->left, line_no, hd-1); 
+    printVerticalLine(node->right, line_no, hd+1); 
+} 
+  
+// The main function that prints a given binary tree in 
+// vertical order 
+void verticalOrder(Node *root) 
+{ 
+    // Find min and max distances with resepect to root 
+    int min = 0, max = 0; 
+    findMinMax(root, &min, &max, 0); 
+  
+    // Iterate through all possible vertical lines starting 
+    // from the leftmost line and print nodes line by line 
+    for (int line_no = min; line_no <= max; line_no++) 
+    { 
+        printVerticalLine(root, line_no, 0); 
+        cout << endl; 
+    } 
+}
+
+Time Complexity: Time complexity of above algorithm is O(w*n) where w is width of Binary Tree and n is number of nodes in 
+Binary Tree. In worst case, the value of w can be O(n) (consider a complete tree for example) and time complexity can become 
+O(n2).
+
+OR
+
+void printVerticalOrder(Node* root) 
+{ 
+    // Base case 
+    if (!root) 
+        return; 
+  
+    // Create a map and store vertical oder in 
+    // map using function getVerticalOrder() 
+    map < int,vector<int> > m; 
+    int hd = 0; 
+  
+    // Create queue to do level order traversal. 
+    // Every item of queue contains node and 
+    // horizontal distance. 
+    queue<pair<Node*, int> > que; 
+    que.push(make_pair(root, hd)); 
+  
+     while (!que.empty()) 
+     { 
+        // pop from queue front 
+        pair<Node *,int> temp = que.front(); 
+        que.pop(); 
+        hd = temp.second; 
+        Node* node = temp.first; 
+  
+        // insert this node's data in vector of hash 
+        m[hd].push_back(node->key); 
+  
+        if (node->left != NULL) 
+            que.push(make_pair(node->left, hd-1)); 
+        if (node->right != NULL) 
+            que.push(make_pair(node->right, hd+1)); 
+    } 
+  
+    // Traverse the map and print nodes at 
+    // every horigontal distance (hd) 
+    map< int,vector<int> > :: iterator it; 
+    for (it=m.begin(); it!=m.end(); it++) 
+    { 
+        for (int i=0; i<it->second.size(); ++i) 
+            cout << it->second[i] << " "; 
+        cout << endl; 
+    } 
+} 
+Time Complexity of above implementation is O(n Log n). Note that above implementation uses map which is implemented using 
+self-balancing BST.
+
+We can reduce time complexity to O(n) using unordered_map. To print nodes in desired order, we can have 2 variables denoting 
+min and max horizontal distance. We can simply iterate from min to max horizontal distance and get corresponding values from
+Map. So it is O(n)
+
+Auxiliary Space : O(n)
+
+OR
+
+oid getVerticalOrder(Node* root, int hd, map<int, vector<int>> &m) 
+{ 
+    // Base case 
+    if (root == NULL) 
+        return; 
+  
+    // Store current node in map 'm' 
+    m[hd].push_back(root->key); 
+  
+    // Store nodes in left subtree 
+    getVerticalOrder(root->left, hd-1, m); 
+  
+    // Store nodes in right subtree 
+    getVerticalOrder(root->right, hd+1, m); 
+} 
+  
+// The main function to print vertical order of a binary tree 
+// with the given root 
+void printVerticalOrder(Node* root) 
+{ 
+    // Create a map and store vertical order in map using 
+    // function getVerticalOrder() 
+    map < int,vector<int> > m; 
+    int hd = 0; 
+    getVerticalOrder(root, hd,m); 
+  
+    // Traverse the map and print nodes at every horigontal 
+    // distance (hd) 
+    map< int,vector<int> > :: iterator it; 
+    for (it=m.begin(); it!=m.end(); it++) 
+    { 
+        for (int i=0; i<it->second.size(); ++i) 
+            cout << it->second[i] << " "; 
+        cout << endl; 
+    } 
+} 
+Time Complexity of hashing based solution can be considered as O(n) 
+
+Note that the above solution may print nodes in same vertical order as they appear in tree.
