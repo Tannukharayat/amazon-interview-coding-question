@@ -1,0 +1,65 @@
+Given two arrays which represent two sequences of keys that are used to create BSTs. Imagine we make a Binary Search Tree (BST) 
+from each array. We need to tell whether two BSTs will be identical or not without actually constructing the tree.\
+
+bool sameBSTs(vector<int> aL1, 
+                            vector<int> aL2) 
+{ 
+    // Base cases 
+    if (aL1.size() != aL2.size()) 
+        return false; 
+    if (aL1.size() == 0) 
+        return true; 
+    if (aL1[0] != aL2[0]) 
+        return false; 
+  
+    // Construct two lists from each input array. The first 
+    // list contains values smaller than first value, i.e., 
+    // left subtree. And second list contains right subtree. 
+    vector<int> aLLeft1 ; 
+    vector<int> aLRight1 ; 
+    vector<int> aLLeft2 ; 
+    vector<int> aLRight2 ; 
+    for (int i = 1; i < aL1.size(); i++)  
+    { 
+        if (aL1[i] < aL1[0]) 
+            aLLeft1.push_back(aL1[i]); 
+        else
+            aLRight1.push_back(aL1[i]); 
+  
+        if (aL2[i] < aL2[0]) 
+            aLLeft2.push_back(aL2[i]); 
+        else
+            aLRight2.push_back(aL2[i]); 
+    } 
+  
+    // Recursively compare left and right 
+    // subtrees. 
+    return sameBSTs(aLLeft1, aLLeft2) && 
+        sameBSTs(aLRight1, aLRight2); 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    vector<int> aL1; 
+    vector<int> aL2; 
+    aL1.push_back(3); 
+    aL1.push_back(5); 
+    aL1.push_back(4); 
+    aL1.push_back(6); 
+    aL1.push_back(1); 
+    aL1.push_back(0); 
+    aL1.push_back(2); 
+      
+    aL2.push_back(3); 
+    aL2.push_back(1); 
+    aL2.push_back(5); 
+    aL2.push_back(2); 
+    aL2.push_back(4); 
+    aL2.push_back(6); 
+    aL2.push_back(0); 
+      
+    cout << ((sameBSTs(aL1, aL2))?"true":"false")<<"\n"; 
+    return 0; 
+} 
+Time Complexity : O(n * n)
