@@ -1,0 +1,27 @@
+Given two unsorted arrays arr1[] and arr2[]. They may contain duplicates. For each element in arr1[] count elements less than or
+equal to it in array arr2[].
+
+void countEleLessThanOrEqual(int arr1[], int m,  
+                                int arr2[], int n)  
+{  
+    // Creating hash array initially  
+    // filled with zero  
+    int hash[MAX] = {0};  
+      
+    // Insert element of arr2[] to hash  
+    // such that hash[i] will give count of  
+    // element i in arr2[]  
+    for (int i = 0; i < n; i++)  
+        hash[arr2[i]]++;  
+  
+    // Presum of hash array  
+    // such that hash[i] will give count of  
+    // element less than or equals to i in arr2[]  
+    for (int i=1; i<MAX; i++)      
+        hash[i] = hash[i] + hash[i-1];  
+      
+    // Traverse arr1[] and print hash[arr[i]]  
+    for (int i = 0; i < m; i++)  
+        cout << hash[arr1[i]] << " ";      
+}  
+  
