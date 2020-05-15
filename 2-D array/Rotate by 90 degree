@@ -86,3 +86,5 @@ space.**
 	}
 	return 0;
 }
+
+LEFT ROTATE:- The idea is to find the transpose of the matrix and then reverse the columns of the transposed matrix.
