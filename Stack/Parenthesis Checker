@@ -127,4 +127,90 @@
           Time Complexity: O(n3)
           Auxiliary Space: O(1)
           
+          OR
           
+          bool helperFunc(int& count, string& s, int& i, int& j, char tocom) 
+          { 
+              count--; 
+              if (j > -1 && s[j] == tocom) { 
+                  s[i] = '#'; 
+                  s[j] = '#'; 
+                  while (j >= 0 && s[j] == '#') 
+                      j--; 
+                  i++; 
+                  return 1; 
+              } 
+              else
+                  return 0; 
+          } 
+
+          // Function that returns true if s is a 
+          // valid balanced bracket string 
+          bool isValid(string s) 
+          { 
+
+              // Empty string is considered balanced 
+              if (s.length() == 0) 
+                  return true; 
+
+              else { 
+                  int i = 0; 
+
+                  // Increments for opening bracket and 
+                  // decrements for closing bracket 
+                  int count = 0; 
+                  int j = -1; 
+                  bool result; 
+                  while (i < s.length()) { 
+                      switch (s[i]) { 
+                      case '}': 
+                          result = helperFunc(count, s, i, j, '{'); 
+                          if (result == 0) { 
+                              return false; 
+                          } 
+                          break; 
+
+                      case ')': 
+                          result = helperFunc(count, s, i, j, '('); 
+                          if (result == 0) { 
+                              return false; 
+                          } 
+                          break; 
+
+                      case ']': 
+                          result = helperFunc(count, s, i, j, '['); 
+                          if (result == 0) { 
+                              return false; 
+                          } 
+                          break; 
+
+                      default: 
+                          j = i; 
+                          i++; 
+                          count++; 
+                      } 
+                  } 
+
+                  // count != 0 indicates unbalanced parentheses 
+                  // this check is required to handle cases where 
+                  // count of opening brackets > closing brackets 
+                  if (count != 0) 
+                      return false; 
+
+                  return true; 
+              } 
+          } 
+
+          // Driver code 
+          int main() 
+          { 
+              string str = "[[]][]()"; 
+
+              if (isValid(str)) 
+                  cout << "Yes"; 
+              else
+                  cout << "No"; 
+
+              return 0; 
+          } 
+          O(1) space | O(N^2) time complexity
