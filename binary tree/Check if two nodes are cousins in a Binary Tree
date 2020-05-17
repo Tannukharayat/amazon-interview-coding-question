@@ -1,0 +1,215 @@
+Given the binary Tree and the two nodes say ‘a’ and ‘b’, determine whether the two nodes are cousins of each other or not.
+Two nodes are cousins of each other if they are at same level and have different parents.
+
+struct Node 
+{ 
+    int data; 
+    struct Node *left, *right; 
+}; 
+  
+// A utility function to create a new Binary Tree Node 
+struct Node *newNode(int item) 
+{ 
+    struct Node *temp =  (struct Node *)malloc(sizeof(struct Node)); 
+    temp->data = item; 
+    temp->left = temp->right = NULL; 
+    return temp; 
+} 
+  
+// Recursive function to check if two Nodes are siblings 
+int isSibling(struct Node *root, struct Node *a, struct Node *b) 
+{ 
+    // Base case 
+    if (root==NULL)  return 0; 
+  
+    return ((root->left==a && root->right==b)|| 
+            (root->left==b && root->right==a)|| 
+            isSibling(root->left, a, b)|| 
+            isSibling(root->right, a, b)); 
+} 
+  
+// Recursive function to find level of Node 'ptr' in a binary tree 
+int level(struct Node *root, struct Node *ptr, int lev) 
+{ 
+    // base cases 
+    if (root == NULL) return 0; 
+    if (root == ptr)  return lev; 
+  
+    // Return level if Node is present in left subtree 
+    int l = level(root->left, ptr, lev+1); 
+    if (l != 0)  return l; 
+  
+    // Else search in right subtree 
+    return level(root->right, ptr, lev+1); 
+} 
+  
+  
+// Returns 1 if a and b are cousins, otherwise 0 
+int isCousin(struct Node *root, struct Node *a, struct Node *b) 
+{ 
+    //1. The two Nodes should be on the same level in the binary tree. 
+    //2. The two Nodes should not be siblings (means that they should 
+    // not have the same parent Node). 
+    if ((level(root,a,1) == level(root,b,1)) && !(isSibling(root,a,b))) 
+        return 1; 
+    else return 0; 
+} 
+  
+// Driver Program to test above functions 
+int main() 
+{ 
+    struct Node *root = newNode(1); 
+    root->left = newNode(2); 
+    root->right = newNode(3); 
+    root->left->left = newNode(4); 
+    root->left->right = newNode(5); 
+    root->left->right->right = newNode(15); 
+    root->right->left = newNode(6); 
+    root->right->right = newNode(7); 
+    root->right->left->right = newNode(8); 
+  
+    struct Node *Node1,*Node2; 
+    Node1 = root->left->left; 
+    Node2 = root->right->right; 
+  
+    isCousin(root,Node1,Node2)? puts("Yes"): puts("No"); 
+  
+    return 0; 
+} 
+Time Complexity of the above solution is O(n) 
+
+OR
+
+struct Node { 
+    int data; 
+    struct Node *left, *right; 
+}; 
+  
+// A utility function to create a new 
+// Binary Tree Node 
+struct Node* newNode(int item) 
+{ 
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node)); 
+    temp->data = item; 
+    temp->left = temp->right = NULL; 
+    return temp; 
+} 
+  
+// Returns true if a and b are cousins, 
+// otherwise false. 
+bool isCousin(Node* root, Node* a, Node* b) 
+{ 
+    if (root == NULL) 
+        return false; 
+  
+    // To store parent of node a. 
+    Node* parA = NULL; 
+  
+    // To store parent of node b. 
+    Node* parB = NULL; 
+  
+    // queue to perform level order 
+    // traversal. Each element of 
+    // queue is a pair of node and 
+    // its parent. 
+    queue<pair<Node*, Node*> > q; 
+  
+    // Dummy node to act like parent 
+    // of root node. 
+    Node* tmp = newNode(-1); 
+  
+    // To store front element of queue. 
+    pair<Node*, Node*> ele; 
+  
+    // Push root to queue. 
+    q.push(make_pair(root, tmp)); 
+    int levSize; 
+  
+    while (!q.empty()) { 
+  
+        // find number of elements in 
+        // current level. 
+        levSize = q.size(); 
+        while (levSize) { 
+  
+            ele = q.front(); 
+            q.pop(); 
+  
+            // check if current node is node a 
+            // or node b or not. 
+            if (ele.first->data == a->data) { 
+                parA = ele.second; 
+            } 
+  
+            if (ele.first->data == b->data) { 
+                parB = ele.second; 
+            } 
+  
+            // push children of current node 
+            // to queue. 
+            if (ele.first->left) { 
+                q.push(make_pair(ele.first->left, ele.first)); 
+            } 
+  
+            if (ele.first->right) { 
+                q.push(make_pair(ele.first->right, ele.first)); 
+            } 
+  
+            levSize--; 
+  
+            // If both nodes are found in 
+            // current level then no need 
+            // to traverse current level further. 
+            if (parA && parB) 
+                break; 
+        } 
+  
+        // Check if both nodes are siblings 
+        // or not. 
+        if (parA && parB) { 
+            return parA != parB; 
+        } 
+  
+        // If one node is found in current level 
+        // and another is not found, then 
+        // both nodes are not cousins. 
+        if ((parA && !parB) || (parB && !parA)) { 
+            return false; 
+        } 
+    } 
+  
+    return false; 
+} 
+// Driver Code 
+int main() 
+{ 
+    /* 
+            1  
+           /  \  
+          2    3 
+         / \  / \ 
+        4   5 6  7 
+             \ \ 
+             15 8 
+    */
+  
+    struct Node* root = newNode(1); 
+    root->left = newNode(2); 
+    root->right = newNode(3); 
+    root->left->left = newNode(4); 
+    root->left->right = newNode(5); 
+    root->left->right->right = newNode(15); 
+    root->right->left = newNode(6); 
+    root->right->right = newNode(7); 
+    root->right->left->right = newNode(8); 
+  
+    struct Node *Node1, *Node2; 
+    Node1 = root->left->left; 
+    Node2 = root->right->right; 
+  
+    isCousin(root, Node1, Node2) ? puts("Yes") : puts("No"); 
+  
+    return 0; 
+} 
+Time Complexity: O(n)
+Auxiliary Space: O(n)
