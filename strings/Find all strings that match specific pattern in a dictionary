@@ -1,0 +1,92 @@
+Given a dictionary of words, find all strings that matches the given pattern where every character in the pattern is uniquely mapped to a 
+character in the dictionary
+
+Input:  
+dict = ["abb", "abc", "xyz", "xyy"];
+pattern = "foo"
+Output: [xyy abb]
+Explanation: 
+xyy and abb have same character at 
+index 1 and 2 like the pattern
+
+Word='xxyzzaabcdd'
+Pattern='mmnoopplfmm'
+For word-:
+map['x']=1;
+map['y']=2;
+map['z']=3;
+map['a']=4;
+map['b']=5;
+map['c']=6;
+map['d']=7;
+Hash for Word="11233445677"
+
+For Pattern-:
+map['m']=1;
+map['n']=2;
+map['o']=3;
+map['p']=4;
+map['l']=5;
+map['f']=6;
+Hash for Pattern="11233445611"
+Therefore in the given example Hash of word 
+is not equal to Hash of pattern so this word 
+is not included in the answer
+
+    string encodeString(string str) 
+{ 
+    unordered_map<char, int> map; 
+    string res = ""; 
+    int i = 0; 
+  
+    // for each character in given string 
+    for (char ch : str) { 
+        // If the character is occurring for the first 
+        // time, assign next unique number to that char 
+        if (map.find(ch) == map.end()) 
+            map[ch] = i++; 
+  
+        // append the number associated with current 
+        // character into the output string 
+        res += to_string(map[ch]); 
+    } 
+  
+    return res; 
+} 
+  
+// Function to print all the strings that match the 
+// given pattern where every character in the pattern is 
+// uniquely mapped to a character in the dictionary 
+void findMatchedWords(unordered_set<string> dict, 
+                      string pattern) 
+{ 
+    // len is length of the pattern 
+    int len = pattern.length(); 
+  
+    // encode the string 
+    string hash = encodeString(pattern); 
+  
+    // for each word in the dictionary 
+    for (string word : dict) { 
+        // If size of pattern is same as size of current 
+        // dictionary word and both pattern and the word 
+        // has same hash, print the word 
+        if (word.length() == len && encodeString(word) == hash) 
+            cout << word << " "; 
+    } 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    unordered_set<string> dict = { "abb", "abc", "xyz", "xyy" }; 
+    string pattern = "foo"; 
+  
+    findMatchedWords(dict, pattern); 
+  
+    return 0; 
+} vComplexity Analysis:
+Time Complexity: O(N*K).
+Here ‘N’ is the number of words and ‘K’ is its length. As we have to traverse each word separately to create its hash.
+Auxiliary Space : O(N).
+The use of hash_map data structure for mapping characters takes this amount of space.
