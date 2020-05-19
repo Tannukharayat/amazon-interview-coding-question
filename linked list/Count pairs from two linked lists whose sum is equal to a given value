@@ -1,0 +1,106 @@
+Given two linked lists(can be sorted or unsorted) of size n1 and n2 of distinct elements. Given a value x. The problem is to 
+count all pairs from both lists whose sum is equal to the given value x.
+
+  int countPairs(struct Node* head1, struct Node* head2, int x) 
+{ 
+    int count = 0; 
+      
+    struct Node *p1, *p2; 
+      
+    // traverse the 1st linked list 
+    for (p1 = head1; p1 != NULL; p1 = p1->next) 
+  
+        // for each node of 1st list 
+        // traverse the 2nd list 
+  
+        for (p2 = head2; p2 != NULL; p2 = p2->next) 
+  
+            // if sum of pair is equal to 'x' 
+            // increment count 
+            if ((p1->data + p2->data) == x) 
+                count++;             
+          
+    // required count of pairs      
+    return count; 
+} 
+
+Time Complexity: O(n1*n2)
+Auxiliary Space: O(1)
+
+OR
+
+int countPairs(struct Node* head1, struct Node* head2, 
+                                              int x) 
+{ 
+    int count = 0; 
+      
+    // sort head1 in ascending order and 
+    // head2 in descending order 
+    // sort (head1), sort (head2) 
+    // For simplicity both lists are considered to be  
+    // sorted in the respective orders 
+      
+    // traverse both the lists from left to right 
+    while (head1 != NULL && head2 != NULL) 
+    { 
+        // if this sum is equal to 'x', then move both  
+        // the lists to next nodes and increment 'count' 
+        if ((head1->data + head2->data) == x) 
+        { 
+            head1 = head1->next; 
+            head2 = head2->next; 
+            count++;     
+        }     
+          
+        // if this sum is greater than x, then 
+        // move head2 to next node 
+        else if ((head1->data + head2->data) > x) 
+            head2 = head2->next; 
+              
+        // else move head1 to next node     
+        else
+            head1 = head1->next; 
+    }         
+          
+    // required count of pairs      
+    return count; 
+} 
+Time Complexity: O(n1*logn1) + O(n2*logn2)
+Auxiliary Space: O(1)
+
+OR
+
+// lists whose sum is equal to a given value 
+int countPairs(struct Node* head1, struct Node* head2,  
+                                               int x) 
+{ 
+    int count = 0; 
+      
+    unordered_set<int> us; 
+      
+    // insert all the elements of 1st list 
+    // in the hash table(unordered_set 'us') 
+    while (head1 != NULL) 
+    { 
+        us.insert(head1->data);     
+          
+        // move to next node     
+        head1 = head1->next; 
+    } 
+      
+    // for each element of 2nd list 
+    while (head2 != NULL)     
+    { 
+        // find (x - head2->data) in 'us' 
+        if (us.find(x - head2->data) != us.end()) 
+            count++; 
+          
+        // move to next node 
+        head2 = head2->next;     
+    } 
+    // required count of pairs      
+    return count; 
+} 
+
+Time Complexity: O(n1 + n2)
+Auxiliary Space: O(n1), hash table should be created of the array having smaller size so as to reduce the space complexity.
