@@ -1,0 +1,22 @@
+Write a method to replace all the spaces in a string with ‘%20’. You may assume that the string has sufficient space at the end
+to hold the additional characters, and that you are given the “true” length of the string.
+  
+  class GFG 
+{ 
+    public static void main(String[] args)  
+    { 
+        // Instantiate the string 
+        String str = "Mr John Smith   "; 
+          
+        // Trim the given string 
+        str = str.trim(); 
+          
+        // Replace All space (unicode is \\s) to %20 
+        str = str.replaceAll("\\s", "%20"); 
+          
+        // Display the result 
+        System.out.println(str); 
+    } 
+} 
+
+  
