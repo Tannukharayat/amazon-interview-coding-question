@@ -1,0 +1,54 @@
+Given n ranges of the form L and R, the task is to find the maximum occurred integer in all the ranges. If more than one such 
+integer exists, print the smallest one.
+
+  Input : L1 = 1 R1 = 15
+        L2 = 4 R2 = 8
+        L3 = 3 R3 = 5
+        L3 = 1 R3 = 4
+Output : 4
+
+  An efficient solution requires linear time. We create an array arr[] of size 1000000 (limit given on maximum value of an 
+  interval). The idea is to add +1 to each Li index and -1 to corresponding Ri index in arr[]. After this, find the prefix sum
+  of the array.
+  
+      int maximumOccurredElement(int L[], int R[], int n) 
+    { 
+        // Initalising all element of array to 0. 
+        int arr[MAX]; 
+        memset(arr, 0, sizeof arr); 
+
+        // Adding +1 at Li index and substracting 1 
+        // at Ri index. 
+        int maxi=-1; 
+        for (int i = 0; i < n; i++) { 
+            arr[L[i]] += 1; 
+            arr[R[i] + 1] -= 1; 
+            if(R[i]>maxi){ 
+                maxi=R[i]; 
+            } 
+        } 
+
+        // Finding prefix sum and index having maximum 
+        // prefix sum. 
+        int msum = arr[0],ind; 
+        for (int i = 1; i < maxi+1; i++) { 
+            arr[i] += arr[i - 1]; 
+            if (msum < arr[i]) { 
+                msum = arr[i]; 
+                ind = i; 
+            } 
+        } 
+
+        return ind; 
+    } 
+
+    // Driven Program 
+    int main() 
+    { 
+        int L[] = { 1, 4, 9, 13, 21 }; 
+        int R[] = { 15, 8, 12, 20, 30 }; 
+        int n = sizeof(L) / sizeof(L[0]); 
+
+        cout << maximumOccurredElement(L, R, n) << endl; 
+        return 0; 
+    } 
