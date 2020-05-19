@@ -1,0 +1,61 @@
+Given two numbers ‘a’ and b’. Write a program to count number of bits needed to be flipped to convert ‘a’ to ‘b’.
+Example :
+
+Input : a = 10, b = 20
+Output : 4
+Binary representation of a is 00001010
+Binary representation of b is 00010100
+We need to flip highlighted four bits in a
+to make it b.
+
+
+    int countSetBits(int n) 
+        { 
+            int count = 0; 
+            while (n > 0) 
+            { 
+                count++; 
+                n &= (n-1); 
+            } 
+            return count; 
+        } 
+
+        // Function that return count of 
+        // flipped number 
+        int FlippedCount(int a, int b) 
+        { 
+            // Return count of set bits in 
+            // a XOR b 
+            return countSetBits(a^b); 
+        } 
+        
+        oR
+        
+        int countBits(int a, int b) 
+        { 
+
+            // To store the required count 
+            int count = 0; 
+
+            // Loop until both of them become zero 
+            while (a || b) { 
+
+                // Store the last bits in a 
+                // as well as b 
+                int last_bit_a = a & 1; 
+                int last_bit_b = b & 1; 
+
+                // If the current bit is not same 
+                // in both the integers 
+                if (last_bit_a != last_bit_b) 
+                    count++; 
+
+                // Right shift both the integers by 1 
+                a = a >> 1; 
+                b = b >> 1; 
+            } 
+
+            // Return the count 
+            return count; 
+        } 
+  
