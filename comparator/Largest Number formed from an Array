@@ -36,3 +36,10 @@ Output:
               }
             return 0;
           }
+
+                   OR
+                   
+           1) Find number of digits in the largest number. Let number of digits be n.
+2) Create extended version of all numbers. In extended version, we have n+1 digits formed by concatenating the number of with itself and truncating extra digits.
+3) Sort original numbers according to their extended values.
+4) Concatenating the sorted numbers produces th required result.
