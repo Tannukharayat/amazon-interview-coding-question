@@ -1,0 +1,82 @@
+Given an array of 2n elements in the following format { a1, a2, a3, a4, ….., an, b1, b2, b3, b4, …., bn }. The task is shuffle the array to
+{a1, b1, a2, b2, a3, b3, ……, an, bn } without using extra space.
+
+Examples:
+
+Input : arr[] = { 1, 2, 9, 15 }
+Output : 1 9 2 15
+
+Input :  arr[] = { 1, 2, 3, 4, 5, 6 }
+Output : 1 4 2 5 3 6
+
+  void shuffleArray(int a[], int n) 
+{ 
+    // Rotate the element to the left 
+    for (int i = 0, q = 1, k = n; i < n; i++, k++, q++)      
+        for (int j = k; j > i + q; j--)  
+            swap(a[j-1], a[j]); 
+} 
+Time Complexity: O(n2)
+
+Method 2: (Divide and Conquer)
+void shufleArray(int a[], int f, int l) 
+{ 
+     if(l>f){ 
+        return; 
+    }    
+  
+    // If only 2 element, return 
+    if (l - f == 1) 
+        return; 
+  
+    // finding mid to divide the array 
+    int mid = (f + l) / 2; 
+  
+    // using temp for swapping first half of second array 
+    int temp = mid + 1; 
+  
+    // mmid is use for swapping second half for first array 
+    int mmid = (f + mid) / 2; 
+  
+    // Swapping the element 
+    for (int i = mmid + 1; i <= mid; i++) 
+        swap(a[i], a[temp++]); 
+  
+    // Recursively doing for first half and second half 
+    shufleArray(a, f, mid); 
+    shufleArray(a, mid + 1, l); 
+} 
+Time Complexity: O(n log n)
+
+OR
+
+void rearrange(int arr[], int n)  
+{ 
+  
+    // if size is null or odd return because it 
+    // is not possible to rearrange 
+    if (arr == NULL || n % 2 == 1) 
+        return; 
+  
+    // start from the middle index 
+    int currIdx = (n - 1) / 2; 
+  
+    // each time we will set two elements from the  
+    // start to the valid position by swapping 
+    while (currIdx > 0) 
+    { 
+        int count = currIdx, swapIdx = currIdx; 
+      
+        while (count-- > 0)  
+        { 
+            int temp = arr[swapIdx + 1]; 
+            arr[swapIdx + 1] = arr[swapIdx]; 
+            arr[swapIdx] = temp; 
+            swapIdx++; 
+        } 
+          
+        currIdx--; 
+    } 
+}
+
+ This algorithm will take O(n^2).
