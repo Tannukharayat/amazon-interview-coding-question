@@ -1,0 +1,184 @@
+Given a Binary Tree where all values are from 0 to n-1. Construct an ancestor matrix mat[n][n]. Ancestor matrix is defined as below.
+
+mat[i][j] = 1 if i is ancestor of j
+mat[i][j] = 0, otherwise
+Examples:
+
+Input: Root of below Binary Tree.
+          0
+        /   \
+       1     2
+Output: 0 1 1
+        0 0 0 
+        0 0 0 
+        
+        
+        
+        struct Node 
+{ 
+    int data; 
+    Node *left, *right; 
+}; 
+  
+// Creating a global boolean matrix for simplicity 
+bool mat[MAX][MAX]; 
+  
+// anc[] stores all ancestors of current node.  This 
+// function fills ancestors for all nodes. 
+// It also returns size of tree.  Size of tree is 
+// used to print ancestor matrix. 
+int ancestorMatrixRec(Node *root, vector<int> &anc) 
+{ 
+    /* base case */
+    if (root == NULL) return 0;; 
+  
+    // Update all ancestors of current node 
+    int data = root->data; 
+    for (int i=0; i<anc.size(); i++) 
+       mat[anc[i]][data] = true; 
+  
+    // Push data to list of ancestors 
+    anc.push_back(data); 
+  
+    // Traverse left and right subtrees 
+    int l = ancestorMatrixRec(root->left, anc); 
+    int r = ancestorMatrixRec(root->right, anc); 
+  
+    // Remove data from list the list of ancestors 
+    // as all descendants of it are processed now. 
+    anc.pop_back(); 
+  
+    return l+r+1; 
+} 
+  
+// This function mainly calls ancestorMatrixRec() 
+void ancestorMatrix(Node *root) 
+{ 
+    // Create an empty ancestor array 
+    vector<int> anc; 
+  
+    // Fill ancestor matrix and find size of 
+    // tree. 
+    int n = ancestorMatrixRec(root, anc); 
+  
+    // Print the filled values 
+    for (int i=0; i<n; i++) 
+    { 
+        for (int j=0; j<n; j++) 
+            cout << mat[i][j] << " "; 
+        cout << endl; 
+    } 
+} 
+  
+/* Helper function to create a new node */
+Node* newnode(int data) 
+{ 
+    Node* node = new Node; 
+    node->data = data; 
+    node->left = node->right = NULL; 
+    return (node); 
+} 
+  
+/* Driver program to test above functions*/
+int main() 
+{ 
+    /* Construct the following binary tree 
+                5 
+              /   \ 
+            1      2 
+          /  \    / 
+         0    4  3    */
+    Node *root        = newnode(5); 
+    root->left        = newnode(1); 
+    root->right       = newnode(2); 
+    root->left->left  = newnode(0); 
+    root->left->right = newnode(4); 
+    root->right->left = newnode(3); 
+  
+    ancestorMatrix(root); 
+  
+    return 0; 
+} 
+
+Time complexity of above solution is O(n2).
+
+OR
+
+int M[size][size]={0}; 
+  
+/* A binary tree node */
+struct Node  
+{  
+    int data;  
+    Node *left, *right;  
+};  
+  
+/* Helper function to create a new node */
+Node* newnode(int data)  
+{  
+    Node* node = new Node;  
+    node->data = data;  
+    node->left = node->right = NULL;  
+    return (node);  
+}  
+  
+void printMatrix(){ 
+        for(int i=0;i<size;i++){ 
+            for(int j=0;j<size;j++) 
+                cout<<M[i][j]<<" "; 
+            cout<<endl; 
+        }         
+  
+} 
+//First PreOrder Traversal  
+void MatrixUtil(Node *root,int index){ 
+          
+    if(root==NULL)return; 
+      
+        int preData=root->data; 
+              
+        //Since there is no ancestor for root node, 
+        // so we doesn't assign it's value as 1             
+        if(index==-1)index=root->data; 
+        else  M[index][preData]=1;     
+      
+    MatrixUtil(root->left,preData); 
+    MatrixUtil(root->right,preData); 
+} 
+  
+void Matrix(Node *root){ 
+    // Call Func MatrixUtil 
+    MatrixUtil(root,-1); 
+      
+      
+    //Applying Transitive Closure for the given Matrix 
+    for(int i=0;i<size;i++){ 
+        for (int j = 0;j< size; j++) { 
+            for(int k=0;k<size;k++) 
+                M[j][k]=M[j][k]||(M[j][i]&&M[i][k]); 
+              
+        } 
+          
+    } 
+      
+    //Printing Matrix 
+    printMatrix(); 
+  
+      
+} 
+/* Driver program to test above functions*/
+int main()  
+{  
+    Node *root     = newnode(5);  
+    root->left     = newnode(1);  
+    root->right     = newnode(2);  
+    root->left->left = newnode(0);  
+    root->left->right = newnode(4);  
+    root->right->left = newnode(3);  
+  
+    Matrix(root);  
+      
+  
+    return 0;  
+}  
+
