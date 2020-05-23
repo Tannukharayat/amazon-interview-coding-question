@@ -1,0 +1,39 @@
+Given a N X N matrix Mat[N][N] of positive integers. There are only three possible moves from a cell (i, j)
+
+(i+1, j)
+(i+1, j-1)
+(i+1, j+1)
+Starting from any column in row 0, return the largest sum of any of the paths up to row N-1.
+
+
+      int MaximumPath(int Mat[][N]) 
+    { 
+        int result = 0 ; 
+
+        // creat 2D matrix to store the sum 
+        // of the path 
+        int dp[N][N+2]; 
+
+        // initialize all dp matrix as '0' 
+        memset(dp, 0, sizeof(dp)); 
+
+        // copy all element of first column into 
+        // 'dp' first column 
+        for (int i = 0 ; i < N ; i++) 
+            dp[0][i+1] = Mat[0][i]; 
+
+        for (int i = 1 ; i < N ; i++) 
+            for (int j = 1 ; j <= N ; j++) 
+                dp[i][j] = max(dp[i-1][j-1], 
+                               max(dp[i-1][j], 
+                                   dp[i-1][j+1])) + 
+                           Mat[i][j-1] ; 
+
+        // Find maximum path sum that end ups 
+        // at  any column of last row 'N-1' 
+        for (int i=0; i<=N; i++) 
+            result = max(result, dp[N-1][i]); 
+
+        // return maximum sum path 
+        return result ; 
+    } 
