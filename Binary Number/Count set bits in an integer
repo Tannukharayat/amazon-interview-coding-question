@@ -1,0 +1,110 @@
+Write an efficient program to count number of 1s in binary representation of an integer.
+Examples :
+
+Input : n = 6
+Output : 2
+Binary representation of 6 is 110 and has 2 set bits
+
+Input : n = 13
+Output : 3
+Binary representation of 13 is 1101 and has 3 set bits
+
+  unsigned int countSetBits(unsigned int n) 
+{ 
+    unsigned int count = 0; 
+    while (n) { 
+        count += n & 1; 
+        n >>= 1; 
+    } 
+    return count; 
+} 
+Time Complexity: (-)(logn) (Theta of logn)
+
+OR
+
+int countSetBits(int n) 
+{ 
+    // base case 
+    if (n == 0) 
+        return 0; 
+  
+    else
+  
+        // if last bit set add 1 else add 0 
+        return (n & 1) + countSetBits(n >> 1); 
+} 
+  
+// driver code 
+int main() 
+{ 
+    // get value from user 
+    int n = 9; 
+  
+    // function calling 
+    cout << countSetBits(n); 
+  
+    return 0; 
+} 
+OR
+
+ Brian Kernighan’s Algorithm:
+ class gfg { 
+    /* Function to get no of set bits in binary 
+representation of passed binary no. */
+public: 
+    unsigned int countSetBits(int n) 
+    { 
+        unsigned int count = 0; 
+        while (n) { 
+            n &= (n - 1); 
+            count++; 
+        } 
+        return count; 
+    } 
+};
+Time Complexity: O(logn)
+
+OR
+
+int countSetBits(int n) 
+{ 
+    // base case 
+    if (n == 0) 
+        return 0; 
+    else
+        return 1 + countSetBits(n & (n - 1)); 
+} 
+
+Using Lookup table:
+void initialize()  
+{  
+  
+    // To initially generate the  
+    // table algorithmically  
+    BitsSetTable256[0] = 0;  
+    for (int i = 0; i < 256; i++) 
+    {  
+        BitsSetTable256[i] = (i & 1) +  
+        BitsSetTable256[i / 2];  
+    }  
+}  
+  
+// Function to return the count  
+// of set bits in n  
+int countSetBits(int n)  
+{  
+    return (BitsSetTable256[n & 0xff] +  
+            BitsSetTable256[(n >> 8) & 0xff] +  
+            BitsSetTable256[(n >> 16) & 0xff] +  
+            BitsSetTable256[n >> 24]);  
+}  
+  
+  We can count bits in O(1) time using lookup table.
+  or
+  int main() 
+{ 
+    cout << __builtin_popcount(4) << endl; 
+    cout << __builtin_popcount(15); 
+  
+    return 0; 
+} 
