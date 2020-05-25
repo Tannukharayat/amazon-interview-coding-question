@@ -44,3 +44,5 @@ Output: 4 and 10
         printClosest(arr, n, x); 
         return 0; 
     }
+
+An efficient solution can find the pair in O(n) time
