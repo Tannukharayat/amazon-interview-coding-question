@@ -6,16 +6,14 @@ the given binary tree.
             if(root==NULL||flag==1)
             return;
             funct(root->left,flag,target,h);
-            if(flag==1&&h[root->data]==0&&root->data!=target)
-            {
-                cout<<root->data<<" ";
-                h[root->data]=1;
-            }
+            
+            funct(root->right,flag,target,h);
             if(root->data==target)
             {
                 flag=1;
             }
-            funct(root->right,flag,target,h);
+            
+            
             if(flag==1&&h[root->data]==0&&root->data!=target)
             {
                 cout<<root->data<<" ";
@@ -27,6 +25,6 @@ the given binary tree.
              int flag = 0;
              int h[100001]={0};
              funct(root,flag,target, h);
-             cout<<endl;
+             //cout<<endl;
               return 1;
         }
