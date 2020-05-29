@@ -22,13 +22,15 @@
           for (int i = 0; i < n; i++) 
               arr[i] = k - arr[i]; 
 
-          for (int i = 0; i < n; i++) { 
+          for (int i = 0; i < n; i++) 
+          { 
 
               // if the element is positive 
               // and less than the size of 
               // array(in range), make it negative 
               if (abs(arr[i]) - 1 < n 
-                  && arr[abs(arr[i]) - 1] > 0) { 
+                  && arr[abs(arr[i]) - 1] > 0) 
+                  { 
                   arr[abs(arr[i]) - 1] 
                       = -arr[abs(arr[i]) - 1]; 
               } 
@@ -37,13 +39,23 @@
           int flag = 0; 
 
           // Loop from 0 to end of the array 
-          for (int i = 0; i <= k - r - 1; i++) { 
+          for (int i = 0; i <= k - r - 1; i++)
+          { 
 
               // Found positive, out of range 
-              if (arr[i] > 0) { 
+              if (arr[i] > 0)
+              { 
                   flag = 1; 
                   break; 
               } 
+           }
+          }
+              
+              
+              
+              
+              OR
+              
               bool areElementsContiguous(int arr[], int n) 
           { 
               // Storing elements of 'arr[]' in a hash 
@@ -94,51 +106,4 @@
                 TIME: O(N)
                 SPACE : O(N)
 
-                OR
-
-                Efficient solution using hash table
-                bool areElementsContiguous(int arr[], int n) 
-          { 
-              // Storing elements of 'arr[]' in a hash 
-              // table 'us'    
-              unordered_set<int> us; 
-              for (int i = 0; i < n; i++) 
-                  us.insert(arr[i]); 
-
-              // as arr[0] is present in 'us' 
-              int count = 1; 
-
-              // starting with previous smaller element 
-              // of arr[0] 
-              int curr_ele = arr[0] - 1; 
-
-              // if 'curr_ele' is present in 'us' 
-              while (us.find(curr_ele) != us.end()) { 
-
-                  // increment count 
-                  count++; 
-
-                  // update 'curr_ele" 
-                  curr_ele--; 
-              } 
-
-              // starting with next greater element 
-              // of arr[0] 
-              curr_ele = arr[0] + 1; 
-
-              // if 'curr_ele' is present in 'us' 
-              while (us.find(curr_ele) != us.end()) { 
-
-                  // increment count 
-                  count++; 
-
-                  // update 'curr_ele" 
-                  curr_ele++; 
-              } 
-
-              // returns true if array contains a set of 
-              // contiguous integers else returns false 
-              return (count == (int)(us.size())); 
-          } 
-          Time Complexity: O(n).
-Auxiliary Space: O(n).
+               
