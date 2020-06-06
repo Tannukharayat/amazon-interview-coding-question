@@ -33,6 +33,35 @@ Binary Tree. We can save space by storing Preorder traversal and a marker for NU
           deSerialize(root->left, fp); 
           deSerialize(root->right, fp); 
       } 
+      or 
+      
+      void serialize(Node *root,vector<int> &A) 
+{ 
+	if ( !root ) 
+	{
+		 A.push_back ( INT_MAX ) ; 
+		return ; 
+	}
+	 A.push_back ( root -> data ) ; 
+	serialize(root-> left ,A) ; 
+	serialize(root-> right ,A) ; 
+} 
+Node * DeSerialize(vector<int> &A , int &i ) 
+{
+	 //cout << i << "*" ; 
+	if ( i > A.size() or A[ i ] == INT_MAX ) 
+	{
+	 	i++ ; 
+		return NULL ; 
+	}
+	 Node * temp = new Node ( A [ i ] ) ; 
+	i++ ; 
+	temp -> left = DeSerialize( A , i ) ;
+	 temp -> right = DeSerialize( A , i ) ;
+	 return temp ; 
+} /*this function deserializes the serialized vector A*/ 
+Node * deSerialize(vector<int> &A) 
+{ int i = 0 ; // for ( int i = 0 ; i < A.size() ; i ++ ) // cout << A [ i ] << " " ; //cout << endl ; return DeSerialize( A , i ) ; }
       
       ****for n-ary tree****
       void serialize(Node *root, FILE *fp) 
