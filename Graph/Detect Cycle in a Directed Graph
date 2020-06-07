@@ -8,18 +8,18 @@ For ( int i = 0 ; i < n ; i ++ )
 
 Void dfs ( int x ) 
 {
-	If ( visit [ x ] == 1 )
-{
-	Flag = true ; 
-	Return ; 
-}
+		If ( visit [ x ] == 1 )
+	{
+		Flag = true ; 
+		Return ; 
+	}
 
-Vsist [ x ] = 1 ; 
+	Vsist [ x ] = 1 ; 
 
-For ( auro i : v [ x ] ) 
-	Dfs ( x) ;
+	For ( auro i : v [ x ] ) 
+		Dfs ( x) ;
 
-Vsit [ x ] =0 ;   0 -> 1 
+	Vsit [ x ] =0 ;   0 -> 1 
 }
 oR
 
