@@ -1,0 +1,46 @@
+First find the kth smallest element, then go n elements after that and take their sum. O(n + k)
+
+
+int sumOfNElemsAfterKthSmallest(int k, int n) {
+        Stack<Node> stack = new Stack<>();
+        Node curr = this.root;
+        while (curr != null) {
+            stack.push(curr);
+            curr = curr.left;
+        }
+
+        // find k-th smallest node.
+        int count = k;
+        Node node;
+        while (count > 0) {
+            node = stack.pop();
+            count--;
+            if (node.right != null) {
+                curr = node.right;
+                while (curr != null) {
+                    stack.push(curr);
+                    curr = curr.left;
+                }
+            }
+        }
+
+        // curr is the k-th smallest node.
+
+        // sum numbers n times.
+        count = n;
+        int sum = 0;
+        while (count > 0) {
+            node = stack.pop();
+            sum += node.data;
+            count--;
+            if (node.right != null) {
+                curr = node.right;
+                while (curr != null) {
+                    stack.push(curr);
+                    curr = curr.left;
+                }
+            }
+        }
+
+        return sum;
+    }
