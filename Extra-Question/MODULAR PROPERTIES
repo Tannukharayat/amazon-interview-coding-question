@@ -1,0 +1,4 @@
+(A + B) mod C = (A mod C + B mod C) mod C
+(A * B) mod C = (A mod C * B mod C) mod C
+A^B mod C = ( (A mod C)^B ) mod C
+A^2 mod C = (A * A) mod C = ((A mod C) * (A mod C)) mod C
