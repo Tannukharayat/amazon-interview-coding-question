@@ -1,0 +1,74 @@
+Given a singly linked list, rearrange the list so that even and odd nodes are alternate in the list.
+
+There are two possible forms of this rearrangement. If the first data is odd, then the second node must be even. The third node must be odd
+and so on. Notice that another arrangement is possible where the first node is even, second odd, third even and so on.
+
+Examples:
+
+
+
+Input : 11 -> 20 -> 40 -> 55 -> 77 -> 80 -> NULL
+Output : 11 -> 20 -> 55 -> 40 -> 77 -> 80 -> NULL
+20, 40, 80 occur in even positions and 11, 55, 77
+
+    
+    void rearrangeOddEven(Node* head) 
+{ 
+    stack<Node*> odd; 
+    stack<Node*> even; 
+    int i = 1; 
+  
+    while (head != nullptr) { 
+  
+        if (head->data % 2 != 0 && i % 2 == 0) { 
+  
+            // Odd Value in Even Position 
+            // Add pointer to current node 
+            // in odd stack 
+            odd.push(head); 
+        } 
+  
+        else if (head->data % 2 == 0 && i % 2 != 0) { 
+  
+            // Even Value in Odd Position 
+            // Add pointer to current node 
+            // in even stack 
+            even.push(head); 
+        } 
+  
+        head = head->next; 
+        i++; 
+    } 
+  
+    while (!odd.empty() && !even.empty()) { 
+  
+        // Swap Data at the top of two stacks 
+        swap(odd.top()->data, even.top()->data); 
+        odd.pop(); 
+        even.pop(); 
+    } 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    Node* head = newNode(8); 
+    head = insertBeg(head, 7); 
+    head = insertBeg(head, 6); 
+    head = insertBeg(head, 5); 
+    head = insertBeg(head, 3); 
+    head = insertBeg(head, 2); 
+    head = insertBeg(head, 1); 
+  
+    cout << "Linked List:" << endl; 
+    printList(head); 
+    rearrangeOddEven(head); 
+  
+    cout << "Linked List after "
+         << "Rearranging:" << endl; 
+    printList(head); 
+  
+    return 0; 
+} 
+Time Complexity : O(n)
+Auxiliary Space : O(n)
