@@ -1,0 +1,46 @@
+Given a positive integer, write a function to find if it is a power of two or not.
+
+Examples :
+
+Input : n = 4
+Output : Yes
+22 = 4
+
+Input : n = 7
+Output : No
+
+Input : n = 32
+Output : Yes
+25 = 32
+
+    
+    bool isPowerOfTwo(int n) 
+{ 
+   if(n==0) 
+   return false; 
+  
+   return (ceil(log2(n)) == floor(log2(n))); 
+} 
+
+OR
+
+bool isPowerOfTwo(int n)  
+{  
+    if (n == 0)  
+        return 0;  
+    while (n != 1)  
+    {  
+        if (n%2 != 0)  
+            return 0;  
+        n = n/2;  
+    }  
+    return 1;  
+}  
+
+OR
+
+bool isPowerOfTwo (int x)  
+{  
+    /* First x in the below expression is for the case when x is 0 */
+    return x && (!(x&(x-1)));  
+}  
