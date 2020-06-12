@@ -1,0 +1,135 @@
+The atoi() function in C takes a string (which represents an integer) as an argument and returns its value of type int. So basically the 
+function is used to convert a string argument to an integer.
+
+Approach 2: This implementation handles the negative numbers. If the first character is ‘-‘ then store the sign as negative and then 
+convert the rest of the string to number using the previous approach while multiplying sign with it.
+int myAtoi(char* str) 
+{ 
+    // Initialize result 
+    int res = 0; 
+  
+    // Initialize sign as positive 
+    int sign = 1; 
+  
+    // Initialize index of first digit 
+    int i = 0; 
+  
+    // If number is negative, 
+    // then update sign 
+    if (str[0] == '-') { 
+        sign = -1; 
+  
+        // Also update index of first digit 
+        i++; 
+    } 
+  
+    // Iterate through all digits 
+    // and update the result 
+    for (; str[i] != '\0'; ++i) 
+        res = res * 10 + str[i] - '0'; 
+  
+    // Return result with sign 
+    return sign * res; 
+} 
+
+OR
+
+Approach 3: This implementation handles various type of errors. If str is NULL or str contains non-numeric characters then return 0 as
+the number is not valid.
+
+
+bool isNumericChar(char x) 
+{ 
+    return (x >= '0' && x <= '9') 
+               ? true
+               : false; 
+} 
+  
+// A simple atoi() function. 
+// If the given string contains 
+// any invalid character, then 
+// this function returns 0 
+int myAtoi(char* str) 
+{ 
+    if (*str == '\0') 
+        return 0; 
+  
+    // Initialize result 
+    int res = 0; 
+  
+    // Initialize sign as positive 
+    int sign = 1; 
+  
+    // Initialize index of first digit 
+    int i = 0; 
+  
+    // If number is negative, 
+    // then update sign 
+    if (str[0] == '-') { 
+        sign = -1; 
+  
+        // Also update index of first digit 
+        i++; 
+    } 
+  
+    // Iterate through all digits of 
+    // input string and update result 
+    for (; str[i] != '\0'; ++i) { 
+  
+        // You may add some lines 
+        // to write error message 
+        if (isNumericChar(str[i]) == false) 
+            return 0; 
+  
+        // to error stream 
+        res = res * 10 + str[i] - '0'; 
+    } 
+  
+    // Return result with sign 
+    return sign * res; 
+} 
+
+OR
+
+Approach 4: Four corner cases needs to be handled:
+
+
+
+Discards all leading whitespaces
+Sign of the number
+Overflow
+Invalid input
+
+using namespace std; 
+int myAtoi(const char* str) 
+{ 
+    int sign = 1, base = 0, i = 0; 
+    // if whitespaces then ignore. 
+    while (str[i] == ' ') { 
+        i++; 
+    } 
+    // sign of number 
+    if (str[i] == '-' || str[i] == '+') { 
+        sign = 1 - 2 * (str[i++] == '-'); 
+    } 
+    // checking for valid input 
+    while (str[i] >= '0' && str[i] <= '9') { 
+        // handling overflow test case 
+        if (base > INT_MAX / 10 
+            || (base == INT_MAX / 10 
+                && str[i] - '0' > 7)) { 
+            if (sign == 1) 
+                return INT_MAX; 
+            else
+                return INT_MIN; 
+        } 
+        base = 10 * base + (str[i++] - '0'); 
+    } 
+    return base * sign; 
+} 
+Complexity Analysis for all the above Approaches:
+
+Time Complexity: O(n).
+Only one traversal of string is needed.
+Space Complexity: O(1).
+As no extra space is required.
