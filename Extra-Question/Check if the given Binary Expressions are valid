@@ -1,0 +1,122 @@
+Given n expressions of the type x = y and x != y where 1 ≤ x, y ≤ n, the task is to check whether the integers from 1 to n can be assigned
+to x and y such that all the equations are satisfied.
+
+Examples:
+
+Input: x[] = {1, 2, 3}, op[] = {“=”, “=”, “!=”}, y[] = {2, 3, 1}
+Output: Invalid
+If 1 = 2 and 2 = 3 then 3 must be equal to 1.
+
+
+    
+    int findParent(int i, vector<int> parent) 
+{ 
+    if (parent[i] == i) 
+        return i; 
+    return findParent(parent[i], parent); 
+} 
+  
+// Find union for both the integers x and y 
+// using rank method 
+void findUnion(int x, int y, vector<int>& parent, 
+               vector<int>& rank) 
+{ 
+    int xroot = findParent(x, parent); 
+    int yroot = findParent(y, parent); 
+  
+    // Union using rank method 
+    if (xroot != yroot) { 
+        if (rank[xroot] > rank[yroot]) { 
+            parent[y] = x; 
+            rank[xroot]++; 
+        } 
+        else if (rank[x] < rank[y]) { 
+            parent[x] = y; 
+            rank[yroot]++; 
+        } 
+        else { 
+            parent[y] = x; 
+            rank[xroot]++; 
+        } 
+    } 
+} 
+  
+// Function that returns true if 
+// the expression is invalid 
+bool isInvalid(vector<int> u, vector<int> v, 
+               vector<string> op, int n) 
+{ 
+    // Vector to store parent values 
+    // of each integer 
+    vector<int> parent; 
+  
+    // Vector to store rank 
+    // of each integer 
+    vector<int> rank; 
+  
+    parent.push_back(-1); 
+    rank.push_back(-1); 
+  
+    // Initialize parent values for 
+    // each of the integers 
+    for (int i = 1; i <= n; i++) 
+        parent.push_back(i); 
+  
+    // Initialize rank values for 
+    // each of the integers 
+    for (int i = 1; i <= n; i++) 
+        rank.push_back(0); 
+  
+    // Check for = operator and find union 
+    // for them 
+    for (int i = 0; i < n; i++) 
+        if (op[i] == "=") 
+            findUnion(u[i], v[i], parent, rank); 
+  
+    // Check for != operator 
+    for (int i = 0; i < n; i++) { 
+        if (op[i] == "!=") { 
+            // If the expression is invalid 
+            if (findParent(u[i], parent) 
+                == findParent(v[i], parent)) 
+                return true; 
+        } 
+    } 
+  
+    // Expression is valid 
+    return false; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    vector<int> u; 
+    vector<int> v; 
+    vector<string> op; 
+  
+    // Store the first integer 
+    u.push_back(1); 
+    u.push_back(2); 
+    u.push_back(3); 
+  
+    // Store the second integer 
+    v.push_back(2); 
+    v.push_back(3); 
+    v.push_back(1); 
+  
+    // Store the operators 
+    op.push_back("="); 
+    op.push_back("="); 
+    op.push_back("!="); 
+  
+    // Number of expressions 
+    int n = u.size(); 
+    if (isInvalid(u, v, op, n)) 
+        cout << "Invalid"; 
+    else
+        cout << "Valid"; 
+  
+    return 0; 
+} 
+
+Invalid
