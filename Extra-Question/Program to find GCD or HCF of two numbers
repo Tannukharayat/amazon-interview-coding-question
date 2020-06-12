@@ -1,0 +1,70 @@
+GCD (Greatest Common Divisor) or HCF (Highest Common Factor) of two numbers is the largest number that divides both of them.
+
+int gcd(int a, int b) 
+{ 
+    // Everything divides 0  
+    if (a == 0) 
+       return b; 
+    if (b == 0) 
+       return a; 
+   
+    // base case 
+    if (a == b) 
+        return a; 
+   
+    // a is greater 
+    if (a > b) 
+        return gcd(a-b, b); 
+    return gcd(a, b-a); 
+} 
+
+int gcd(int a, int b) 
+{ 
+    if (b == 0) 
+        return a; 
+    return gcd(b, a % b);  
+      
+} 
+   
+// Driver program to test above function 
+int main() 
+{ 
+    int a = 98, b = 56; 
+    cout<<"GCD of "<<a<<" and "<<b<<" is "<<gcd(a, b); 
+    return 0; 
+} 
+
+OR
+
+int gcd(int a, int b) 
+{ 
+    if (a == 0) 
+        return b; 
+    return gcd(b % a, a); 
+} 
+  
+// Function to find gcd of array of 
+// numbers 
+int findGCD(int arr[], int n) 
+{ 
+    int result = arr[0]; 
+    for (int i = 1; i < n; i++) 
+    { 
+        result = gcd(arr[i], result); 
+  
+        if(result == 1) 
+        { 
+           return 1; 
+        } 
+    } 
+    return result; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    int arr[] = { 2, 4, 6, 8, 16 }; 
+    int n = sizeof(arr) / sizeof(arr[0]); 
+    cout << findGCD(arr, n) << endl; 
+    return 0; 
+} 
