@@ -1,0 +1,4 @@
+strstr() in C/C++
+In C++, std::strstr() is a predefined function used for string handling. string.h is the header file required for string functions.
+
+This function takes two strings s1 and s2 as an argument and finds the first occurrence of the sub-string s2 in the string s1. The process of matching does not include the terminating null-characters(‘\0’), but function stops there.
