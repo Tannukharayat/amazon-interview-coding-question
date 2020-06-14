@@ -1,0 +1,111 @@
+Given an ancestor matrix mat[n][n] where the ancestor matrix is defined as below.
+
+mat[i][j] = 1 if i is ancestor of j
+mat[i][j] = 0, otherwise 
+Construct a Binary Tree from the given ancestor matrix where all its values of nodes are from 0 to n-1.
+
+It may be assumed that the input provided the program is valid and the tree can be constructed out of it.
+Many Binary trees can be constructed from one input. The program will construct any one of them.
+
+    
+    struct Node { 
+    int data; 
+    Node *left, *right; 
+    Node(int _val) 
+    { 
+        data = _val; 
+        left = right = NULL; 
+    } 
+}; 
+  
+// Function to return 
+// root index of a 
+// binary tree 
+int getRootIndex(vector<vector<int> >& arr) 
+{ 
+    int root_index = -1; 
+  
+    for (int j = 0; j < arr[0].size(); j++) { 
+        int count = 0; 
+        for (int i = 0; i < arr.size(); i++) 
+            if (arr[i][j] == 0) { 
+                count++; 
+            } 
+  
+        if (count == arr.size()) { 
+            root_index = j; 
+            break; 
+        } 
+    } 
+    return root_index; 
+} 
+  
+// Function to print 
+// in-order traversal of 
+// a tree 
+void printInorder(Node* node) 
+{ 
+    if (node == NULL) { 
+        return; 
+    } 
+    printInorder(node->left); 
+    cout << node->data << " "; 
+    printInorder(node->right); 
+} 
+  
+// Function to generate binary 
+// tree from parent matrix 
+Node* createTreeRec(vector<vector<int> >& arr, int index) 
+{ 
+  
+    Node* node = new Node(index); 
+  
+    // If left is 1 then create 
+    // left child. (for 1st one in row) 
+    // If left is 2 then create 
+    // right child.(for 1st one in row) 
+    int left = 1; 
+  
+    for (int j = 0; j < arr[index].size(); j++) { 
+        if (arr[index][j] == 1) { 
+            // recur for left sub-tree 
+            if (left == 1) { 
+                node->left = createTreeRec(arr, j); 
+            } 
+            // recur for right sub-tree 
+            else if (left == 2) { 
+                node->right = createTreeRec(arr, j); 
+            } 
+            left++; 
+        } 
+    } 
+  
+    return node; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+  
+    // Assuming leftmost 1 in a 
+    // row is left child, if exists 
+    // and rightmost 1 in a row 
+    // is right child, if exists 
+    vector<vector<int> > arr = { 
+        { 0, 0, 0, 1, 1, 0 }, 
+        { 0, 0, 0, 0, 0, 1 }, 
+        { 1, 1, 0, 0, 0, 0 }, 
+        { 0, 0, 0, 0, 0, 0 }, 
+        { 0, 0, 0, 0, 0, 0 }, 
+        { 0, 0, 0, 0, 0, 0 }, 
+    }; 
+  
+    int root_index = getRootIndex(arr); 
+    Node* root = createTreeRec(arr, root_index); 
+  
+    // Printing inorder traversal 
+    // of tree to check the output 
+    printInorder(root); 
+  
+    return 0; 
+}
