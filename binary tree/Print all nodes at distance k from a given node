@@ -128,3 +128,5 @@ class BinaryTree {
         tree.printKDistantfromLeaf(tree.root, 2); 
     } 
 }
+
+Time Complexity: At first look the time complexity looks more than O(n), but if we take a closer look, we can observe that no node is traversed more than twice. Therefore the time complexity is O(n).
