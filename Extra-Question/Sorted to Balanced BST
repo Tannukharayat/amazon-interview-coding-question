@@ -1,0 +1,186 @@
+Method 1 (Insert elements of first tree to second)
+Take all elements of first BST one by one, and insert them into the second BST. Inserting an element to a self balancing BST takes Logn time (See this) where n is size of the BST. So time complexity of this method is Log(n) + Log(n+1) … Log(m+n-1). The value of this expression will be between mLogn and mLog(m+n-1). As an optimization, we can pick the smaller tree as first tree.
+
+Method 2 (Merge Inorder Traversals)
+1) Do inorder traversal of first tree and store the traversal in one temp array arr1[]. This step takes O(m) time.
+2) Do inorder traversal of second tree and store the traversal in another temp array arr2[]. This step takes O(n) time.
+3) The arrays created in step 1 and 2 are sorted arrays. Merge the two sorted arrays into one array of size m + n. This step takes O(m+n) time.
+4) Construct a balanced tree from the merged array using the technique discussed in this post. This step takes O(m+n) time.
+
+Method 3 (In-Place Merge using DLL)
+We can use a Doubly Linked List to merge trees in place. Following are the steps.
+
+1) Convert the given two Binary Search Trees into doubly linked list in place (Refer this post for this step).
+2) Merge the two sorted Linked Lists (Refer this post for this step).
+3) Build a Balanced Binary Search Tree from the merged list created in step 2. (Refer this post for this step)
+
+Time complexity of this method is also O(m+n) and this method does conversion in place.
+
+The method 1 constructs the tree from root to leaves. In this method, we construct from leaves to root. The idea is to insert nodes in BST in the same order as the appear in Doubly Linked List, so that the tree can be constructed in O(n) time complexity. We first count the number of nodes in the given Linked List. Let the count be n. After counting nodes, we take left n/2 nodes and recursively construct the left subtree. After left subtree is constructed, we assign middle node to root and link the left subtree with root. Finally, we recursively construct the right subtree and link it with root.
+While constructing the BST, we also keep moving the list head pointer to next so that we have the appropriate pointer in each recursive call.
+
+class Node  
+{  
+    public: 
+    int data;  
+  
+    // For tree, next pointer can be 
+    // used as right subtree pointer  
+    Node* next;  
+  
+    // For tree, prev pointer can be 
+    // used as left subtree pointer  
+    Node* prev;  
+};  
+  
+// A utility function to count nodes in a Linked List  
+int countNodes(Node *head);  
+  
+Node* sortedListToBSTRecur(Node **head_ref, int n);  
+  
+/* This function counts the number of  
+nodes in Linked List and then calls  
+sortedListToBSTRecur() to construct BST */
+Node* sortedListToBST(Node *head)  
+{  
+    /*Count the number of nodes in Linked List */
+    int n = countNodes(head);  
+  
+    /* Construct BST */
+    return sortedListToBSTRecur(&head, n);  
+}  
+  
+/* The main function that constructs  
+balanced BST and returns root of it.  
+head_ref --> Pointer to pointer to 
+head node of Doubly linked list  
+n --> No. of nodes in the Doubly Linked List */
+Node* sortedListToBSTRecur(Node **head_ref, int n)  
+{  
+    /* Base Case */
+    if (n <= 0)  
+        return NULL;  
+  
+    /* Recursively construct the left subtree */
+    Node *left = sortedListToBSTRecur(head_ref, n/2);  
+  
+    /* head_ref now refers to middle node, 
+    make middle node as root of BST*/
+    Node *root = *head_ref;  
+  
+    // Set pointer to left subtree  
+    root->prev = left;  
+  
+    /* Change head pointer of Linked List 
+    for parent recursive calls */
+    *head_ref = (*head_ref)->next;  
+  
+    /* Recursively construct the right  
+    subtree and link it with root  
+    The number of nodes in right subtree 
+    is total nodes - nodes in  
+    left subtree - 1 (for root) */
+    root->next = sortedListToBSTRecur(head_ref, n-n/2-1);  
+  
+    return root;  
+}  
+  
+/* UTILITY FUNCTIONS */
+/* A utility function that returns  
+count of nodes in a given Linked List */
+int countNodes(Node *head)  
+{  
+    int count = 0;  
+    Node *temp = head;  
+    while(temp)  
+    {  
+        temp = temp->next;  
+        count++;  
+    }  
+    return count;  
+}  
+  
+/* Function to insert a node at  
+the beginging of the Doubly Linked List */
+void push(Node** head_ref, int new_data)  
+{  
+    /* allocate node */
+    Node* new_node = new Node(); 
+  
+    /* put in the data */
+    new_node->data = new_data;  
+  
+    /* since we are adding at the beginning,  
+    prev is always NULL */
+    new_node->prev = NULL;  
+  
+    /* link the old list off the new node */
+    new_node->next = (*head_ref);  
+  
+    /* change prev of head node to new node */
+    if((*head_ref) != NULL)  
+    (*head_ref)->prev = new_node ;  
+  
+    /* move the head to point to the new node */
+    (*head_ref) = new_node;  
+}  
+  
+/* Function to print nodes in a given linked list */
+void printList(Node *node)  
+{  
+    while (node!=NULL)  
+    {  
+        cout<<node->data<<" ";  
+        node = node->next;  
+    }  
+}  
+  
+/* A utility function to print 
+preorder traversal of BST */
+void preOrder(Node* node)  
+{  
+    if (node == NULL)  
+        return;  
+    cout<<node->data<<" ";  
+    preOrder(node->prev);  
+    preOrder(node->next);  
+}  
+  
+/* Driver code*/
+int main()  
+{  
+    /* Start with the empty list */
+    Node* head = NULL;  
+  
+    /* Let us create a sorted linked list to test the functions  
+    Created linked list will be 7->6->5->4->3->2->1 */
+    push(&head, 7);  
+    push(&head, 6);  
+    push(&head, 5);  
+    push(&head, 4);  
+    push(&head, 3);  
+    push(&head, 2);  
+    push(&head, 1);  
+  
+    cout<<"Given Linked List\n";  
+    printList(head);  
+  
+    /* Convert List to BST */
+    Node *root = sortedListToBST(head);  
+    cout<<"\nPreOrder Traversal of constructed BST \n ";  
+    preOrder(root);  
+  
+    return 0;  
+}  
+
+time complexity:-  of mid method
+ 
+ Let's look at the number of operations that we have to perform on each of the halves of the linked list. As we mentioned earlier, it takes N/2N/2N/2 steps to find the middle of a linked list with NNN elements. After finding the middle element, we are left with two halves of size N/2N / 2N/2 each. Then, we find the middle element for both of these halves and it would take a total of 2×N/42 \times N / 42×N/4 steps for that. And similarly for the smaller sublists that keep forming recursively. This would give us the following series of operations for a list of size NNN.
+
+N2+2⋅N4+4⋅N8+8⋅N16  … \begin{aligned} \frac{N}{2} + 2 \cdot \frac{N}{4} + 4 \cdot \frac{N}{8} + 8 \cdot \frac{N}{16} \; \ldots \end{aligned} 2N​+2⋅4N​+4⋅8N​+8⋅16N​…​
+
+Essentially, this is done log⁡N\log NlogN times since we split the linked list in half every time. Hence, the above equation becomes:
+
+∑i=1log⁡N2i−1⋅N2i=  ∑i=1log⁡NN2=  N2  log⁡N=  O(Nlog⁡N) \begin{aligned} &\sum_{i = 1}^{\log N} 2^{i - 1} \cdot \frac{N}{2^i} \\ = \; &\sum_{i = 1}^{\log N}\frac{N}{2} \\ = \; &\frac{N}{2} \; \log N \\ = \; &O(N\log N) \end{aligned} ===​i=1∑logN​2i−1⋅2iN​i=1∑logN​2N​2N​logNO(NlogN)​
+
+Space Complexity: O(log⁡N)O(\log N)O(logN). Since we are resorting to recursion, there is always the added space complexity of the recursion stack that comes into picture. This could have been O(N)O(N)O(N) for a skewed tree, but the question clearly states that we need to maintain the height balanced property. This ensures the height of the tree to be bounded by O(log⁡N)O(\log N)O(logN). Hence, the space complexity is O(log⁡N)O(\log N)O(logN).
