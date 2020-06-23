@@ -184,3 +184,28 @@ Essentially, this is done log⁡N\log NlogN times since we split the linked list
 ∑i=1log⁡N2i−1⋅N2i=  ∑i=1log⁡NN2=  N2  log⁡N=  O(Nlog⁡N) \begin{aligned} &\sum_{i = 1}^{\log N} 2^{i - 1} \cdot \frac{N}{2^i} \\ = \; &\sum_{i = 1}^{\log N}\frac{N}{2} \\ = \; &\frac{N}{2} \; \log N \\ = \; &O(N\log N) \end{aligned} ===​i=1∑logN​2i−1⋅2iN​i=1∑logN​2N​2N​logNO(NlogN)​
 
 Space Complexity: O(log⁡N)O(\log N)O(logN). Since we are resorting to recursion, there is always the added space complexity of the recursion stack that comes into picture. This could have been O(N)O(N)O(N) for a skewed tree, but the question clearly states that we need to maintain the height balanced property. This ensures the height of the tree to be bounded by O(log⁡N)O(\log N)O(logN). Hence, the space complexity is O(log⁡N)O(\log N)O(logN).
+
+for sorted array
+TNode* sortedArrayToBST(int arr[],  
+                        int start, int end)  
+{  
+    /* Base Case */
+    if (start > end)  
+    return NULL;  
+  
+    /* Get the middle element and make it root */
+    int mid = (start + end)/2;  
+    TNode *root = newNode(arr[mid]);  
+  
+    /* Recursively construct the left subtree  
+    and make it left child of root */
+    root->left = sortedArrayToBST(arr, start,  
+                                    mid - 1);  
+  
+    /* Recursively construct the right subtree  
+    and make it right child of root */
+    root->right = sortedArrayToBST(arr, mid + 1, end);  
+  
+    return root;  
+}  
+  
