@@ -135,3 +135,4 @@ is placed in the row with that number. For eg below figure represents a chessboa
                               }
                               return 0;
                     }
+So average and worst case complexity of the solution is  O(N!)  
