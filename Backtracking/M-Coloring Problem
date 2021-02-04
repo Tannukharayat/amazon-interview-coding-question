@@ -2,6 +2,11 @@
 adjacent vertices of the graph are colored with the same color. Here coloring of a graph means assignment of colors to all vertices. Print 
 1 if it is possible to colour vertices and 0 otherwise.
 
+Time Complexity: O(m^V). 
+There are total O(m^V) combination of colors. So the time complexity is O(m^V).
+Space Complexity: O(V). 
+Recursive Stack of graphColoring(…) function will require O(V) space.
+
 Vertex are 1-based (vertext number starts with 1, not 0).**
 
         bool issafe(bool graph[101][101], int m ,int V, int arr[], int index)
