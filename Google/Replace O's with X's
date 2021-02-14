@@ -1,0 +1,73 @@
+void floodfill(int i , int j , int n , int m,  vector<vector<char>> &mat , int vis[100][100])
+    {
+        if(i<0||i>=n||j<0||j>=m)
+        return;
+        vis[i][j]=1;
+        if(mat[i][j]=='N')
+        {
+          //  cout<<i<<" "<<j<<endl;
+            mat[i][j]='O';
+        }
+        if(i+1<n)
+        {
+             if(vis[i+1][j]==0&&mat[i+1][j]=='N')
+            floodfill(i+1 , j , n , m, mat , vis);   
+        }
+        if(j+1<m)
+        {
+              if(vis[i][j+1]==0&&mat[i][j+1]=='N')
+             floodfill(i , j+1 ,n , m , mat , vis);
+        }
+        if(i-1>=0)
+        {
+              if(vis[i-1][j]==0&&mat[i-1][j]=='N')
+             floodfill(i-1 , j ,n , m, mat , vis);
+        }
+        if(j-1>=0)
+        {
+              if(vis[i][j-1]==0&&mat[i][j-1]=='N')
+             floodfill(i , j-1 ,n , m , mat , vis);
+        }
+    }
+    vector<vector<char>> fill(int n, int m, vector<vector<char>> mat)
+    {
+        for(int i = 0 ; i < n ; i++)
+        {
+            for(int j = 0 ; j < m ; j++)
+            {
+                if(mat[i][j]=='O')
+                mat[i][j]='N';
+            }
+        }
+        int vis[100][100];
+        memset(vis,0,sizeof(vis));
+        for(int i = 0 ; i < m ; i++)
+        {
+             if(mat[0][i]=='N'&&vis[0][i]==0)
+            floodfill(0,i, n , m ,mat, vis);
+        }
+         for(int i = 0 ; i < n ; i++)
+        {
+             if(mat[i][m-1]=='N'&&vis[i][m-1]==0)
+            floodfill(i,m-1, n , m,mat, vis);
+        } 
+           for(int i = m-1 ; i >= 0 ; i--)
+        {
+             if(mat[n-1][i]=='N'&&vis[n-1][i]==0)
+            floodfill(n-1,i,n , m,mat, vis);
+        }
+           for(int i = n-1 ; i >= 0 ; i--)
+        {
+             if(mat[i][0]=='N'&&vis[i][0]==0)
+            floodfill(i,0,n , m ,mat, vis);
+        }
+        for(int i = 0 ; i < n ; i++)
+        {
+            for(int j = 0 ; j < m ; j++)
+            {
+                if(mat[i][j]=='N')
+                mat[i][j]='X';
+            }
+        }
+        return mat;
+    }
