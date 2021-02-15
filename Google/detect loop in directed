@@ -1,0 +1,47 @@
+int detect_loop(vector<int> v[100], int vis[], int curr, int &ans)
+    {
+        //cout<<curr<<" - ";
+        for(int i = 0 ; i < v[curr].size() ; i++)
+        {
+           if(vis[v[curr][i]]==1)
+            {
+              ans=1;
+                return 1;
+            }
+            if(vis[v[curr][i]]==0)
+            {
+                  vis[v[curr][i]]=1;
+                if(detect_loop(v,vis, v[curr][i], ans))
+                return 1;
+                vis[v[curr][i]]=0;
+            }
+        }
+        return 0;
+    }
+	bool isPossible(int N, vector<pair<int, int> >& prerequisites) 
+	{
+	    vector<int> v[101];
+	    vector<int> source;
+	     for(int i = 0 ; i < prerequisites.size() ; i++)
+	     {
+	         pair<int,int> p = prerequisites[i];
+	         v[p.second].push_back(p.first);
+	         source.push_back(p.second);
+	     }
+	     int vis[100];
+	     memset(vis,0,sizeof(vis));
+	     for(int i = 0 ; i < source.size() ; i++)
+	     {
+	         
+	            int ans=0;
+	             memset(vis,0,sizeof(vis));
+	            int as=detect_loop(v,vis,source[i],ans);
+	          //  cout<<"+++"<<as<<"+++"<<endl;
+	             if(as==1)
+	             {
+	                 //cout<<source[i]<<"))";
+	                 return 0;
+	             }//cout<<endl;
+	     }
+	     return 1;
+	}
