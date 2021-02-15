@@ -1,0 +1,59 @@
+class Solution{
+public:
+    int isROW(vector<vector<int>> mat, int k , int l , int num)
+    {
+        if(num==0)
+        return 1;
+        for(int i = 0 ; i < 9 ; i++)
+        {
+            if(mat[k][i]==num&&i!=l)
+            {
+               return 0;
+            }
+        }
+        return 1;
+    }
+    int isCOL(vector<vector<int>> mat, int k, int l , int num)
+    {
+        if(num==0)
+        return 1;
+        for(int i = 0 ; i < 9 ; i++)
+        {
+            if(mat[i][l]==num&&i!=k)
+            return 0;
+        }
+        return 1;
+    }
+    int isBOX(vector<vector<int>> mat, int k , int l , int num)
+    {
+        if(num==0)
+         return 1;
+        int r=k/3, c=l/3;
+
+       for(int i = 0 ; i < 3 ; i++)
+        {
+            for(int j = 0 ; j < 3 ; j++)
+            {
+             if(mat[i+3*r][j+3*c]==num&&i+3*r!=k&&j+3*c!=l)
+                return 0;
+            }
+        }
+        
+        return 1;
+    }
+    int isValid(vector<vector<int>> mat)
+    {
+        for(int i = 0 ; i < 9 ; i++ )
+        {
+            for(int j = 0 ; j < 9 ; j++)
+            {
+                if(mat[i][j]==0)
+                continue;
+                if(isROW(mat,i,j,mat[i][j])==0||isCOL(mat,i,j,mat[i][j])==0||isBOX(mat,i,j ,mat[i][j])==0)
+                {
+                  return 0;
+                }
+            }
+        }
+        return 1;
+    }
