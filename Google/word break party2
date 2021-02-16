@@ -1,0 +1,56 @@
+void findword(string word[100], vector<string> &v, map<string,int>mp, vector<string> &vect,string s , int l , int r)
+{
+    if(l>r)
+    return;
+    if(mp[s.substr(l, r-l+1)])
+    {
+        v.push_back(s.substr(l, r-l+1));
+        string str="";
+        str=str+"(";
+        for(int i = 0 ; i < v.size() ; i++)
+        {
+            str=str+v[i];
+            if(i!=v.size()-1)
+            str=str+" ";
+        }
+        v.pop_back();
+        str=str+")";
+        vect.push_back(str);
+    }
+    for(int i = l ; i <= r ; i++)
+    {
+        if(mp[s.substr(l, i-l+1)])
+        {
+            v.push_back(s.substr(l , i-l+1));
+            findword(word, v , mp ,vect, s , i+1 , r);
+            v.pop_back();
+        }
+    }
+}
+int main() 
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        string s;
+        string word[100];
+        map<string,int>mp;
+        for(int i = 0 ; i < n ; i++)
+        {
+            cin>>word[i];
+            mp[word[i]]=1;
+        }
+        cin>>s;
+        vector<string> v, vect;
+        int size = s.length();
+        findword(word, v, mp, vect, s , 0 , size-1);
+        sort(vect.begin(), vect.end());
+        for(int i = 0 ; i < vect.size() ; i++)
+        cout<<vect[i];
+        cout<<endl;
+    }
+	return 0;
+}
