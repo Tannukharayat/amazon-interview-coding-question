@@ -1,0 +1,129 @@
+class FindMedian
+{
+	public:
+		void insertHeap(int &);
+		double getMedian();
+	private:
+		double median; //Stores current median
+		priority_queue<int> max; //Max heap for lower values
+		priority_queue<int, vector<int>, greater<int> > min; //Min heap for greater values
+		void balanceHeaps(); //Method used by insertHeap
+};
+
+
+ // } Driver Code Ends
+
+
+// Function to insert heap
+void FindMedian::insertHeap(int &x)
+{
+	
+	if(max.size()==0&&min.size()==0)
+	{
+	    max.push(x);
+	}else if(min.size()==0)
+	{
+	    if(max.top()<x)
+	    min.push(x);
+	    else 
+	    {
+	        min.push(max.top());
+	        max.pop();
+	        max.push(x);
+	    }
+	}else if(min.size()>max.size())
+	{
+	    if(min.top()>x)
+	    {
+	        max.push(x);
+	    }else
+	    {
+	        max.push(min.top());
+	        min.pop();
+	        min.push(x);
+	    }
+	}else if(min.size()<max.size())
+	{
+	     if(max.top()<x)
+	    {
+	        min.push(x);
+	    }else
+	    {
+	        min.push(max.top());
+	        max.pop();
+	        max.push(x);
+	    }
+	}else 
+	{
+	    if(x>max.top())
+	    {
+	        min.push(x);
+	    }else max.push(x);
+	}// Your code here
+	if(max.size()==0)
+	{
+	    max.push(x);
+	}else if(min.size()==0)
+	{
+	    min.push(x);
+	}else if(min.size()>max.size())
+	{
+	    if(min.top()>x)
+	    {
+	        max.push(x);
+	    }else
+	    {
+	        max.push(min.top());
+	        min.pop();
+	        min.push(x);
+	    }
+	}else if(min.size()<max.size())
+	{
+	     if(max.top()<x)
+	    {
+	        min.push(x);
+	    }else
+	    {
+	        min.push(max.top());
+	        max.pop();
+	        max.push(x);
+	    }
+	}else 
+	{
+	    if(x>max.top())
+	    {
+	        min.push(x);
+	    }else max.push(x);
+	}
+}
+
+// Function to balance heaps
+void FindMedian::balanceHeaps()
+{
+	// Your code here
+}
+
+// Function to return getMedian
+double FindMedian::getMedian()
+{
+    if(max.size()==min.size())
+	{
+	     double x = (double)min.top();
+        double y = (double)max.top();
+         //cout<<"+";
+	    return (x+y)/2;
+	   
+	}else if(max.size() > min.size())
+	{
+	   double y = (double)max.top();
+	   //cout<<"-";
+	    return y;
+	    
+	}else 
+	{
+	     double x = (double)min.top();
+	   //  cout<<"=";
+       return  x;
+       
+	}
+}
