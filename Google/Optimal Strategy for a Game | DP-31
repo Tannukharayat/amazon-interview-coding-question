@@ -62,3 +62,6 @@ int main()
   
     return 0; 
 } 
+Time Complexity: O(n2).
+Use of a nested for loop brings the time complexity to n2.
+Auxiliary Space: O(n2).
