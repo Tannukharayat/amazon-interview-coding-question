@@ -1,0 +1,75 @@
+class Solution
+{
+    public:
+    void topological_sort(vector<int> v[26], vector<int> &order,int vis[26], int curr)
+    {
+        vis[curr]=1;
+        for(int i = 0 ; i < v[curr].size() ; i++)
+        {
+            if(vis[v[curr][i]]==0)
+            {
+                topological_sort(v, order, vis, v[curr][i]);
+            }
+        }
+        order.push_back(curr);
+    }
+    string findOrder(string dict[], int N, int K) 
+    {
+        vector<int> v[26];
+        map<int,int> mp;
+        vector<int> present_char;
+        int ch=10;
+        for(int i = 0 ; i < N ; i++)
+        {
+            for(int j = 0 ; j < dict[i].length() ; j++)
+            {
+                mp[dict[i][j]-'a']=1;
+            }
+        }
+        for(int i = 0 ; i < 26 ; i++)
+        {
+            if(mp[i]==1)
+            {
+                present_char.push_back(i);
+            }
+        }
+        for(int i = 0 ; i < N-1  ; i++)
+        {
+           int k = 0 , l = 0 , j = i+1;
+                while(k<dict[i].length()&&l<dict[j].length())
+                {
+                            if(dict[i][k]!=dict[j][l])
+                            {
+                                if(ch==10)
+                                ch=dict[i][k]-'a';
+                                v[dict[i][k]-'a'].push_back(dict[j][l]-'a');
+                                break;
+                            }
+                            k++;
+                            l++;
+                }
+        }
+        int vis[26];
+        memset(vis,0,sizeof(vis));
+        vector<int> order;
+       // cout<<ch<<"+";
+        topological_sort(v, order, vis, ch);
+        for(int i = 0 ; i < present_char.size() ; i++)
+        {
+            if(vis[i]==0)
+            {
+                  topological_sort(v, order, vis, present_char[i]);
+            }
+        }
+        string s="";
+        for(int i = order.size()-1 ; i >= 0 ; i--)
+        {
+            //cout<<order[i]<<" ";
+            s+=(order[i]+'a');
+            
+        }
+        
+        return s;
+    }
+    
+};
