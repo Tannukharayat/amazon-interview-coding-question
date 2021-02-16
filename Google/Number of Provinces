@@ -1,0 +1,48 @@
+Given a graph with V vertices. Find the number of Provinces.
+Note: A province is a group of directly or indirectly connected cities and no other cities outside of the group.
+
+class Solution 
+{
+  public:
+    void countprovince(vector<int> adj[1000], int vis[1000], int i , int V)
+    {
+        vis[i]=1;
+        //cout<<i<<" ";
+        for(int j = 0 ; j < adj[i].size() ; j++)
+        {
+            if(vis[adj[i][j]]==0)
+            countprovince(adj,vis,adj[i][j],V);
+        }
+    }
+    int numProvinces(vector<vector<int>> adj, int V) 
+    {
+        vector<int> vect[1000];
+        for(int i = 0 ; i < V ;i++)
+        {
+            for(int j = 0 ; j < V ; j++)
+            {
+                if(adj[i][j]==1&&i!=j)
+                {
+                    vect[i].push_back(j);
+                    vect[j].push_back(i);
+                   // cout<<i<<" "<<j<<endl;
+                }
+            }
+        }
+        int cnt=0;
+        int vis[1000]={0};
+        memset(vis,0,sizeof(vis));
+         for(int i = 0 ; i < V ; i++)
+         {
+             if(vis[i]==0)
+             {
+                 //cout<<i<<" ";
+                
+                 countprovince(vect, vis, i, V);
+                 cnt++;
+                 // cout<<endl;
+             }
+         }
+         return cnt;
+    }
+};
