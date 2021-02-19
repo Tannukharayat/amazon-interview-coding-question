@@ -1,0 +1,25 @@
+Given a BST and an integer K. Find the Kth Smallest element in the BST. 
+
+        int KthSmallestElement(Node *root, int k)
+        {
+           stack<Node*> s;
+           while(root!=NULL||!s.empty())
+           {
+                while(root!=NULL)
+                {
+                    s.push(root);
+                    root=root->left;
+                }
+                root=s.top();
+                s.pop();
+               // cout<<root->data<<" ";
+                k--;
+                if(k==0)
+                {
+                    return root->data;
+                }
+                root= root->right;
+            }
+            return -1;
+        }
+
