@@ -1,0 +1,41 @@
+Given a list S that initially contains a single value 0. Below are the Q queries of the following types:
+
+0 X: Insert X in the list
+1 X: For every element A in S, replace it by A XOR X.
+Print all the element in the list in increasing order after performing the given Q queries.
+
+ 
+
+Example 1:
+
+Input:
+N = 5
+Q[] = {{0, 6}, {0, 3}, {0, 2}, {1, 4}, {1, 5}}
+Output:
+1 2 3 7
+Explanation:
+[0] (initial value)
+[0 6] (add 6 to list)
+[0 6 3] (add 3 to list)
+[0 6 3 2] (add 2 to list)
+[4 2 7 6] (XOR each element by 4)
+[1 7 2 3] (XOR each element by 5)
+Thus sorted order after performing
+queries is [1 2 3 7] 
+
+
+        vector<int> constructList(vector<vector<int>> Q, int N) 
+    {
+        int xxor = 0;
+        vector<int> ans;
+      //  ans.push_back(0);
+       for(int i = Q.size()-1 ; i >= 0 ; i--)
+       {
+           if(Q[i][0]==0)
+           {
+               ans.push_back(Q[i][1]^ xxor);
+           }else xxor = xxor^Q[i][1]; 
+       }ans.push_back(xxor);
+       sort(ans.begin(), ans.end());
+       return ans;
+    }
