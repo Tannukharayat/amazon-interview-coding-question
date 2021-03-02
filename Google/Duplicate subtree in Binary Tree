@@ -1,0 +1,39 @@
+Given a Binary Tree, check whether the Binary tree contains a duplicate sub-tree of size 2 or more. 
+Note : Two same leaf nodes are not considered as subtree size of a leaf node is one.
+
+string duplicate(Node *root, map<string,int> &mp, int &ans)
+{
+    
+    if(root==NULL)
+    return "#";
+   // cout<<root->data<<")";
+     char ch='0'+root->data;
+     string s="";
+     s+=ch;
+     if(root->left==NULL&&root->right==NULL)
+     return s;
+       ch=root->data+'0';
+     
+     string l = duplicate(root->left,mp,ans);
+     string r = duplicate(root->right,mp,ans);
+     string curr =  l+ch+r;
+    // cout<<root->data<<"+"<<l<<" - "<<r<<" - "<<curr<<endl;
+     if(mp[curr]==1&&curr.length()>=2)
+     {
+         ans=1;
+         return "";
+     }
+     if(ans==1)
+     return "";
+     mp[curr]=1;
+     return curr;
+}
+
+bool dupSub(Node *root)
+{
+      map<string,int> mp;
+    int ans=0;
+   // cout<<"++"<<root->left->data<<endl;
+    duplicate(root, mp, ans);
+    return ans;
+}
