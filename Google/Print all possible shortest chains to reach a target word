@@ -1,0 +1,105 @@
+Given two strings start and target(both of the same length) and a list of strings str[], the task is to print all possible smallest sequences starting from start to target if it exists, such that adjacent words in the sequence only differ by a single character and each word in the sequence is present in the given list. 
+Note: It may be assumed that the target word is present in the list and the length of all the words is the same. If multiple sequences occur, print all of them.
+
+Input: str[] = {poon, plee, same, poie, plea, plie, poin}, start = “toon”, target = “plea”
+Output: [[toon, poon, poin, poie, plee, plea]]
+Explanation: toon → poon → poin → poie → plee → plea
+
+Input: str[] = { ted, tex, red, tax, tad, den, rex, pee}, start = “red”, target = “tax”
+Output [[“red”, “ted”, “tad”, “tax”], [“red”, “ted”, “tex”, “tax”], [“red”, “rex”, “tex”, “tax”]]
+
+
+vector<string> addWord(
+    string word,
+    unordered_set<string>& dict)
+{
+    vector<string> res;
+ 
+    // Find next word in dict by changing
+    // each element from 'a' to 'z'
+    for (int i = 0; i < word.size(); i++) {
+        char s = word[i];
+        for (char c = 'a'; c <= 'z'; c++) {
+            word[i] = c;
+            if (dict.count(word))
+                res.push_back(word);
+        }
+        word[i] = s;
+    }
+    return res;
+}
+ 
+// Function to get all the shortest possible
+// sequences starting from 'start' to 'target'
+vector<vector<string> > findLadders(
+    vector<string>& Dict,
+    string beginWord,
+    string endWord)
+{
+    // Store all the shortest path.
+    vector<vector<string> > res;
+ 
+    // Store visited words in list
+    unordered_set<string> visit;
+ 
+    // Queue used to find the shortest path
+    queue<vector<string> > q;
+ 
+    // Stores the distinct words from given list
+    unordered_set<string> dict(Dict.begin(),
+                               Dict.end());
+    q.push({ beginWord });
+ 
+    // Stores whether the shortest
+    // path is found or not
+    bool flag = false;
+ 
+    while (!q.empty()) {
+        int size = q.size();
+        for (int i = 0; i < size; i++) {
+ 
+            // Explore the next level
+            vector<string> cur = q.front();
+            q.pop();
+            vector<string> newadd;
+ 
+            // Find words differing by a
+            // single character
+            newadd = addWord(cur.back(), dict);
+ 
+            // Add words to the path.
+            for (int j = 0; j < newadd.size(); j++) {
+                vector<string> newline(cur.begin(),
+                                       cur.end());
+ 
+                newline.push_back(newadd[j]);
+ 
+                // Found the target
+                if (newadd[j] == endWord) {
+                    flag = true;
+                    res.push_back(newline);
+                }
+ 
+                visit.insert(newadd[j]);
+                q.push(newline);
+            }
+        }
+ 
+        // If already reached target
+        if (flag) {
+            break;
+        }
+ 
+        // Erase all visited words.
+        for (auto it : visit) {
+            dict.erase(it);
+        }
+ 
+        visit.clear();
+    }
+    return res;
+}
+ 
+ Time complexity: O(N²*M), where M is the number of strings in the given list and N is the length of each string.
+
+Auxiliary Space:O(M*N)
