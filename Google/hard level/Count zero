@@ -1,0 +1,42 @@
+*Given a number d, representing the number of digits of a number. Find the total count of positive integers which have at-least one zero 
+in them and consist d or less digits.*
+
+    We can place any of {1, 2, ... 9} in D1
+      Hence D1 can be filled in 9 ways.
+
+      Apart from D1 all the other places can be  10 ways. 
+      (we can place 0 as well)
+      Hence the total numbers having d digits can be given as: 
+      Total =  9*10d-1
+
+      Now, let's find the numbers having d digits, that
+      don't contain zero at any place. 
+      In this case, all the places can be filled in 9 ways.
+      Hence count of such numbers is given by:
+      Non_Zero = 9d
+
+      Now the count of numbers having at least one zero 
+      can be obtained by subtracting Non_Zero from Total.
+      Hence Answer would be given by:
+      9*(10d-1 - 9d-1 ) 
+
+      long long int funct(int d)
+      {
+          return 9*pow(10,d-1)-pow(9,d);
+      }
+      int main() 
+      {
+        int t;
+        cin >> t ;
+        while(t--)
+        {
+            long long int n , ans = 0 ;
+            cin >> n ;
+            for(int i = 2 ; i <= n ; i++)
+            {
+                ans+=funct(i);
+            }
+            cout<<ans<<endl;
+        }
+        return 0;
+      }
