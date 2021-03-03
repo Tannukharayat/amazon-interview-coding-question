@@ -1,0 +1,45 @@
+Given a singly linked list, rearrange the list so that even and odd nodes are alternate in the list.
+
+    void rearrangeOddEven(Node* head) 
+{ 
+    stack<Node*> odd; 
+    stack<Node*> even; 
+    int i = 1; 
+  
+    while (head != nullptr) { 
+  
+        if (head->data % 2 != 0 && i % 2 == 0) { 
+  
+            // Odd Value in Even Position 
+            // Add pointer to current node 
+            // in odd stack 
+            odd.push(head); 
+        } 
+  
+        else if (head->data % 2 == 0 && i % 2 != 0) { 
+  
+            // Even Value in Odd Position 
+            // Add pointer to current node 
+            // in even stack 
+            even.push(head); 
+        } 
+  
+        head = head->next; 
+        i++; 
+    } 
+  
+    while (!odd.empty() && !even.empty()) { 
+  
+        // Swap Data at the top of two stacks 
+        swap(odd.top()->data, even.top()->data); 
+        odd.pop(); 
+        even.pop(); 
+    } 
+} 
+
+METHOD 2
+  
+  
+  Segregate odd and even values in the list. After this, all odd values will occur together followed by all even values.
+Split the list into two lists odd and even.
+Merge the even list into odd list
