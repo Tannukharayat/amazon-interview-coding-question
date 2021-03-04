@@ -1,0 +1,166 @@
+**You are given a Singly Linked List with N nodes where each node next pointing to its next node. You are also given M random pointers ,
+where you will be given M number of pairs denoting two nodes a and b  i.e. a->arb = b.**
+
+Method 1: (Uses O(n) extra space)
+ Store the node and its next pointer mappings of original linked list.
+    Node *copyList(Node *head) 
+    {
+
+        Node *clone = NULL, *clone_tmp = NULL , *curr = NULL;
+        Node *temp = head;
+        while(temp!=NULL)
+        {
+            curr=temp;
+            Node *new_node=new Node(temp->data);
+            if(clone==NULL)
+            clone = clone_tmp = new_node;
+            else 
+            {
+                clone_tmp->next = new_node;
+                clone_tmp=new_node;
+            }
+            clone_tmp->arb=curr;
+            temp=temp->next;
+            curr->next=clone_tmp;
+        }
+
+
+        temp=clone;
+        temp=clone;
+        while(temp!=NULL)
+        {
+            Node *curr=temp->arb;
+            if(temp->arb->arb==NULL)
+                temp->arb=NULL;
+            else
+                temp->arb=temp->arb->arb->next;
+            curr->next=
+
+            temp=temp->next;
+        }
+        return clone;
+    }
+    Restore the next pointers in original linked list from the stored mappings
+    Time Complexity:  O(n)
+Auxiliary Space:  O(n)
+
+Method 2:
+    Node *copyList(Node *head) {
+        Node *curr = head;
+        while(curr!=NULL)
+        {
+            Node* np=new Node(curr->data);
+            if(curr->next!=NULL)
+            np->next=curr->next;
+            curr->next=np;
+            curr=curr->next->next;
+        }curr=head;
+        while(curr!=NULL)
+        {
+            if(curr->arb!=NULL)
+            curr ->next->arb=curr->arb->next;
+            curr=curr->next->next;
+        }
+        Node *clone=head->next;
+        Node *temp=head, *temp1;
+        while(temp->next->next!=NULL)
+        {
+            temp1 = temp->next;
+            temp->next=temp1->next;
+            temp=temp->next;
+            temp1->next= temp->next;
+        }
+        temp->next=NULL;
+
+        return clone;
+    }
+    Time Complexity: O(n)
+Auxiliary Space: O(1)
+
+Method : 3
+
+                    Node *copyList(Node *head) 
+                {
+                    Node *tmp=head;
+                    while(tmp!=NULL)
+                    {
+                        Node *np = new Node(tmp->data);
+                        np->next=tmp->next;
+                        tmp->next=np;
+                        tmp=tmp->next->next;
+                    }
+                    tmp=head;
+                    while(tmp!=NULL)
+                    {
+                        if(tmp->arb==NULL)
+                        tmp->next->arb=NULL;
+                        else
+                        tmp->next->arb=tmp->arb->next;
+                        tmp=tmp->next->next;
+                    }
+                    tmp=head;
+                   Node *head1=NULL,*temp1=NULL;
+                    while(tmp)
+                    {
+                        if(head1==NULL)
+                        head1=temp1=tmp->next;
+                        else 
+                        {
+                            temp1->next=tmp->next;
+                            temp1=temp1->next;
+                        }
+                        tmp->next=tmp->next->next;
+                        tmp=tmp->next;
+                    }
+                    return head1;
+                }
+Method 4:
+
+The idea is to use Hashing. Below is algorithm.
+1. Traverse the original linked list and make a copy in terms of data.
+2. Make a hash map of key value pair with original linked list node and copied linked list node.
+3. Traverse the original linked list again and using the hash map adjust the next and random reference of cloned linked list 
+nodes.
+
+         LinkedList* clone() 
+    { 
+        // Initialize two references, 
+        // one with original list's head. 
+        Node *origCurr = head; 
+        Node *cloneCurr = NULL; 
+  
+        // Hash map which contains node  
+        // to node mapping of original  
+        // and clone linked list. 
+        unordered_map<Node*, Node*> mymap; 
+  
+        // Traverse the original list and 
+        // make a copy of that in the  
+        // clone linked list. 
+        while (origCurr != NULL) 
+        { 
+            cloneCurr = new Node(origCurr->data); 
+            mymap[origCurr] = cloneCurr; 
+            origCurr = origCurr->next; 
+        } 
+  
+        // Adjusting the original list  
+        // reference again. 
+        origCurr = head; 
+  
+        // Traversal of original list again 
+        // to adjust the next and random  
+        // references of clone list using  
+        // hash map. 
+        while (origCurr != NULL) 
+        { 
+            cloneCurr = mymap[origCurr]; 
+            cloneCurr->next = mymap[origCurr->next]; 
+            cloneCurr->random = mymap[origCurr->random]; 
+            origCurr = origCurr->next; 
+        } 
+  
+        // return the head reference of  
+        // the clone list. 
+        return new LinkedList(mymap[head]); 
+    } 
