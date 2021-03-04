@@ -48,3 +48,6 @@
       }
 
       /it wil put minimum element in mat[0][0] then extract that element and comparing other element.
+
+O(N*N*N)
+YOUNGIFY ; O(N);
