@@ -102,3 +102,5 @@ public:
         
     }
 };
+
+orst case time complexity as O(Logn) of union and find function
