@@ -1,0 +1,42 @@
+Given a matrix cost of size n where cost[i][j] denotes the cost of moving from city i to city j. Your task is to complete a tour from the city 0 (0 based index) to all other 
+cities such that you visit each city atmost once and then at the end come back to city 0 in min cost.
+
+Example 1:
+
+Input: cost = {{0,111},{112,0}}
+Output: 223
+Explanation: We can visit 0->1->0 and 
+cost = 111 + 112.
+Example 2:
+
+Input: cost = {{0,1000,5000},{5000,0,1000},
+{1000,5000,0}}
+Output: 3000
+Explanation: We can visit 0->1->2->0 and cost 
+= 1000+1000+1000 = 3000
+
+    int tsp(vector<vector<int>>cost, int start, int mask)
+    {
+        int n = cost.size();
+       // cout<<n<<" "<<mask<<endl;
+        int all_vis = (1<<n)-1;
+        if(mask==all_vis)
+        {
+            return cost[start][0];
+        }
+        int ans = INT_MAX;
+        for(int i = 0 ; i < n ; i++)
+        {
+          //  cout<<"+"<<(mask&(1<<i));
+            if((mask&(1<<i))==0)
+            {//cout<<"*";
+                ans=min(ans, cost[start][i]+tsp(cost,i, mask|(1<<i)));
+            }
+        }
+        return ans;
+    }
+    int total_cost(vector<vector<int>>cost)
+    {
+        int mask=1;
+       return tsp(cost, 0, mask);
+    }
