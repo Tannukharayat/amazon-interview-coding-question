@@ -40,3 +40,4 @@ Explanation: We can visit 0->1->2->0 and cost
         int mask=1;
        return tsp(cost, 0, mask);
     }
+There are at most O(n*2n) subproblems, and each one takes linear time to solve. The total running time is therefore O(n2*2n). The time complexity is much less than O(n!), but still exponential. Space required is also exponential.
