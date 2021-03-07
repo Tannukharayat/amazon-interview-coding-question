@@ -1,0 +1,63 @@
+Given a binary tree, return all root-to-leaf paths.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Input:
+
+   1
+ /   \
+2     3
+ \
+  5
+
+Output: ["1->2->5", "1->3"]
+
+Explanation: All root-to-leaf paths are: 1->2->5, 1->3
+
+       void funct(TreeNode* root, string s, vector<string> &v)
+    {
+        if(root==NULL)
+            return;
+        if(root->left==NULL&&root->right==NULL)
+        {
+                string st="";
+           int num=abs(root->val);
+           string ss="";
+           while(num>0)
+           {
+               char c=num%10+'0';
+               num=num/10;
+               ss=c+ss;
+           }
+           if(root->val<0)
+            v.push_back(s+'-'+ss);
+           else v.push_back(s+ss);
+            //s=s+ss;
+            
+            return;
+        }
+       string st="";
+       int num=abs(root->val);
+       string ss="";
+       while(num>0)
+       {
+           char c=num%10+'0';
+           num=num/10;
+           ss=c+ss;
+       }
+       if(root->val<0)
+        st='-'+ss;
+       else st = st+ss;
+       //cout<<
+        funct(root->left, s+st+'-'+'>', v); 
+        funct(root->right, s+st+'-'+'>', v);    
+    }
+    vector<string> binaryTreePaths(TreeNode* root) 
+    {
+        string s="";
+        vector<string> v;
+        funct(root, s , v);
+        return v;
+    }
