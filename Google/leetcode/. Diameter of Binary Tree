@@ -1,0 +1,25 @@
+class Solution 
+{
+public:
+    int funct(TreeNode* root, int &ans)
+    {
+        if(root==NULL)
+        {
+            return 0;
+        }
+        if(root->left==NULL&&root->right==NULL)
+        {
+            return 1;
+        }
+        int l = funct(root->left, ans);
+        int r = funct(root->right, ans);
+        ans = max(ans, l+r);
+        return max(l,r)+1;
+    }
+    int diameterOfBinaryTree(TreeNode* root) 
+    {
+        int ans = 0;
+        funct(root, ans);
+        return ans;
+    }
+};
