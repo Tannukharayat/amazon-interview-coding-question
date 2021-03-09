@@ -211,3 +211,6 @@ int main()
 }  
   
 // This code is contributed by rathbhupend
+
+
+TIME - O(N)
