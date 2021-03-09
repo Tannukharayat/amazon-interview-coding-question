@@ -217,3 +217,8 @@ int main()
   
     return 0; 
 } 
+
+Time complexity: O(4^(N^2)).
+Even after applying trie the time complexity remains same. For every cell there are 4 directions and there are N^2 cells. So the time complexity is O(4^(N^2)).
+Auxiliary Space: O(N^2).
+The maximum length of recursion can be N^2, where N is the side of the matrix. So the space Complexity is O(N^2).
