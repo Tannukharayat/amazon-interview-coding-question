@@ -1,6 +1,7 @@
 **A Hamiltonian path, is a path in an undirected or directed graph that visits each vertex exactly once. Given an undirected graph  the 
 task is to check if a Hamiltonian path is present in it or not.**--undirected and first vertex npt included
 
+there can be n! permitation
         bool issafe(int graph[100][100], int path[] , int v, int pos)
         {
             if(graph[path[pos-1]][v]==0)
